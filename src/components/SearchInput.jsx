@@ -1,15 +1,42 @@
 import { SearchIcon } from 'assets/imgs';
+import useInput from 'hooks/common/useInput';
 import { palette } from 'lib/styles/palette';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import RecommendBox from './RecommendBox';
 
+const searchData = ['영화 추천', '액션영화', '송강호 주연', '오늘의 영화'];
 function SearchInput() {
+  const [keyword, onChangeValue] = useInput('');
+  const [recommendKeyword, setRecommendKeyword] = useState(searchData);
+
+  useEffect(() => {
+    if (keyword) {
+      const onChangeKeyword = () => {
+        const choosenTextList = searchData.filter((textItem) =>
+          textItem.includes(keyword),
+        );
+        setRecommendKeyword(choosenTextList);
+      };
+      onChangeKeyword();
+    }
+  }, [keyword]);
+
   return (
-    <SearchInputBox>
-      <Icon src={SearchIcon} alt="검색 돋보기" />
-      <InputStyled type="text" placeholder="영화를 제목으로 검색해보세요" />
-      <SearchBtn type="button">검색</SearchBtn>
-    </SearchInputBox>
+    <>
+      <SearchInputBox>
+        <Icon src={SearchIcon} alt="검색 돋보기" />
+        <InputStyled
+          type="text"
+          placeholder="영화를 제목으로 검색해보세요"
+          value={keyword}
+          onChange={onChangeValue}
+        />
+
+        <SearchBtn type="button">검색</SearchBtn>
+      </SearchInputBox>
+      {keyword && <RecommendBox recommendKeyword={recommendKeyword} />}
+    </>
   );
 }
 
