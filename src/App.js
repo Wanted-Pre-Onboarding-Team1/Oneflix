@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
 import { ThemeProvider } from 'styled-components';
-import GlobalStyles from './lib/styles/globalStyles';
-import Routing from './router/route';
-import { palette } from './lib/styles/palette';
+import { palette } from 'lib/styles/palette';
+import GlobalStyles from 'lib/styles/globalStyles';
+import Routing from 'router/route';
 
 function App() {
   return (
