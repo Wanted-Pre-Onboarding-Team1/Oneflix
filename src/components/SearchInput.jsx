@@ -1,5 +1,6 @@
 import { SearchIcon } from 'assets/imgs';
 import useInput from 'hooks/common/useInput';
+import media from 'lib/styles/media';
 import { palette } from 'lib/styles/palette';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
@@ -51,12 +52,19 @@ const SearchInputBox = styled.form`
   font-size: 16px;
   box-sizing: border-box;
   height: 45px;
+  ${media.small} {
+    height: 30px;
+  }
 `;
 
 const Icon = styled.img`
   width: 21px;
   height: 21px;
   margin-left: 4px;
+  ${media.small} {
+    width: 16px;
+    height: 16px;
+  }
 `;
 
 const InputStyled = styled.input`
@@ -73,4 +81,9 @@ const SearchBtn = styled.button`
   width: 91px;
   height: 45px;
   box-sizing: content-box;
+  ${media.small} {
+    width: 50px;
+    height: 30px;
+    font-size: 14px;
+  }
 `;
