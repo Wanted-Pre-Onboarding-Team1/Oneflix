@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { palette } from 'lib/styles/palette';
 
 import TitleArea from 'components/detailPage/TitleArea';
 import NumericCnt from 'components/detailPage/NumericCnt';
@@ -7,30 +8,41 @@ import ProdCrew from 'components/detailPage/ProdCrew';
 
 export default function DetailPage() {
   return (
-    <DevArticle>
-      <DevSection>
-        <DummyImg />
-      </DevSection>
-      <DevSection>
+    <Article>
+      <SectionImg>
+        <DummyImg src="/assets/img/movieposter.jpeg" alt="moviemposter" />
+      </SectionImg>
+      <SectionTxt>
         <TitleArea title="title" pubDate="pubDate" subtitle="subtitle" />
         <NumericCnt userRating="userRating" />
         <ProdCrew director="director" actor="actor" />
-      </DevSection>
-    </DevArticle>
+      </SectionTxt>
+    </Article>
   );
 }
 
-const DevArticle = styled.article`
+const Article = styled.article`
+  width: 100vw;
+  height: 100vh;
+  color: #ffffff;
+  background-color: ${palette.backgroundColor};
+
   display: flex;
-  * {
-    /* border: 1px solid black; */
-  }
+  justify-content: center;
+  align-items: center;
 `;
-const DevSection = styled.section`
+const SectionImg = styled.section`
   width: 100%;
+  text-align: right;
+  padding-right: 2rem;
 `;
-const DummyImg = styled.div`
-  width: 300px;
-  height: 444px;
-  background: grey;
+const SectionTxt = styled.section`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+const DummyImg = styled.img`
+  width: 30vw;
+  min-width: 250px;
 `;
