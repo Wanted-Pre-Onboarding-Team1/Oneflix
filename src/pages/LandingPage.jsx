@@ -1,42 +1,21 @@
-import styled, { css } from 'styled-components';
+import MainPage from 'components/mainPage/MainPage';
+import SideNavbar from 'components/sideNavbar/SideNavbar';
+import { palette } from 'lib/styles/palette';
 import React from 'react';
+import styled from 'styled-components';
 
 function LandingPage() {
   return (
-    <div>
-      <CardText color="btn" fontSize="16" fontWeight="700" lineHeight="19" />
-    </div>
+    <LandingPageLayout>
+      <SideNavbar />
+      <MainPage />
+    </LandingPageLayout>
   );
 }
 
 export default LandingPage;
 
-const LandingPageColorPicker = (palette, color) => {
-  switch (color) {
-    case 'main':
-      return palette.mainColor;
-    case 'backgroundColor':
-      return palette.backgroundColor;
-    case 'btn':
-      return palette.btnTextColor;
-    case 'favorite':
-      return palette.favoriteTextColor;
-    case 'sidebar':
-      return palette.sidebarBackgroundColor;
-    default:
-      return '';
-  }
-};
-
-const LandingPageTextStyle = styled.css`
-  ${(color, fontSize, fontWeight, lineHeight) => css`
-    color: ${LandingPageColorPicker(color)};
-    font-size: ${fontSize}px;
-    font-weight: ${fontWeight};
-    line-height: ${lineHeight}px;
-  `}
-`;
-
-const CardText = styled.strong`
-  ${LandingPageTextStyle};
+const LandingPageLayout = styled.div`
+  display: flex;
+  background: ${palette.backgroundColor};
 `;
