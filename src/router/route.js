@@ -1,6 +1,6 @@
+import LandingPage from 'pages/LandingPage';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import LandingPage from '../pages/LandingPage';
 
 function Routing() {
   return (
