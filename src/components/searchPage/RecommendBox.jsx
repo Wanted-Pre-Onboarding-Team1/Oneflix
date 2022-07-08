@@ -23,7 +23,7 @@ export default RecommendBox;
 const DropBox = styled.ul`
   width: 100%;
   position: absolute;
-  top: 45px;
+  top: 75px;
   background-color: ${palette.backgroundLightColor};
   color: ${palette.fontColor};
   padding: 10px;

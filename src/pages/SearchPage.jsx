@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { palette } from 'lib/styles/palette';
 import media from 'lib/styles/media';
-import SearchInput from 'components/SearchInput';
+import SearchInput from 'components/searchPage/SearchInput';
 import useMovieModel from 'models/useMovieModel';
 import MovieCard from 'components/movieCard/MovieCard';
 
