@@ -12,7 +12,11 @@ html,
 body,
 #root {
   height: 100%;
+<<<<<<< HEAD
+
+=======
   background-color: ${palette.backgroundColor};
+>>>>>>> 8008ebe4df9336981fd4f9f3cd49060a2123e6db
 }
 * {
   box-sizing: border-box;
