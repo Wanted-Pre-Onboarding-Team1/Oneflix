@@ -24,20 +24,18 @@ function SearchInput() {
   }, [keyword]);
 
   return (
-    <>
-      <SearchInputBox>
-        <Icon src={SearchIcon} alt="검색 돋보기" />
-        <InputStyled
-          type="text"
-          placeholder="영화를 제목으로 검색해보세요"
-          value={keyword}
-          onChange={onChangeValue}
-        />
-
-        <SearchBtn type="button">검색</SearchBtn>
-      </SearchInputBox>
+    <SearchInputBox>
       {keyword && <RecommendBox recommendKeyword={recommendKeyword} />}
-    </>
+      <Icon src={SearchIcon} alt="검색 돋보기" />
+      <InputStyled
+        type="text"
+        placeholder="영화를 제목으로 검색해보세요"
+        value={keyword}
+        onChange={onChangeValue}
+      />
+
+      <SearchBtn type="button">검색</SearchBtn>
+    </SearchInputBox>
   );
 }
 
@@ -52,6 +50,8 @@ const SearchInputBox = styled.form`
   font-size: 16px;
   box-sizing: border-box;
   height: 45px;
+  max-width: 1060px;
+  margin: 28px auto;
   ${media.small} {
     height: 30px;
   }

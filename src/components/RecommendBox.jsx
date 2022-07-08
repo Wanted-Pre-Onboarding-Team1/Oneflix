@@ -22,10 +22,13 @@ export default RecommendBox;
 
 const DropBox = styled.ul`
   width: 100%;
+  position: absolute;
+  top: 45px;
   background-color: ${palette.backgroundLightColor};
   color: ${palette.fontColor};
   padding: 10px;
   border-radius: 10px;
+  max-width: 1060px;
 `;
 const DropEle = styled.li`
   display: flex;
