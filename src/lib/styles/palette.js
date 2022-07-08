@@ -5,6 +5,5 @@ export const palette = {
   borderColor: '#4c4c4c',
   backgroundLightColor: '#2d2d2d',
   backgroundLighterColor: '#565656',
-  WHITE: '#FFFFFF',
   highlightColor: '#BB65FF',
 };
