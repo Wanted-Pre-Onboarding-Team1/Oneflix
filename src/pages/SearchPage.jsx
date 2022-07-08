@@ -39,6 +39,7 @@ function SearchPage() {
 }
 
 const StyledSearchPage = styled.section`
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;

@@ -1,17 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import { AiFillStar } from 'react-icons/ai';
 import { palette } from 'lib/styles/palette';
 
 export default function MovieCard({ id, title, year, rating, image }) {
+  const [isLikeClicked, setLikeClicked] = useState(false);
+  const likeIconColor = isLikeClicked ? hilightColor : fontColor;
+
+  function changeClickState(event) {
+    event.preventDefault();
+    setLikeClicked(!isLikeClicked);
+  }
+
   return (
     <CardLayout>
       <NavLink to={`/detail/${id}`}>
-        <button type="button">버튼</button>
+        <button type="button" onClick={changeClickState}>
+          <LikeIcon color={likeIconColor} />
+        </button>
         <img src={image} alt={`${title} 포스터`} />
         <section>
           <strong>
-            <span style={{ color: `${palette.hilightColor}` }}>{rating}</span>
+            <span style={{ color: `${hilightColor}` }}>{rating}</span>
             <span>/10</span>
           </strong>
           <h1>
@@ -26,14 +37,16 @@ export default function MovieCard({ id, title, year, rating, image }) {
   );
 }
 
+const { fontColor, hilightColor, tabColorSide, textColorSide } = palette;
+
 const CardLayout = styled.article`
   width: 180px;
   height: 360px;
   margin-bottom: 16px;
   border-radius: 0 0 4px 4px;
   font-weight: 400;
-  background: ${palette.tabColorSide};
-  color: ${palette.textColorSide};
+  background: ${tabColorSide};
+  color: ${textColorSide};
 
   & img {
     width: 100%;
@@ -57,5 +70,12 @@ const CardLayout = styled.article`
 
   & button {
     position: absolute;
+    z-index: 0;
   }
+`;
+
+const LikeIcon = styled(AiFillStar)`
+  width: 30px;
+  height: 30px;
+  fill: ${({ iconColor }) => iconColor};
 `;

@@ -26,15 +26,15 @@ function RecommendBox({ recommendKeyword, inputRef }) {
 export default RecommendBox;
 
 const DropBox = styled.ul`
-  width: 100%;
   position: absolute;
-  top: 45px;
+  width: 75%;
   top: ${({ top }) => top}px;
   background-color: ${palette.backgroundLightColor};
   color: ${palette.fontColor};
   padding: 10px;
   border-radius: 10px;
   max-width: 1060px;
+  z-index: 10;
 `;
 const DropEle = styled.li`
   display: flex;

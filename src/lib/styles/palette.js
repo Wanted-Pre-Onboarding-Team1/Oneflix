@@ -2,7 +2,6 @@ export const palette = {
   mainColor: '#F33F3F',
   backgroundColor: '#191919',
   backgroundColorSide: '#000000',
-  backgroundColorCard: '#FFFFFF',
   textColorSide: '#E1E1E1',
   tabColorSide: '#1F1F1F',
   hilightColor: '#BB65FF',
@@ -10,5 +9,4 @@ export const palette = {
   borderColor: '#4c4c4c',
   backgroundLightColor: '#2d2d2d',
   backgroundLighterColor: '#565656',
-  highlightColor: '#BB65FF',
 };

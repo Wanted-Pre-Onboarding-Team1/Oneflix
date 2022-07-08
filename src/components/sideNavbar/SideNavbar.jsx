@@ -67,7 +67,7 @@ const Menu = styled.section`
     display: flex;
     align-items: center;
     height: 40px;
-    width: 150px;
+    width: 100%;
     background: ${palette.tabColorSide};
     margin-bottom: 20px;
     border-radius: 6px;

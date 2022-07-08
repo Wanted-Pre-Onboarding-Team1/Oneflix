@@ -50,6 +50,7 @@ export default SearchInput;
 
 const SearchForm = styled.form`
   width: 100%;
+  width: 75%;
   border: 1px solid ${palette.borderColor};
   display: flex;
   align-items: center;
