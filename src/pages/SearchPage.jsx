@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { palette } from 'lib/styles/palette';
+import media from 'lib/styles/media';
 
 /* 데이터가 없을 시 "검색결과가 없습니다"
 있을 시 결과 리스트 
@@ -9,7 +10,7 @@ import { palette } from 'lib/styles/palette';
 */
 
 function SearchPage() {
-  const [movieList, setMovieList] = useState([1]);
+  const [movieList, setMovieList] = useState([]);
 
   return (
     <StyledSearchPage>
@@ -41,17 +42,16 @@ const StyledSearchPage = styled.section`
 `;
 
 const StyledSearchSection = styled.div`
-  background-color: ${palette.WHITE};
+  background-color: ${palette.backgroundColor};
   width: 75vw;
   height: 100vh;
-  opacity: 0.1;
-  @media screen and (max-width: 1142px) {
+  ${media.medium} {
     height: 100%;
   }
-  @media screen and (max-width: 756px) {
+  ${media.small} {
     height: 100%;
   }
-  @media screen and (max-width: 576px) {
+  ${media.custom(576)} {
     height: 100%;
   }
 `;
@@ -67,13 +67,13 @@ const StyledSearchResults = styled.div`
   margin: 0px 40px;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  @media screen and (max-width: 1142px) {
+  ${media.medium} {
     grid-template-columns: repeat(3, 1fr);
   }
-  @media screen and (max-width: 756px) {
+  ${media.small} {
     grid-template-columns: repeat(2, 1fr);
   }
-  @media screen and (max-width: 576px) {
+  ${media.custom(576)} {
     grid-template-columns: repeat(1, 1fr);
   }
 `;
