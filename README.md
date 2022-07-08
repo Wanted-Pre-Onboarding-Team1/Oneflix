@@ -125,7 +125,7 @@
     - 원인: 라우팅 설정 문제
     - 해결: Route, Outlet을 사용한 중첩 라우팅 구성으로 해결    
 ```
-
+## 7. 프로젝트 설치 및 실행 방법
 ### 프로젝트 클론
 ```
 $ git clone https://github.com/Wanted-Pre-Onboarding-Team1/Oneflix
