@@ -9,6 +9,7 @@ import { palette } from 'lib/styles/palette';
 function SearchPage() {
   const [movieList, setMovieList] = useState([]);
   const { movies } = useMovieModel();
+  console.log(movies);
   const requestedMovieList = movies?.data.map(
     ({ id, title, year, rating, medium_cover_image: image }, index) => {
       return (
