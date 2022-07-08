@@ -1,24 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 import { palette } from 'lib/styles/palette';
 
-export default function MovieCard({ title, year, rating, image }) {
+export default function MovieCard({ id, title, year, rating, image }) {
   return (
     <CardLayout>
-      <button type="button">버튼</button>
-      <img src={image} alt={`${title} 포스터`} />
-      <section>
-        <strong>
-          <span style={{ color: `${palette.hilightColor}` }}>{rating}</span>
-          <span>/10</span>
-        </strong>
-        <h1>
-          {' '}
-          {`${
-            title.length < 25 ? title : `${title.substring(0, 20)}...`
-          }(${year})`}{' '}
-        </h1>
-      </section>
+      <NavLink to={`/detail/${id}`}>
+        <button type="button">버튼</button>
+        <img src={image} alt={`${title} 포스터`} />
+        <section>
+          <strong>
+            <span style={{ color: `${palette.hilightColor}` }}>{rating}</span>
+            <span>/10</span>
+          </strong>
+          <h1>
+            {' '}
+            {`${
+              title.length < 25 ? title : `${title.substring(0, 20)}...`
+            }(${year})`}{' '}
+          </h1>
+        </section>
+      </NavLink>
     </CardLayout>
   );
 }
