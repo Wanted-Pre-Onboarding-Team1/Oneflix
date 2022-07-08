@@ -3,11 +3,11 @@ import { palette } from './palette';
 
 const GlobalStyles = createGlobalStyle`
 @font-face {
-    font-family: 'Cafe24Ssurround';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff') format('woff');
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-  }
+}
 html,
 body,
 #root {
@@ -120,7 +120,7 @@ video {
   border: 0;
   font-size: 100%;
   vertical-align: baseline;
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: 'GmarketSansMedium';
 }
 /* HTML5 display-role reset for older browsers */
 article,
@@ -139,7 +139,7 @@ section {
 body {
   line-height: 1;
   margin: 0;
-  font-family: "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  font-family: 'GmarketSansMedium';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* 폰트 사이즈 정의 */
