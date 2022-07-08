@@ -5,18 +5,44 @@ import { palette } from 'lib/styles/palette';
 import TitleArea from 'components/detailPage/TitleArea';
 import NumericCnt from 'components/detailPage/NumericCnt';
 import ProdCrew from 'components/detailPage/ProdCrew';
+import { useParams } from 'react-router-dom';
+import useDetailModel from 'models/useDetailModel';
+import { useEffect } from 'react';
+import { useRef } from 'react';
+import { useState } from 'react';
 
 export default function DetailPage() {
+  const [moviMetaData, setmoviMetaData] = useState(null);
+
+  const paramId = useParams().id.slice(1);
+  const movies = useDetailModel(paramId);
+
+  useEffect(() => {
+    if (movies.movies) {
+      const movie = movies.movies?.data[0];
+      setmoviMetaData(movie);
+    }
+  }, [movies, moviMetaData]);
+
   return (
     <Article>
-      <SectionImg>
-        <DummyImg src="/assets/img/movieposter.jpeg" alt="moviemposter" />
-      </SectionImg>
-      <SectionTxt>
-        <TitleArea title="title" pubDate="pubDate" subtitle="subtitle" />
-        <NumericCnt userRating="userRating" />
-        <ProdCrew director="director" actor="actor" />
-      </SectionTxt>
+      {moviMetaData && (
+        <>
+          <SectionImg>
+            <DummyImg src={moviMetaData.medium_cover_image} />
+          </SectionImg>
+          <SectionTxt>
+            <TitleArea
+              title={moviMetaData.title}
+              year={moviMetaData.year}
+              genres={moviMetaData.genres}
+              runtime={moviMetaData.runtime}
+            />
+            <NumericCnt rating={moviMetaData.rating} />
+            <ProdCrew summary={moviMetaData.summary} />
+          </SectionTxt>
+        </>
+      )}
     </Article>
   );
 }

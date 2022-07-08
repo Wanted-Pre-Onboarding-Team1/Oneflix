@@ -2,14 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 
 export default function TitleArea(props) {
-  const { title, pubDate, subtitle } = props;
+  const { title, year, genres, runtime } = props;
   return (
     <Section>
       <Title>
-        {title} ({pubDate})
+        {title} ({year})
       </Title>
-      <Genres>{subtitle}</Genres>
-      <Runtime>2h 11m</Runtime>
+      <Genres>{genres}</Genres>
+      <Runtime>{runtime}</Runtime>
     </Section>
   );
 }

@@ -9,6 +9,7 @@ import MovieCard from 'components/movieCard/MovieCard';
 function SearchPage() {
   const [movieList, setMovieList] = useState([1, 2, 3]);
   const { movies } = useMovieModel();
+  console.log(movies);
   const requestedMovieList = movies?.data.map(
     ({ id, title, year, rating, medium_cover_image: image }, index) => {
       return (
