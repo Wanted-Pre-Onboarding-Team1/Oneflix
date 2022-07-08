@@ -21,6 +21,7 @@ function MainPage() {
     };
 
     getMovieList();
+    // dependency 추가하면 무한 로딩 발생
   }, []);
 
   useEffect(() => {

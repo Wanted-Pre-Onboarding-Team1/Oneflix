@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
-import { useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
-const useIntersectObserver = (props) => {
+const defaultOption = {
+  root: null,
+  rootMargin: '0px',
+  threshold: 1,
+};
+
+const useIntersectObserver = (options = defaultOption) => {
   const observeTargetRef = useRef();
   const [isTargetVisible, setTargetVisible] = useState(false);
 
@@ -10,17 +15,13 @@ const useIntersectObserver = (props) => {
       setTargetVisible(entry.isIntersecting);
     };
 
-    const observer = new IntersectionObserver(onTargetVisible, {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.5,
-    });
+    const observer = new IntersectionObserver(onTargetVisible, options);
 
     observeTargetRef.current && observer.observe(observeTargetRef.current);
     return () => {
       observer.disconnect();
     };
-  }, []);
+  }, [options]);
 
   return { isTargetVisible, observeTargetRef };
 };
