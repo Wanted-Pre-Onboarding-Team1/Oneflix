@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { palette } from 'lib/styles/palette';
 import media from 'lib/styles/media';
 import SearchInput from 'components/SearchInput';
+import useMovieModel from 'models/useMovieModel';
 
 /* 데이터가 없을 시 "검색결과가 없습니다"
 있을 시 결과 리스트 
@@ -12,6 +13,7 @@ import SearchInput from 'components/SearchInput';
 
 function SearchPage() {
   const [movieList, setMovieList] = useState([1, 2, 3]);
+  const { movies } = useMovieModel();
 
   return (
     <StyledSearchPage>
