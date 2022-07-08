@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import { AiFillStar } from 'react-icons/ai';
 import { palette } from 'lib/styles/palette';
 
-export default function NumericCnt({ userRating }) {
+export default function NumericCnt({ rating }) {
   return (
     <NumericInfoCnt>
       <Rating>
         평점
-        <strong>4.5</strong>
+        <strong>{rating}</strong>
       </Rating>
       <LikeBtn type="button">
         즐겨찾기 <AiFillStar className="like" />

@@ -3,20 +3,46 @@ import styled from 'styled-components';
 import TitleArea from 'components/detailPage/TitleArea';
 import NumericCnt from 'components/detailPage/NumericCnt';
 import ProdCrew from 'components/detailPage/ProdCrew';
-import { palette } from 'lib/styles/palette';
+import { useParams } from 'react-router-dom';
+import useDetailModel from 'models/useDetailModel';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 export default function DetailPage() {
+  const [movieMetaData, setmovieMetaData] = useState(null);
+
+  const paramId = useParams().id.slice(1);
+  const movies = useDetailModel(paramId);
+
+  useEffect(() => {
+    if (movies.movies) {
+      const movie = movies.movies?.data[0];
+      setmovieMetaData(movie);
+    }
+  }, [movies, movieMetaData]);
+
   return (
-    <DetailsCnt>
-      <MoviePosterBox>
-        <MoviePoster src="/assets/img/movieposter.jpeg" alt="moviemposter" />
-      </MoviePosterBox>
-      <MovieDescBox>
-        <TitleArea title="title" pubDate="pubDate" subtitle="subtitle" />
-        <NumericCnt userRating="userRating" />
-        <ProdCrew director="director" actor="actor" />
-      </MovieDescBox>
-    </DetailsCnt>
+    <Article>
+      {movieMetaData && (
+        <>
+          <DetailsCnt>
+            <MoviePosterBox>
+              <MoviePoster src={movieMetaData.medium_cover_image} />
+            </MoviePosterBox>
+          </DetailsCnt>
+          <MovieDescBox>
+            <TitleArea
+              title={movieMetaData.title}
+              year={movieMetaData.year}
+              genres={movieMetaData.genres}
+              runtime={movieMetaData.runtime}
+            />
+            <NumericCnt rating={movieMetaData.rating} />
+            <ProdCrew summary={movieMetaData.summary} />
+          </MovieDescBox>
+        </>
+      )}
+    </Article>
   );
 }
 
