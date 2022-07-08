@@ -1,43 +1,72 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { FiSearch, FiExternalLink } from 'react-icons/fi';
+import { FiMenu, FiSearch, FiExternalLink } from 'react-icons/fi';
 import { palette } from 'lib/styles/palette';
 import { NavLink } from 'react-router-dom';
 
-export default function SideNavbar(props) {
+export default function SideNavbar() {
+  const [isToggled, setToggle] = useState(false);
+  console.log(isToggled);
+
+  const toggleSideMenu = () => {
+    setToggle((prev) => !prev);
+  };
+
   return (
     <SideNavbarLayout>
-      <h1>Watchlists</h1>
-      <nav>
-        <ul>
-          <li>
-            <NavLink to="search">
-              <FiSearch /> Search
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="favorites">
-              <FiExternalLink /> Favorites{' '}
-            </NavLink>
-          </li>
-        </ul>
-      </nav>
-      <hr />
-      <a href="/">My Lists</a>
+      <ToggleButton onClick={toggleSideMenu}>
+        <FiMenu />
+      </ToggleButton>
+      {!isToggled && (
+        <Menu>
+          <h1>Watchlists</h1>
+          <nav>
+            <ul>
+              <li>
+                <NavLink to="search">
+                  <FiSearch /> Search
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="favorites">
+                  <FiExternalLink /> Favorites{' '}
+                </NavLink>
+              </li>
+            </ul>
+          </nav>
+        </Menu>
+      )}
     </SideNavbarLayout>
   );
 }
 
-const SideNavbarLayout = styled.section`
-  padding: 20px 30px;
-  width: 30%;
-  max-width: 320px;
+const SideNavbarLayout = styled.aside`
+  position: relative;
+  display: flex;
+  flex-direction: column;
   background: ${palette.backgroundColorSide};
+`;
+
+const ToggleButton = styled.button`
+  color: ${palette.hilightColor};
+  font-size: 1.5rem;
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 10;
+`;
+
+const Menu = styled.section`
+  padding: 40px 32px;
+  position: sticky;
+  top: 0;
 
   & li {
+    list-style: none;
     display: flex;
     align-items: center;
-    height: 42px;
+    height: 40px;
+    width: 150px;
     background: ${palette.tabColorSide};
     margin-bottom: 20px;
     border-radius: 6px;
@@ -54,8 +83,5 @@ const SideNavbarLayout = styled.section`
   }
   & hr {
     margin-bottom: 20px;
-  }
-  @media (max-width: 740px) {
-    display: none;
   }
 `;
