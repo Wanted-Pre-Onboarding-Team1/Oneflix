@@ -4,9 +4,14 @@ import { palette } from 'lib/styles/palette';
 import React from 'react';
 import styled from 'styled-components';
 
-function RecommendBox({ recommendKeyword }) {
+function RecommendBox({ recommendKeyword, inputRef }) {
+  const { clientHeight, clientTop } = inputRef;
+  const inputRefStyleInfo = window.getComputedStyle(inputRef);
+  const { marginTop } = inputRefStyleInfo;
+  const inputRefTopMargin = parseInt(marginTop, 10);
+
   return (
-    <DropBox>
+    <DropBox top={clientTop + clientHeight + inputRefTopMargin}>
       <Recommend>추천 검색어</Recommend>
       {recommendKeyword.map((item, index) => (
         <DropEle key={item + index}>
@@ -24,6 +29,7 @@ const DropBox = styled.ul`
   width: 100%;
   position: absolute;
   top: 45px;
+  top: ${({ top }) => top}px;
   background-color: ${palette.backgroundLightColor};
   color: ${palette.fontColor};
   padding: 10px;

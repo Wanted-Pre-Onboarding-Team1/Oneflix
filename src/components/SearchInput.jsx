@@ -2,7 +2,7 @@ import { SearchIcon } from 'assets/imgs';
 import useInput from 'hooks/common/useInput';
 import media from 'lib/styles/media';
 import { palette } from 'lib/styles/palette';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import RecommendBox from './RecommendBox';
 
@@ -10,6 +10,8 @@ const searchData = ['영화 추천', '액션영화', '송강호 주연', '오늘
 function SearchInput() {
   const [keyword, onChangeValue] = useInput('');
   const [recommendKeyword, setRecommendKeyword] = useState(searchData);
+
+  const searchInput = useRef();
 
   useEffect(() => {
     if (keyword) {
@@ -24,8 +26,13 @@ function SearchInput() {
   }, [keyword]);
 
   return (
-    <SearchInputBox>
-      {keyword && <RecommendBox recommendKeyword={recommendKeyword} />}
+    <SearchForm ref={searchInput}>
+      {keyword && (
+        <RecommendBox
+          recommendKeyword={recommendKeyword}
+          inputRef={searchInput.current}
+        />
+      )}
       <Icon src={SearchIcon} alt="검색 돋보기" />
       <InputStyled
         type="text"
@@ -35,13 +42,13 @@ function SearchInput() {
       />
 
       <SearchBtn type="button">검색</SearchBtn>
-    </SearchInputBox>
+    </SearchForm>
   );
 }
 
 export default SearchInput;
 
-const SearchInputBox = styled.form`
+const SearchForm = styled.form`
   width: 100%;
   border: 1px solid ${palette.borderColor};
   display: flex;

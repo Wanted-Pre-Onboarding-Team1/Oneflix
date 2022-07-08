@@ -5,13 +5,12 @@ import styled from 'styled-components';
 
 const DOMAIN = 'http://localhost:8080/';
 
-const MainPage = function () {
+function MainPage() {
   const [MovieList, setMovieList] = useState([]);
   useEffect(() => {
     const getMovieList = async () => {
       const response = await axios.get(`${DOMAIN}movies?_page=1`);
       const { data } = response;
-      console.log(data);
       setMovieList([...data]);
     };
 
@@ -43,7 +42,7 @@ const MainPage = function () {
       </ul>
     </MainPageLayout>
   );
-};
+}
 
 export default MainPage;
 

@@ -42,12 +42,13 @@ const StyledSearchPage = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  width: 100%;
+  height: max-content;
 `;
 
 const StyledSearchSection = styled.div`
   background-color: ${palette.backgroundColor};
   width: 75vw;
-  height: 100vh;
   margin: 0 auto;
   ${media.medium} {
     height: 100%;

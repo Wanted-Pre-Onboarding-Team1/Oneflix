@@ -12,7 +12,7 @@ export default function SideNavbar() {
   };
 
   return (
-    <SideNavbarLayout>
+    <Navbar>
       <ToggleButton onClick={toggleSideMenu}>
         <FiMenu />
       </ToggleButton>
@@ -37,30 +37,31 @@ export default function SideNavbar() {
           </nav>
         </Menu>
       )}
-    </SideNavbarLayout>
+    </Navbar>
   );
 }
 
-const SideNavbarLayout = styled.aside`
-  position: relative;
+const Navbar = styled.aside`
   display: flex;
   flex-direction: column;
   background: ${palette.backgroundColorSide};
+  height: auto;
 `;
 
 const ToggleButton = styled.button`
   color: ${palette.hilightColor};
   font-size: 1.5rem;
   position: fixed;
-  top: 12px;
-  left: 16px;
+  top: 20px;
+  left: 20px;
   z-index: 10;
 `;
 
 const Menu = styled.section`
   padding: 40px 32px;
   position: sticky;
-  top: 0;
+  top: 30px;
+  display: ${({ isToggled }) => (isToggled ? 'none' : 'block')};
 
   & li {
     display: flex;
