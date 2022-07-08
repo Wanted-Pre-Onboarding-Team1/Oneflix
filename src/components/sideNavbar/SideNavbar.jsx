@@ -61,7 +61,6 @@ const Menu = styled.section`
   top: 0;
 
   & li {
-    list-style: none;
     display: flex;
     align-items: center;
     height: 40px;
