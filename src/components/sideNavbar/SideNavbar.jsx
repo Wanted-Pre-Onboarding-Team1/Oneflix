@@ -18,18 +18,20 @@ export default function SideNavbar() {
       </ToggleButton>
       {!isToggled && (
         <Menu>
-          <h1>Watchlists</h1>
+          <NavLink to="/">
+            <h1>Watchlists</h1>
+          </NavLink>
           <nav>
             <ul>
               <li>
-                <NavLink to="search">
+                <Move to="search">
                   <FiSearch /> Search
-                </NavLink>
+                </Move>
               </li>
               <li>
-                <NavLink to="like">
+                <Move to="like">
                   <FiExternalLink /> Like{' '}
-                </NavLink>
+                </Move>
               </li>
             </ul>
           </nav>
@@ -68,7 +70,9 @@ const Menu = styled.section`
     background: ${palette.tabColorSide};
     margin-bottom: 20px;
     border-radius: 6px;
-    padding: 10px 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   & h1 {
     color: ${palette.hilightColor};
@@ -82,4 +86,12 @@ const Menu = styled.section`
   & hr {
     margin-bottom: 20px;
   }
+`;
+
+const Move = styled(NavLink)`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

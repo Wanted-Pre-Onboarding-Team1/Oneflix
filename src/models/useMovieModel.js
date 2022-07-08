@@ -8,7 +8,7 @@ const useMovieModel = () => {
   useEffect(() => {
     const getMovies = async () => {
       try {
-        const response = await request.get('/movies?_limit=50&_page=2');
+        const response = await request.get('/movies?_limit=50&_page=1');
         setMovies(response);
       } catch (error) {
         // eslint-disable-next-line no-alert

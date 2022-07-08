@@ -3,7 +3,7 @@ import MovieCard from 'components/movieCard/MovieCard';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-const DOMAIN = 'http://localhost:8000/';
+const DOMAIN = 'http://localhost:8080/';
 
 const MainPage = function () {
   const [MovieList, setMovieList] = useState([]);
