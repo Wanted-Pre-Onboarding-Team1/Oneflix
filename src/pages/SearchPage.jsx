@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { palette } from 'lib/styles/palette';
-import media from 'lib/styles/media';
 import SearchInput from 'components/SearchInput';
 import useMovieModel from 'models/useMovieModel';
 import MovieCard from 'components/movieCard/MovieCard';
+import media from 'lib/styles/media';
+import { palette } from 'lib/styles/palette';
 
 function SearchPage() {
   const [movieList, setMovieList] = useState([1, 2, 3]);
@@ -38,6 +38,8 @@ function SearchPage() {
   );
 }
 
+const { backgroundColor, fontColor } = palette;
+
 const StyledSearchPage = styled.section`
   position: relative;
   display: flex;
@@ -46,9 +48,8 @@ const StyledSearchPage = styled.section`
   width: 100%;
   height: max-content;
 `;
-
 const StyledSearchSection = styled.div`
-  background-color: ${palette.backgroundColor};
+  background-color: ${backgroundColor};
   width: 75vw;
   margin: 0 auto;
   ${media.medium} {
@@ -61,18 +62,15 @@ const StyledSearchSection = styled.div`
     height: 100%;
   }
 `;
-
 const StyledSerchText = styled.div`
   display: flex;
   justify-content: center;
-  color: ${palette.fontColor};
+  color: ${fontColor};
   font-size: 2.2rem;
 `;
-
 const StyledSearchResults = styled.div`
   margin: 0px 40px;
   display: grid;
-
   grid-template-columns: repeat(5, 1fr);
   ${media.medium} {
     grid-template-columns: repeat(3, 1fr);

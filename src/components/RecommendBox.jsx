@@ -1,8 +1,8 @@
+import React from 'react';
+import styled from 'styled-components';
 import { SearchIcon } from 'assets/imgs';
 import media from 'lib/styles/media';
 import { palette } from 'lib/styles/palette';
-import React from 'react';
-import styled from 'styled-components';
 
 function RecommendBox({ recommendKeyword, inputRef }) {
   const { clientHeight, clientTop } = inputRef;
@@ -25,12 +25,15 @@ function RecommendBox({ recommendKeyword, inputRef }) {
 
 export default RecommendBox;
 
+const { backgroundColorLight, fontColor, backgroundColorLighter, mainColor } =
+  palette;
+
 const DropBox = styled.ul`
   position: absolute;
   width: 75%;
   top: ${({ top }) => top}px;
-  background-color: ${palette.backgroundLightColor};
-  color: ${palette.fontColor};
+  background-color: ${backgroundColorLight};
+  color: ${fontColor};
   padding: 10px;
   border-radius: 10px;
   max-width: 1060px;
@@ -43,13 +46,13 @@ const DropEle = styled.li`
   cursor: pointer;
   border-radius: 4px;
   :hover {
-    background-color: ${palette.backgroundLighterColor};
+    background-color: ${backgroundColorLighter};
   }
 `;
 const Recommend = styled.p`
   font-size: 12px;
   margin-bottom: 4px;
-  color: ${palette.mainColor};
+  color: ${mainColor};
 `;
 const Icon = styled.img`
   width: 21px;

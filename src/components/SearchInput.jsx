@@ -1,9 +1,9 @@
-import { SearchIcon } from 'assets/imgs';
-import useInput from 'hooks/common/useInput';
-import media from 'lib/styles/media';
-import { palette } from 'lib/styles/palette';
 import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
+import useInput from 'hooks/common/useInput';
+import { SearchIcon } from 'assets/imgs';
+import media from 'lib/styles/media';
+import { palette } from 'lib/styles/palette';
 import RecommendBox from './RecommendBox';
 
 const searchData = ['영화 추천', '액션영화', '송강호 주연', '오늘의 영화'];
@@ -40,7 +40,6 @@ function SearchInput() {
         value={keyword}
         onChange={onChangeValue}
       />
-
       <SearchBtn type="button">검색</SearchBtn>
     </SearchForm>
   );
@@ -48,10 +47,12 @@ function SearchInput() {
 
 export default SearchInput;
 
+const { borderColor, fontColor } = palette;
+
 const SearchForm = styled.form`
   width: 100%;
   width: 75%;
-  border: 1px solid ${palette.borderColor};
+  border: 1px solid ${borderColor};
   display: flex;
   align-items: center;
   border-radius: 6px;
@@ -64,7 +65,6 @@ const SearchForm = styled.form`
     height: 30px;
   }
 `;
-
 const Icon = styled.img`
   width: 21px;
   height: 21px;
@@ -74,14 +74,12 @@ const Icon = styled.img`
     height: 16px;
   }
 `;
-
 const InputStyled = styled.input`
   width: 100%;
   padding: 4px 9px 4px 10px;
   background-color: rgba(0, 0, 0, 0.1);
-  color: ${palette.fontColor};
+  color: ${fontColor};
 `;
-
 const SearchBtn = styled.button`
   background-color: #bb65ff;
   border-radius: 6px;
