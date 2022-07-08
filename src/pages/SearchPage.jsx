@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { palette } from 'lib/styles/palette';
 import media from 'lib/styles/media';
+import SearchInput from 'components/SearchInput';
 
 /* 데이터가 없을 시 "검색결과가 없습니다"
 있을 시 결과 리스트 
@@ -10,10 +11,11 @@ import media from 'lib/styles/media';
 */
 
 function SearchPage() {
-  const [movieList, setMovieList] = useState([]);
+  const [movieList, setMovieList] = useState([1, 2, 3]);
 
   return (
     <StyledSearchPage>
+      <SearchInput />
       <StyledSearchSection>
         {movieList.length === 0 ? (
           <StyledSerchText>검색결과가 없습니다.</StyledSerchText>
@@ -38,6 +40,7 @@ function SearchPage() {
 
 const StyledSearchPage = styled.section`
   display: flex;
+  flex-direction: column;
   justify-content: flex-end;
 `;
 
@@ -45,6 +48,7 @@ const StyledSearchSection = styled.div`
   background-color: ${palette.backgroundColor};
   width: 75vw;
   height: 100vh;
+  margin: 0 auto;
   ${media.medium} {
     height: 100%;
   }
@@ -66,6 +70,7 @@ const StyledSerchText = styled.div`
 const StyledSearchResults = styled.div`
   margin: 0px 40px;
   display: grid;
+
   grid-template-columns: repeat(5, 1fr);
   ${media.medium} {
     grid-template-columns: repeat(3, 1fr);

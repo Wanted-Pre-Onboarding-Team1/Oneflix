@@ -52,6 +52,8 @@ const SearchInputBox = styled.form`
   font-size: 16px;
   box-sizing: border-box;
   height: 45px;
+  max-width: 1060px;
+  margin: 0 auto;
   ${media.small} {
     height: 30px;
   }
