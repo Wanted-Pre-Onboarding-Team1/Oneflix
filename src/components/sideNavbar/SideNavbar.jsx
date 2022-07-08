@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { FiMenu, FiSearch, FiExternalLink } from 'react-icons/fi';
 import { palette } from 'lib/styles/palette';
-import { NavLink } from 'react-router-dom';
 
 export default function SideNavbar() {
   const [isToggled, setToggle] = useState(false);
@@ -12,86 +12,84 @@ export default function SideNavbar() {
   };
 
   return (
-    <SideNavbarLayout>
+    <Navbar>
       <ToggleButton onClick={toggleSideMenu}>
         <FiMenu />
       </ToggleButton>
       {!isToggled && (
         <Menu>
           <NavLink to="/">
-            <h1>Watchlists</h1>
+            <Logo>Watchlists</Logo>
           </NavLink>
-          <nav>
+          <SidebarMenu>
             <ul>
-              <li>
+              <MenuBtnItem>
                 <Move to="search">
                   <FiSearch /> Search
                 </Move>
-              </li>
-              <li>
+              </MenuBtnItem>
+              <MenuBtnItem>
                 <Move to="like">
                   <FiExternalLink /> Like{' '}
                 </Move>
-              </li>
+              </MenuBtnItem>
             </ul>
-          </nav>
+          </SidebarMenu>
         </Menu>
       )}
-    </SideNavbarLayout>
+    </Navbar>
   );
 }
 
-const SideNavbarLayout = styled.aside`
-  position: relative;
+const { sideBackgroundColor, highlightColor, sideTextColor, sideTabColor } =
+  palette;
+
+const Navbar = styled.aside`
   display: flex;
   flex-direction: column;
-  background: ${palette.backgroundColorSide};
+  background: ${sideBackgroundColor};
+  height: auto;
+  min-height: 100vh;
 `;
-
 const ToggleButton = styled.button`
-  color: ${palette.hilightColor};
+  color: ${highlightColor};
   font-size: 1.5rem;
   position: fixed;
-  top: 12px;
-  left: 16px;
+  top: 20px;
+  left: 20px;
   z-index: 10;
 `;
-
 const Menu = styled.section`
   padding: 40px 32px;
   position: sticky;
-  top: 0;
-
-  & li {
-    display: flex;
-    align-items: center;
-    height: 40px;
-    width: 150px;
-    background: ${palette.tabColorSide};
-    margin-bottom: 20px;
-    border-radius: 6px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  & h1 {
-    color: ${palette.hilightColor};
-    font-size: 2rem;
-    margin-bottom: 20px;
-  }
-  & nav,
-  & a {
-    color: ${palette.textColorSide};
-  }
-  & hr {
-    margin-bottom: 20px;
-  }
+  top: 30px;
+  display: ${({ isToggled }) => (isToggled ? 'none' : 'block')};
 `;
-
+const Logo = styled.h1`
+  color: ${highlightColor};
+  font-size: 2rem;
+  margin-bottom: 20px;
+`;
+const SidebarMenu = styled.nav`
+  color: ${sideTextColor};
+`;
+const MenuBtnItem = styled.li`
+  display: flex;
+  align-items: center;
+  height: 40px;
+  width: 100%;
+  background: ${sideTabColor};
+  margin-bottom: 20px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 const Move = styled(NavLink)`
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
+  color: ${sideTextColor};
   align-items: center;
 `;

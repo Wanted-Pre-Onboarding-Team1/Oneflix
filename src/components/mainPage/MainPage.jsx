@@ -1,17 +1,16 @@
-import axios from 'axios';
-import MovieCard from 'components/movieCard/MovieCard';
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
+import MovieCard from 'components/movieCard/MovieCard';
+import { BASE_URL } from 'constants';
 
-const DOMAIN = 'http://localhost:8080/';
+function MainPage() {
+  const [movieList, setMovieList] = useState([]);
 
-const MainPage = function () {
-  const [MovieList, setMovieList] = useState([]);
   useEffect(() => {
     const getMovieList = async () => {
-      const response = await axios.get(`${DOMAIN}movies?_page=1`);
+      const response = await axios.get(`${BASE_URL}/movies?_page=1`);
       const { data } = response;
-      console.log(data);
       setMovieList([...data]);
     };
 
@@ -19,9 +18,9 @@ const MainPage = function () {
   }, []);
 
   return (
-    <MainPageLayout>
-      <ul>
-        {MovieList.map(
+    <MainPageCnt>
+      <MainMovieList>
+        {movieList.map(
           ({
             imdb_code: id,
             title,
@@ -29,7 +28,7 @@ const MainPage = function () {
             rating,
             medium_cover_image: image,
           }) => (
-            <li key={id}>
+            <li key={`${title}_${id}`}>
               <MovieCard
                 id={id}
                 title={title}
@@ -40,25 +39,24 @@ const MainPage = function () {
             </li>
           ),
         )}
-      </ul>
-    </MainPageLayout>
+      </MainMovieList>
+    </MainPageCnt>
   );
-};
+}
 
 export default MainPage;
 
-export const MainPageLayout = styled.section`
+export const MainPageCnt = styled.section`
   display: flex;
   justify-content: center;
   width: 100%;
   padding: 90px 30px;
-
-  & ul {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-  }
+`;
+const MainMovieList = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
 `;
