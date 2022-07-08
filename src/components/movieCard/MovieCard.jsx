@@ -12,7 +12,12 @@ export default function MovieCard({ title, year, rating, image }) {
           <span style={{ color: `${palette.hilightColor}` }}>{rating}</span>
           <span>/10</span>
         </strong>
-        <h1> {`${title}(${year})`} </h1>
+        <h1>
+          {' '}
+          {`${
+            title.length < 25 ? title : `${title.substring(0, 20)}...`
+          }(${year})`}{' '}
+        </h1>
       </section>
     </CardLayout>
   );
@@ -38,6 +43,7 @@ const CardLayout = styled.article`
 
   & h1 {
     font-size: 1.1rem;
+    line-height: 1.3rem;
   }
 
   & strong {

@@ -7,7 +7,6 @@ import styled from 'styled-components';
 function LandingPage() {
   return (
     <LandingPageLayout>
-      <SideNavbar />
       <MainPage />
     </LandingPageLayout>
   );
@@ -17,5 +16,6 @@ export default LandingPage;
 
 const LandingPageLayout = styled.div`
   display: flex;
+  width: 100%;
   background: ${palette.backgroundColor};
 `;

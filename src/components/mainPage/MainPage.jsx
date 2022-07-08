@@ -48,6 +48,8 @@ const MainPage = function () {
 export default MainPage;
 
 export const MainPageLayout = styled.section`
+  display: flex;
+  justify-content: center;
   width: 100%;
   padding: 90px 30px;
 

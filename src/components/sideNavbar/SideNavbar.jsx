@@ -6,7 +6,6 @@ import { NavLink } from 'react-router-dom';
 
 export default function SideNavbar() {
   const [isToggled, setToggle] = useState(false);
-  console.log(isToggled);
 
   const toggleSideMenu = () => {
     setToggle((prev) => !prev);
@@ -28,8 +27,8 @@ export default function SideNavbar() {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="favorites">
-                  <FiExternalLink /> Favorites{' '}
+                <NavLink to="like">
+                  <FiExternalLink /> Like{' '}
                 </NavLink>
               </li>
             </ul>
@@ -51,7 +50,7 @@ const ToggleButton = styled.button`
   color: ${palette.hilightColor};
   font-size: 1.5rem;
   position: fixed;
-  top: 16px;
+  top: 12px;
   left: 16px;
   z-index: 10;
 `;
