@@ -49,6 +49,7 @@ const Navbar = styled.aside`
   flex-direction: column;
   background: ${sideBackgroundColor};
   height: auto;
+  min-height: 100vh;
 `;
 const ToggleButton = styled.button`
   color: ${highlightColor};

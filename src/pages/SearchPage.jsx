@@ -7,7 +7,7 @@ import media from 'lib/styles/media';
 import { palette } from 'lib/styles/palette';
 
 function SearchPage() {
-  const [movieList, setMovieList] = useState([1, 2, 3]);
+  const [movieList, setMovieList] = useState([]);
   const { movies } = useMovieModel();
   const requestedMovieList = movies?.data.map(
     ({ id, title, year, rating, medium_cover_image: image }, index) => {
@@ -44,7 +44,7 @@ const StyledSearchPage = styled.section`
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: flex-start;
   width: 100%;
   height: max-content;
 `;
@@ -63,6 +63,7 @@ const StyledSearchSection = styled.div`
   }
 `;
 const StyledSerchText = styled.div`
+  margin-top: 50%;
   display: flex;
   justify-content: center;
   color: ${fontColor};
