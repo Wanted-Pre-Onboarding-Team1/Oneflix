@@ -1,70 +1,167 @@
-# Getting Started with Create React App
+# [Wanted Pre Onboarding FE 5th] 팀 과제 # 1-2
+- 주제: 영화 정보 사이트
+- 프로젝트 기간: 2022.07.07 ~ 2022.07.13
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<br />
 
-## Available Scripts
+## **1. 팀원 소개 · 맡은 부분**
+### # 심채영
+```
+ - 상세 페이지 CSS 작성
+ - 상세 페이지 JSON data 반영 작업
+```
+### # 이지호
+```
+ - 검색 페이지
+ - 검색 페이지 인풋, 연관 검색어 로직
+```
+### # 이치행
+```
+ - 상세 페이지 마크업
+ - 작업 Merge, 리팩토링
+```
+### # 임종혁
+```
+ - 검색 페이지 퍼블리싱
+ - 검색 리스트 무한 스크롤 로직
+``` 
+### # 천현주
+```
+- 메인 페이지 퍼블리싱, 무한 스크롤 로직
+- 사이드 메뉴 퍼블리싱
+```
 
-In the project directory, you can run:
+<br />
 
-### `npm start`
+## **2. 기술 스택**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+`react` `styled-components` `axios` `json server` 
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+<br />
 
-### `npm test`
+## **3. 프로젝트 소개**
+### # 2022.07.07
+    - 기능, 업무 분담
+    - 초기세팅 https://github.com/Wanted-Pre-Onboarding-Team1/Oneflix
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- 프로젝트 기능 일람
+   ![영화정보사이트](https://user-images.githubusercontent.com/99126860/177974656-33c24277-8c5b-410f-b6f8-e97836b0450d.jpg)
 
-### `npm run build`
+### # 2022.07.08
+    - 중간 발표 전 merge
+    - 마크업, 스타일 관련 크리티컬한 문제 해결: 앱 작동 방해 혹은 스타일이 통일되지 않는 문제
+    - 코드 리팩토링 진행: 코드 스타일 통일, 변수명 수정
+    - 추천검색어 로직 구현
+    - json server 모듈화 진행
+    
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<br />
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## **4. 프로젝트 구조**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+📦public
+ ┣ 📂assets
+ ┃ ┗ 📂img
+ ┃ ┃ ┗ 📜movieposter.jpeg
+ ┣ 📜favicon.ico
+ ┣ 📜index.html
+ ┣ 📜manifest.json
+ ┗ 📜robots.txt
+📦src
+ ┣ 📂assets
+ ┃ ┗ 📂imgs
+ ┃ ┃ ┣ 📜SearchIcon.png
+ ┃ ┃ ┗ 📜index.js
+ ┣ 📂components
+ ┃ ┣ 📂detailPage
+ ┃ ┃ ┣ 📜NumericCnt.jsx
+ ┃ ┃ ┣ 📜ProdCrew.jsx
+ ┃ ┃ ┗ 📜TitleArea.jsx
+ ┃ ┣ 📂likePage
+ ┃ ┃ ┗ 📜LikePage.jsx
+ ┃ ┣ 📂mainPage
+ ┃ ┃ ┗ 📜MainPage.jsx
+ ┃ ┣ 📂movieCard
+ ┃ ┃ ┗ 📜MovieCard.jsx
+ ┃ ┣ 📂sideNavbar
+ ┃ ┃ ┣ 📜SideNavbar.jsx
+ ┃ ┃ ┗ 📜SideNavbarLayout.jsx
+ ┃ ┣ 📜RecommendBox.jsx
+ ┃ ┗ 📜SearchInput.jsx
+ ┣ 📂database
+ ┃ ┗ 📜database.json
+ ┣ 📂hooks
+ ┃ ┗ 📂common
+ ┃ ┃ ┗ 📜useInput.js
+ ┣ 📂lib
+ ┃ ┣ 📂api
+ ┃ ┃ ┗ 📜httpRequest.js
+ ┃ ┗ 📂styles
+ ┃ ┃ ┣ 📜globalStyles.js
+ ┃ ┃ ┣ 📜media.js
+ ┃ ┃ ┗ 📜palette.js
+ ┣ 📂models
+ ┃ ┗ 📜useMovieModel.js
+ ┣ 📂pages
+ ┃ ┣ 📜DetailPage.jsx
+ ┃ ┣ 📜LandingPage.jsx
+ ┃ ┗ 📜SearchPage.jsx
+ ┣ 📂router
+ ┃ ┗ 📜route.js
+ ┣ 📜App.js
+ ┣ 📜index.css
+ ┣ 📜index.js
+ ┣ 📜reportWebVitals.js
+ ┗ 📜setupTests.js
+ ```
 
-### `npm run eject`
+<br />
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## **5. 컨벤션**
+### # 협업을 위한 git 커밋 컨벤션 설정
+| 커밋명      | 내용                                             |
+| ----------- | ------------------------------------------------ |
+| feat     | 새로운 기능을 추가                     |
+| fix      | 버그 수정                                      |
+| design    | CSS 등 사용자 UI 디자인 변경                              |
+| docs     | 문서 생성, 추가, 수정(README.md)                 |
+| refactor | 코드 리팩토링                                |
+| chore   | 간단한 코드 변경, 로직에 큰 영향을 주지 않는 작은 변경 |
+| test | 테스트 코드 추가 및 리팩토링                     |
+| rename |파일 혹은 폴더명을 수정, 이동|
+| !HOTFIX |치명적인 버그의 긴급한 수정|
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<br />
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## **6. 발생 에러**
+### # merge, refactor 작업: 앱 작동을 방해하는 오류
+```
+1. 서버에서 데이터를 받아 화면을 표시하는 기능의 오작동
+    - 원인: MainPage, useMovieModel에서 각각 axios.get에 사용하는 주소가 다르게 지정
+    - 해결: 주소를 constants로 만들어 통일
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+2. SideNavBar가 모든 컴포넌트에서 표시되지 않는 문제
+    - 원인: 라우팅 설정 문제
+    - 해결: Route, Outlet을 사용한 중첩 라우팅 구성으로 해결    
+```
 
-## Learn More
+<br />
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## **7. 프로젝트 설치 · 실행 방법**
+### # 프로젝트 클론
+```
+$ git clone https://github.com/Wanted-Pre-Onboarding-Team1/Oneflix
+```
+### # 패키지 설치
+```
+$ npm install 
+```
+### # develop 서버 실행
+```
+$ npm start
+```
+### # branch에서 작업
+```
+$ git checkout -b feature/page
+```
