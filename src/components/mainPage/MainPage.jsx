@@ -1,42 +1,38 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import styled from 'styled-components';
 import MovieCard from 'components/movieCard/MovieCard';
-import { BASE_URL } from 'constants';
 import useIntersectObserver from 'hooks/useIntersectObserver';
+import { HttpRequest } from 'lib/api/httpRequest';
 
 function MainPage() {
   const [movieList, setMovieList] = useState([]);
   const [isInitialLoading, setInitialLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
   const { isTargetVisible, observeTargetRef } = useIntersectObserver();
+  const movieRequest = new HttpRequest();
+
+  const getCurrentPage = (list) => list.length * 0.1;
 
   useEffect(() => {
-    const getMovieList = async () => {
-      const response = await axios.get(
-        `${BASE_URL}/movies?_page=${currentPage}`,
-      );
-      const { data } = response;
-      setMovieList([...data]);
-    };
+    const callback = (response) => setMovieList(response.data);
 
-    getMovieList();
-    // dependency 추가하면 무한 로딩 발생
+    movieRequest.getWithParams({
+      url: 'movies',
+      config: { _page: getCurrentPage(movieList) },
+      callback,
+    });
   }, []);
 
   useEffect(() => {
     setInitialLoading(false);
-    setCurrentPage((prev) => +prev + 1);
+    const callback = ({ data }) => setMovieList((prev) => [...prev, ...data]);
 
-    async function getMoreMovies() {
-      const response = await axios.get(
-        `${BASE_URL}/movies?_page=${currentPage}`,
-      );
-      const { data } = response;
-      setMovieList((prev) => [...prev, ...data]);
-    }
-
-    isTargetVisible && !isInitialLoading && getMoreMovies();
+    isTargetVisible &&
+      !isInitialLoading &&
+      movieRequest.getWithParams({
+        url: 'movies',
+        config: { _page: getCurrentPage(movieList) + 1 },
+        callback,
+      });
   }, [isTargetVisible, isInitialLoading]);
 
   return (

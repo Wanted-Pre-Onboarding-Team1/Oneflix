@@ -13,6 +13,11 @@ export class HttpRequest {
     return response;
   }
 
+  async getWithParams({ url = '', config = {}, callback }) {
+    const response = await this.axios.get(url, { params: config });
+    callback(response);
+  }
+
   async post(url, data) {
     const response = await this.axios.post(url, data);
     return response;
