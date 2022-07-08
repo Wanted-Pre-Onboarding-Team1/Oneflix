@@ -14,23 +14,23 @@ export default function ProdCrew({ director, actor, summary }) {
           <InfoCont>{actor}</InfoCont>
         </List> */}
       </ul>
-      <Summary>{summary}</Summary>
+      <MovieSummary>{summary}</MovieSummary>
     </section>
   );
 }
 
-const CrewInfoBox = styled.li`
-  display: flex;
-  margin-top: 1rem;
-`;
-const InfoTitle = styled.h3`
-  font-size: 2rem;
-  margin-right: 0.8rem;
-`;
-const InfoCont = styled.p`
-  font-size: 1.4rem;
-`;
-const Summary = styled.p`
+// const CrewInfoBox = styled.li`
+//   display: flex;
+//   margin-top: 1rem;
+// `;
+// const InfoTitle = styled.h3`
+//   font-size: 2rem;
+//   margin-right: 0.8rem;
+// `;
+// const InfoCont = styled.p`
+//   font-size: 1.4rem;
+// `;
+const MovieSummary = styled.p`
   width: 30vw;
   overflow: visible;
   font-size: 1rem;

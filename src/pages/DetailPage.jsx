@@ -3,18 +3,13 @@ import styled from 'styled-components';
 import TitleArea from 'components/detailPage/TitleArea';
 import NumericCnt from 'components/detailPage/NumericCnt';
 import ProdCrew from 'components/detailPage/ProdCrew';
-<<<<<<< HEAD
 import { useParams } from 'react-router-dom';
 import useDetailModel from 'models/useDetailModel';
 import { useEffect } from 'react';
-import { useRef } from 'react';
 import { useState } from 'react';
-=======
-import { palette } from 'lib/styles/palette';
->>>>>>> 00d16d8ee65209566036a3b70ca7aed4fd851645
 
 export default function DetailPage() {
-  const [moviMetaData, setmoviMetaData] = useState(null);
+  const [movieMetaData, setmovieMetaData] = useState(null);
 
   const paramId = useParams().id.slice(1);
   const movies = useDetailModel(paramId);
@@ -22,43 +17,32 @@ export default function DetailPage() {
   useEffect(() => {
     if (movies.movies) {
       const movie = movies.movies?.data[0];
-      setmoviMetaData(movie);
+      setmovieMetaData(movie);
     }
-  }, [movies, moviMetaData]);
+  }, [movies, movieMetaData]);
 
   return (
-<<<<<<< HEAD
     <Article>
-      {moviMetaData && (
+      {movieMetaData && (
         <>
-          <SectionImg>
-            <DummyImg src={moviMetaData.medium_cover_image} />
-          </SectionImg>
-          <SectionTxt>
+          <DetailsCnt>
+            <MoviePosterBox>
+              <MoviePoster src={movieMetaData.medium_cover_image} />
+            </MoviePosterBox>
+          </DetailsCnt>
+          <MovieDescBox>
             <TitleArea
-              title={moviMetaData.title}
-              year={moviMetaData.year}
-              genres={moviMetaData.genres}
-              runtime={moviMetaData.runtime}
+              title={movieMetaData.title}
+              year={movieMetaData.year}
+              genres={movieMetaData.genres}
+              runtime={movieMetaData.runtime}
             />
-            <NumericCnt rating={moviMetaData.rating} />
-            <ProdCrew summary={moviMetaData.summary} />
-          </SectionTxt>
+            <NumericCnt rating={movieMetaData.rating} />
+            <ProdCrew summary={movieMetaData.summary} />
+          </MovieDescBox>
         </>
       )}
     </Article>
-=======
-    <DetailsCnt>
-      <MoviePosterBox>
-        <MoviePoster src="/assets/img/movieposter.jpeg" alt="moviemposter" />
-      </MoviePosterBox>
-      <MovieDescBox>
-        <TitleArea title="title" pubDate="pubDate" subtitle="subtitle" />
-        <NumericCnt userRating="userRating" />
-        <ProdCrew director="director" actor="actor" />
-      </MovieDescBox>
-    </DetailsCnt>
->>>>>>> 00d16d8ee65209566036a3b70ca7aed4fd851645
   );
 }
 
