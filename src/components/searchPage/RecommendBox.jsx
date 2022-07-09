@@ -13,7 +13,7 @@ function RecommendBox({ recommendKeyword, onChangeValue, inputRef }) {
   return (
     <DropBox top={clientTop + clientHeight + inputRefTopMargin}>
       <Recommend>추천 검색어</Recommend>
-      {recommendKeyword.map((item, index) => (
+      {recommendKeyword?.map((item, index) => (
         <DropEle
           key={item + index}
           value={item}
