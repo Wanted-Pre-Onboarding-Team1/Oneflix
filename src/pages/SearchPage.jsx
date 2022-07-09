@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import SearchInput from 'components/SearchInput';
+import SearchInput from 'components/searchPage/SearchInput';
 import useMovieModel from 'models/useMovieModel';
 import MovieCard from 'components/movieCard/MovieCard';
 import media from 'lib/styles/media';

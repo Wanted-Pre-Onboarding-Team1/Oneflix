@@ -30,10 +30,16 @@ const { backgroundColorLight, fontColor, backgroundColorLighter, mainColor } =
 
 const DropBox = styled.ul`
   position: absolute;
+<<<<<<< HEAD:src/components/RecommendBox.jsx
   width: 75%;
   top: ${({ top }) => top}px;
   background-color: ${backgroundColorLight};
   color: ${fontColor};
+=======
+  top: 75px;
+  background-color: ${palette.backgroundLightColor};
+  color: ${palette.fontColor};
+>>>>>>> ebaa9c6 (refactor : 파일 위치 변경):src/components/searchPage/RecommendBox.jsx
   padding: 10px;
   border-radius: 10px;
   max-width: 1060px;
