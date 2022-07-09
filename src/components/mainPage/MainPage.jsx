@@ -1,27 +1,47 @@
-import axios from 'axios';
-import MovieCard from 'components/movieCard/MovieCard';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import MovieCard from 'components/movieCard/MovieCard';
+import useIntersectObserver from 'hooks/useIntersectObserver';
+import { HttpRequest } from 'lib/api/httpRequest';
 
-const DOMAIN = 'http://localhost:8000/';
+function MainPage() {
+  const [movieList, setMovieList] = useState([]);
+  const [isInitialLoading, setInitialLoading] = useState(true);
+  const { isTargetVisible, observeTargetRef } = useIntersectObserver();
+  const movieRequest = new HttpRequest();
 
-const MainPage = function () {
-  const [MovieList, setMovieList] = useState([]);
+  const getCurrentPageNumber = (list) => {
+    const pageNumber = list.length * 0.1;
+    return Number.isInteger(pageNumber) ? pageNumber : Math.ceil(pageNumber);
+  };
+
   useEffect(() => {
-    const getMovieList = async () => {
-      const response = await axios.get(`${DOMAIN}movies?_page=1`);
-      const { data } = response;
-      console.log(data);
-      setMovieList([...data]);
-    };
+    const callback = (response) => setMovieList(response.data);
 
-    getMovieList();
+    movieRequest.getWithParams({
+      url: 'movies',
+      config: { _page: getCurrentPageNumber(movieList) },
+      callback,
+    });
   }, []);
 
+  useEffect(() => {
+    getCurrentPageNumber(movieList) === 1 && setInitialLoading(false);
+    const callback = ({ data }) => setMovieList((prev) => [...prev, ...data]);
+
+    isTargetVisible &&
+      !isInitialLoading &&
+      movieRequest.getWithParams({
+        url: 'movies',
+        config: { _page: getCurrentPageNumber(movieList) + 1 },
+        callback,
+      });
+  }, [isTargetVisible, isInitialLoading]);
+
   return (
-    <MainPageLayout>
-      <ul>
-        {MovieList.map(
+    <MainPageCnt>
+      <MainMovieList>
+        {movieList.map(
           ({
             imdb_code: id,
             title,
@@ -29,7 +49,7 @@ const MainPage = function () {
             rating,
             medium_cover_image: image,
           }) => (
-            <li key={id}>
+            <li key={`${title}_${id}`}>
               <MovieCard
                 id={id}
                 title={title}
@@ -40,25 +60,26 @@ const MainPage = function () {
             </li>
           ),
         )}
-      </ul>
-    </MainPageLayout>
+        <div ref={observeTargetRef} />
+      </MainMovieList>
+    </MainPageCnt>
   );
-};
+}
 
 export default MainPage;
 
-export const MainPageLayout = styled.section`
+export const MainPageCnt = styled.section`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   width: 100%;
   padding: 90px 30px;
-
-  & ul {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-  }
+`;
+const MainMovieList = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
 `;

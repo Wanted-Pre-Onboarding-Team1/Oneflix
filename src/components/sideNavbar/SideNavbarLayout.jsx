@@ -1,21 +1,21 @@
-import { palette } from 'lib/styles/palette';
 import React from 'react';
 import { Outlet } from 'react-router-dom';
+import styled from 'styled-components';
+import { palette } from 'lib/styles/palette';
 import SideNavbar from './SideNavbar';
 
-// MainNavbar
 function SideNavbarLayout(props) {
   return (
-    <article
-      style={{
-        display: 'flex',
-        backgroundColor: `${palette.backgroundColor}`,
-      }}
-    >
+    <NavbarLayout>
       <SideNavbar />
       <Outlet />
-    </article>
+    </NavbarLayout>
   );
 }
 
 export default SideNavbarLayout;
+
+const NavbarLayout = styled.article`
+  display: flex;
+  background-color: ${palette.backgroundColor};
+`;

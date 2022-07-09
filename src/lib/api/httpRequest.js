@@ -1,15 +1,21 @@
 import axios from 'axios';
+import { BASE_URL } from 'constants';
 
 export class HttpRequest {
   constructor() {
     this.axios = axios.create({
-      baseURL: 'http://localhost:8080',
+      baseURL: BASE_URL,
     });
   }
 
   async get(url) {
     const response = await this.axios.get(url);
     return response;
+  }
+
+  async getWithParams({ url = '', config = {}, callback }) {
+    const response = await this.axios.get(url, { params: config });
+    callback(response);
   }
 
   async post(url, data) {
