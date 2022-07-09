@@ -39,6 +39,7 @@ function SearchInput() {
       onSubmit={() => navigate(`/search/${keyword}`)}
       ref={searchInput}
     >
+      <SelectBox selectData={['제목', '개봉년도']} />
       {isActive && (
         <RecommendBox
           recommendKeyword={recommendKeyword}
@@ -57,7 +58,6 @@ function SearchInput() {
         ref={targetEl}
       />
       <SearchBtn type="submit">검색</SearchBtn>
-      <SelectBox selectData={['제목', '개봉년도']} />
     </SearchForm>
   );
 }
