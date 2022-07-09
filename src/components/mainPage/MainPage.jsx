@@ -42,13 +42,7 @@ function MainPage() {
     <MainPageCnt>
       <MainMovieList>
         {movieList.map(
-          ({
-            imdb_code: id,
-            title,
-            year,
-            rating,
-            medium_cover_image: image,
-          }) => (
+          ({ id, title, year, rating, medium_cover_image: image }) => (
             <li key={`${title}_${id}`}>
               <MovieCard
                 id={id}
