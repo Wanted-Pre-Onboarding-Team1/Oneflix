@@ -6,11 +6,13 @@ import SearchInput from 'components/searchPage/SearchInput';
 import useMovieModel from 'models/useMovieModel';
 import MovieCard from 'components/movieCard/MovieCard';
 import { useParams } from 'react-router-dom';
+import useInfinityMovieLoad from 'hooks/useInfinityMovieLoad';
 
 function SearchPage() {
   const params = useParams();
-  const { movies } = useMovieModel(params.title, 1);
-  const requestedMovieList = movies?.data.map(
+  // const { movieList } = useMovieModel(params.title, 1);
+  const { observeTargetRef, movieList } = useInfinityMovieLoad();
+  const requestedMovieList = movieList.map(
     ({ id, title, year, rating, medium_cover_image: image }, index) => {
       return (
         <MovieCard
@@ -24,17 +26,18 @@ function SearchPage() {
       );
     },
   );
-
+  console.log(movieList);
   return (
     <StyledSearchPage>
       <SearchInput />
       <StyledSearchSection>
-        {movies?.data.length === 0 ? (
+        {movieList?.length === 0 ? (
           <StyledSerchText>검색결과가 없습니다.</StyledSerchText>
         ) : (
           <StyledSearchResults>{requestedMovieList}</StyledSearchResults>
         )}
       </StyledSearchSection>
+      <div ref={observeTargetRef} />
     </StyledSearchPage>
   );
 }

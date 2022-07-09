@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-
+// 무한스크롤 페이지별로 불러오는 로직
 const defaultOption = {
   root: null,
   rootMargin: '0px',
