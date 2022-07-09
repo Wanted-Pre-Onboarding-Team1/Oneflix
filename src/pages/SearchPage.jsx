@@ -10,7 +10,7 @@ import { useParams } from 'react-router-dom';
 function SearchPage() {
   const params = useParams();
   const { movies } = useMovieModel(params.title, 1);
-  const requestedMovieList = movies?.data.map(
+  const requestedMovieList = movies?.map(
     ({ id, title, year, rating, medium_cover_image: image }, index) => {
       return (
         <MovieCard
@@ -29,7 +29,7 @@ function SearchPage() {
     <StyledSearchPage>
       <SearchInput />
       <StyledSearchSection>
-        {movies?.data.length === 0 ? (
+        {movies?.length === 0 ? (
           <StyledSerchText>검색결과가 없습니다.</StyledSerchText>
         ) : (
           <StyledSearchResults>{requestedMovieList}</StyledSearchResults>

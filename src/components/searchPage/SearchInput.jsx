@@ -10,7 +10,7 @@ import RecommendBox from './RecommendBox';
 
 function SearchInput() {
   const { movies } = useMovieModel(' ', 1);
-  const searchData = movies?.data.map((movie) => movie.title);
+  const searchData = movies?.map((movie) => movie.title);
   const [keyword, onChangeValue, onClickChange] = useInput('');
   const [recommendKeyword, setRecommendKeyword] = useState(movies);
   const navigate = useNavigate();
@@ -47,7 +47,7 @@ function SearchInput() {
         value={keyword}
         onChange={onChangeValue}
       />
-      <SearchBtn type="button">검색</SearchBtn>
+      <SearchBtn type="submit">검색</SearchBtn>
     </SearchForm>
   );
 }
