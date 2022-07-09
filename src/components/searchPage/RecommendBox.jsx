@@ -8,7 +8,7 @@ function RecommendBox({ recommendKeyword, onChangeValue }) {
   return (
     <DropBox>
       <Recommend>추천 검색어</Recommend>
-      {recommendKeyword.map((item, index) => (
+      {recommendKeyword?.map((item, index) => (
         <DropEle
           key={item + index}
           value={item}

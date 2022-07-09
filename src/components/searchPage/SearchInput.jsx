@@ -2,15 +2,18 @@ import { SearchIcon } from 'assets/imgs';
 import useInput from 'hooks/common/useInput';
 import media from 'lib/styles/media';
 import { palette } from 'lib/styles/palette';
+import useMovieModel from 'models/useMovieModel';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import RecommendBox from './RecommendBox';
 
-const searchData = ['영화 추천', '액션영화', '송강호 주연', '오늘의 영화'];
 function SearchInput() {
-  const [keyword, onChangeValue] = useInput('');
-  const [recommendKeyword, setRecommendKeyword] = useState(searchData);
-
+  const { movies } = useMovieModel('the', 1);
+  const searchData = movies?.data.map((movie) => movie.title);
+  const [keyword, onChangeValue, onClickChange] = useInput('');
+  const [recommendKeyword, setRecommendKeyword] = useState(movies);
+  const navigate = useNavigate();
   useEffect(() => {
     if (keyword) {
       const onChangeKeyword = () => {
@@ -21,11 +24,16 @@ function SearchInput() {
       };
       onChangeKeyword();
     }
-  }, [keyword]);
+  }, [keyword, searchData]);
 
   return (
-    <SearchInputBox>
-      {keyword && <RecommendBox recommendKeyword={recommendKeyword} />}
+    <SearchInputBox onSubmit={() => navigate(`/search/${keyword}`)}>
+      {keyword && (
+        <RecommendBox
+          recommendKeyword={recommendKeyword}
+          onChangeValue={onClickChange}
+        />
+      )}
       <Icon src={SearchIcon} alt="검색 돋보기" />
       <InputStyled
         type="text"
@@ -34,7 +42,7 @@ function SearchInput() {
         onChange={onChangeValue}
       />
 
-      <SearchBtn type="button">검색</SearchBtn>
+      <SearchBtn type="submit">검색</SearchBtn>
     </SearchInputBox>
   );
 }
