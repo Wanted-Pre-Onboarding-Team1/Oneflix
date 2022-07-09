@@ -6,6 +6,9 @@ export default function useInput(initialValue) {
   const onChange = (event) => {
     setValue(event.target.value);
   };
+  const onClickChange = (newValue) => {
+    setValue(newValue);
+  };
 
-  return [value, onChange];
+  return [value, onChange, onClickChange];
 }

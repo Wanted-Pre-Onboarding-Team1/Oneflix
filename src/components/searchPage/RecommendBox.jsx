@@ -4,7 +4,7 @@ import { SearchIcon } from 'assets/imgs';
 import media from 'lib/styles/media';
 import { palette } from 'lib/styles/palette';
 
-function RecommendBox({ recommendKeyword, inputRef }) {
+function RecommendBox({ recommendKeyword, onChangeValue, inputRef }) {
   const { clientHeight, clientTop } = inputRef;
   const inputRefStyleInfo = window.getComputedStyle(inputRef);
   const { marginTop } = inputRefStyleInfo;
@@ -13,8 +13,12 @@ function RecommendBox({ recommendKeyword, inputRef }) {
   return (
     <DropBox top={clientTop + clientHeight + inputRefTopMargin}>
       <Recommend>추천 검색어</Recommend>
-      {recommendKeyword.map((item, index) => (
-        <DropEle key={item + index}>
+      {recommendKeyword?.map((item, index) => (
+        <DropEle
+          key={item + index}
+          value={item}
+          onClick={() => onChangeValue(item)}
+        >
           <Icon src={SearchIcon} alt="검색 돋보기" />
           {item}
         </DropEle>
