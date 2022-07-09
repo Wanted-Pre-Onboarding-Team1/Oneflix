@@ -4,7 +4,7 @@ import { SearchIcon } from 'assets/imgs';
 import media from 'lib/styles/media';
 import { palette } from 'lib/styles/palette';
 
-function RecommendBox({ recommendKeyword, inputRef }) {
+function RecommendBox({ recommendKeyword, onChangeValue, inputRef }) {
   const { clientHeight, clientTop } = inputRef;
   const inputRefStyleInfo = window.getComputedStyle(inputRef);
   const { marginTop } = inputRefStyleInfo;
@@ -14,7 +14,11 @@ function RecommendBox({ recommendKeyword, inputRef }) {
     <DropBox top={clientTop + clientHeight + inputRefTopMargin}>
       <Recommend>추천 검색어</Recommend>
       {recommendKeyword.map((item, index) => (
-        <DropEle key={item + index}>
+        <DropEle
+          key={item + index}
+          value={item}
+          onClick={() => onChangeValue(item)}
+        >
           <Icon src={SearchIcon} alt="검색 돋보기" />
           {item}
         </DropEle>
@@ -30,16 +34,10 @@ const { backgroundColorLight, fontColor, backgroundColorLighter, mainColor } =
 
 const DropBox = styled.ul`
   position: absolute;
-<<<<<<< HEAD:src/components/RecommendBox.jsx
   width: 75%;
   top: ${({ top }) => top}px;
   background-color: ${backgroundColorLight};
   color: ${fontColor};
-=======
-  top: 75px;
-  background-color: ${palette.backgroundLightColor};
-  color: ${palette.fontColor};
->>>>>>> ebaa9c6 (refactor : 파일 위치 변경):src/components/searchPage/RecommendBox.jsx
   padding: 10px;
   border-radius: 10px;
   max-width: 1060px;
