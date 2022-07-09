@@ -5,16 +5,17 @@ import MovieCard from 'components/movieCard/MovieCard';
 import useIntersectObserver from 'hooks/useIntersectObserver';
 import { BASE_URL } from 'constants';
 
-const DOMAIN = 'http://localhost:8080/';
-
 function MainPage() {
   const [movieList, setMovieList] = useState([]);
   const [isInitialLoading, setInitialLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
   const { isTargetVisible, observeTargetRef } = useIntersectObserver();
 
   useEffect(() => {
     const getMovieList = async () => {
-      const response = await axios.get(`${BASE_URL}/movies?_page=1`);
+      const response = await axios.get(
+        `${BASE_URL}/movies?_page=${currentPage}`,
+      );
       const { data } = response;
       setMovieList([...data]);
     };
@@ -24,12 +25,15 @@ function MainPage() {
 
   useEffect(() => {
     setInitialLoading(false);
+    setCurrentPage((prev) => +prev + 1);
 
-    const getMoreMovies = async () => {
-      const response = await axios.get(`${DOMAIN}movies?_page=2`);
+    async function getMoreMovies() {
+      const response = await axios.get(
+        `${BASE_URL}/movies?_page=${currentPage}`,
+      );
       const { data } = response;
       setMovieList((prev) => [...prev, ...data]);
-    };
+    }
 
     isTargetVisible && !isInitialLoading && getMoreMovies();
   }, [isTargetVisible, isInitialLoading]);
@@ -51,7 +55,7 @@ function MainPage() {
           ),
         )}
       </MainMovieList>
-      <div ref={observeTargetRef}>observe target</div>
+      <div ref={observeTargetRef} />
     </MainPageCnt>
   );
 }
