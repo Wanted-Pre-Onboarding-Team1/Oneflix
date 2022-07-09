@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import TitleArea from 'components/detailPage/TitleArea';
 import NumericCnt from 'components/detailPage/NumericCnt';
 import ProdCrew from 'components/detailPage/ProdCrew';
 import { useParams } from 'react-router-dom';
 import useDetailModel from 'models/useDetailModel';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { palette } from 'lib/styles/palette';
 
 export default function DetailPage() {
   const [movieMetaData, setmovieMetaData] = useState(null);
 
-  const paramId = useParams().id.slice(1);
+  const paramId = useParams().id.slice(); // 만약 paramID가 :43134와 같이 반환될 경우 slice에 1을 전달
+
   const movies = useDetailModel(paramId);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function DetailPage() {
   }, [movies, movieMetaData]);
 
   return (
-    <Article>
+    <DetailsCnt>
       {movieMetaData && (
         <>
           <DetailsCnt>
@@ -42,7 +42,7 @@ export default function DetailPage() {
           </MovieDescBox>
         </>
       )}
-    </Article>
+    </DetailsCnt>
   );
 }
 
