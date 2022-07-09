@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import useToggle from 'hooks/common/useToggle';
 import useOutSideClick from 'hooks/common/useOutsideClick';
 import RecommendBox from './RecommendBox';
+import SelectBox from './SelectBox';
 
 function SearchInput() {
   const [keyword, onChangeValue, onClickChange] = useInput('');
@@ -34,33 +35,30 @@ function SearchInput() {
   }, [keyword]);
 
   return (
-    <div ref={targetEl}>
-      <SearchForm
-        onSubmit={() => navigate(`/search/${keyword}`)}
-        ref={searchInput}
-      >
-        {isActive && (
-          <RecommendBox
-            recommendKeyword={recommendKeyword}
-            onChangeValue={onClickChange}
-            inputRef={searchInput.current}
-          />
-        )}
-        <Icon src={SearchIcon} alt="검색 돋보기" />
-        <InputStyled
-          type="text"
-          placeholder="영화를 제목으로 검색해보세요"
-          value={keyword}
-          onChange={onChangeValue}
-          onFocus={onToggleIsActive}
+    <SearchForm
+      onSubmit={() => navigate(`/search/${keyword}`)}
+      ref={searchInput}
+    >
+      {isActive && (
+        <RecommendBox
+          recommendKeyword={recommendKeyword}
+          onChangeValue={onClickChange}
+          inputRef={searchInput.current}
         />
-        <SearchBtn type="submit">검색</SearchBtn>
-        <SelectTag name="fruits" className="select">
-          <option value="title">제목</option>
-          <option value="year">개봉년도</option>
-        </SelectTag>
-      </SearchForm>
-    </div>
+      )}
+      <Icon src={SearchIcon} alt="검색 돋보기" />
+      <InputStyled
+        type="text"
+        // eslint-disable-next-line react/jsx-curly-brace-presence
+        placeholder={`영화를 제목으로 검색해보세요`}
+        value={keyword}
+        onChange={onChangeValue}
+        onFocus={onToggleIsActive}
+        ref={targetEl}
+      />
+      <SearchBtn type="submit">검색</SearchBtn>
+      <SelectBox selectData={['제목', '개봉년도']} />
+    </SearchForm>
   );
 }
 
@@ -111,22 +109,4 @@ const SearchBtn = styled.button`
     height: 30px;
     font-size: 14px;
   }
-`;
-const SelectTag = styled.select`
-  width: 90px;
-  padding: 14px 4px;
-  font-size: 16px;
-  font-weight: 600;
-  background-color: #bb65ff;
-  border-radius: 6px;
-  line-height: 18px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  /* select {
-  box-sizing: border-box;
-  width: 100px;
-  padding: 4px;
-  font-size: 14px;
-  border-radius: 6px; */
 `;
