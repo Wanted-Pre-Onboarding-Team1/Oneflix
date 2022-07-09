@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import SearchInput from 'components/searchPage/SearchInput';
 import useMovieModel from 'models/useMovieModel';
@@ -7,9 +8,8 @@ import media from 'lib/styles/media';
 import { palette } from 'lib/styles/palette';
 
 function SearchPage() {
-  const [movieList, setMovieList] = useState([]);
-  const { movies } = useMovieModel();
-
+  const params = useParams();
+  const { movies } = useMovieModel(1, params.title);
   const requestedMovieList = movies?.data.map(
     ({ id, title, year, rating, medium_cover_image: image }, index) => {
       return (
@@ -29,10 +29,10 @@ function SearchPage() {
     <StyledSearchPage>
       <SearchInput />
       <StyledSearchSection>
-        {movieList.length === 0 ? (
-          <StyledSerchText>검색결과가 없습니다.</StyledSerchText>
-        ) : (
+        {movies?.data ? (
           <StyledSearchResults>{requestedMovieList}</StyledSearchResults>
+        ) : (
+          <StyledSerchText>검색결과가 없습니다.</StyledSerchText>
         )}
       </StyledSearchSection>
     </StyledSearchPage>
