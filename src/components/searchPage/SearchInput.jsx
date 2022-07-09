@@ -6,16 +6,21 @@ import { palette } from 'lib/styles/palette';
 import useMovieModel from 'models/useMovieModel';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import useToggle from 'hooks/common/useToggle';
+import useOutSideClick from 'hooks/common/useOutsideClick';
 import RecommendBox from './RecommendBox';
 
 function SearchInput() {
-  const { movies } = useMovieModel(' ', 1);
-  const searchData = movies?.map((movie) => movie.title);
   const [keyword, onChangeValue, onClickChange] = useInput('');
-  const [recommendKeyword, setRecommendKeyword] = useState(movies);
+  const [isActive, onToggleIsActive] = useToggle();
+  const { targetEl } = useOutSideClick(isActive, onToggleIsActive);
+
   const navigate = useNavigate();
   const searchInput = useRef();
 
+  const { movies } = useMovieModel(' ', 1);
+  const searchData = movies?.map((movie) => movie.title);
+  const [recommendKeyword, setRecommendKeyword] = useState(movies);
   useEffect(() => {
     if (keyword) {
       const onChangeKeyword = () => {
@@ -29,26 +34,33 @@ function SearchInput() {
   }, [keyword]);
 
   return (
-    <SearchForm
-      onSubmit={() => navigate(`/search/${keyword}`)}
-      ref={searchInput}
-    >
-      {keyword && (
-        <RecommendBox
-          recommendKeyword={recommendKeyword}
-          onChangeValue={onClickChange}
-          inputRef={searchInput.current}
+    <div ref={targetEl}>
+      <SearchForm
+        onSubmit={() => navigate(`/search/${keyword}`)}
+        ref={searchInput}
+      >
+        {isActive && (
+          <RecommendBox
+            recommendKeyword={recommendKeyword}
+            onChangeValue={onClickChange}
+            inputRef={searchInput.current}
+          />
+        )}
+        <Icon src={SearchIcon} alt="검색 돋보기" />
+        <InputStyled
+          type="text"
+          placeholder="영화를 제목으로 검색해보세요"
+          value={keyword}
+          onChange={onChangeValue}
+          onFocus={onToggleIsActive}
         />
-      )}
-      <Icon src={SearchIcon} alt="검색 돋보기" />
-      <InputStyled
-        type="text"
-        placeholder="영화를 제목으로 검색해보세요"
-        value={keyword}
-        onChange={onChangeValue}
-      />
-      <SearchBtn type="submit">검색</SearchBtn>
-    </SearchForm>
+        <SearchBtn type="submit">검색</SearchBtn>
+        <SelectTag name="fruits" className="select">
+          <option value="title">제목</option>
+          <option value="year">개봉년도</option>
+        </SelectTag>
+      </SearchForm>
+    </div>
   );
 }
 
@@ -99,4 +111,22 @@ const SearchBtn = styled.button`
     height: 30px;
     font-size: 14px;
   }
+`;
+const SelectTag = styled.select`
+  width: 90px;
+  padding: 14px 4px;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: #bb65ff;
+  border-radius: 6px;
+  line-height: 18px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* select {
+  box-sizing: border-box;
+  width: 100px;
+  padding: 4px;
+  font-size: 14px;
+  border-radius: 6px; */
 `;
