@@ -25,11 +25,9 @@ export default function DetailPage() {
     <DetailsCnt>
       {movieMetaData && (
         <>
-          <DetailsCnt>
-            <MoviePosterBox>
-              <MoviePoster src={movieMetaData.medium_cover_image} />
-            </MoviePosterBox>
-          </DetailsCnt>
+          <MoviePosterBox>
+            <MoviePoster src={movieMetaData.medium_cover_image} />
+          </MoviePosterBox>
           <MovieDescBox>
             <TitleArea
               title={movieMetaData.title}
