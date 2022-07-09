@@ -9,7 +9,7 @@ import { palette } from 'lib/styles/palette';
 
 function SearchPage() {
   const params = useParams();
-  const { movies } = useMovieModel(params.title, 1);
+  const { movies } = useMovieModel(1, params.title);
   const requestedMovieList = movies?.data.map(
     ({ id, title, year, rating, medium_cover_image: image }, index) => {
       return (
@@ -29,10 +29,10 @@ function SearchPage() {
     <StyledSearchPage>
       <SearchInput />
       <StyledSearchSection>
-        {movies?.data.length === 0 ? (
-          <StyledSerchText>검색결과가 없습니다.</StyledSerchText>
-        ) : (
+        {movies?.data ? (
           <StyledSearchResults>{requestedMovieList}</StyledSearchResults>
+        ) : (
+          <StyledSerchText>검색결과가 없습니다.</StyledSerchText>
         )}
       </StyledSearchSection>
     </StyledSearchPage>
