@@ -9,13 +9,13 @@ import styled from 'styled-components';
 import RecommendBox from './RecommendBox';
 
 function SearchInput() {
-  const { movies } = useMovieModel('the', 1);
+  const { movies } = useMovieModel(' ', 1);
   const searchData = movies?.data.map((movie) => movie.title);
   const [keyword, onChangeValue, onClickChange] = useInput('');
   const [recommendKeyword, setRecommendKeyword] = useState(movies);
   const navigate = useNavigate();
-
   const searchInput = useRef();
+
   useEffect(() => {
     if (keyword) {
       const onChangeKeyword = () => {
@@ -26,10 +26,13 @@ function SearchInput() {
       };
       onChangeKeyword();
     }
-  }, [keyword, searchData]);
+  }, [keyword]);
 
   return (
-    <SearchForm onSubmit={() => navigate(`/search/${keyword}`)}>
+    <SearchForm
+      onSubmit={() => navigate(`/search/${keyword}`)}
+      ref={searchInput}
+    >
       {keyword && (
         <RecommendBox
           recommendKeyword={recommendKeyword}
