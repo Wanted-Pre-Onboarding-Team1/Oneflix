@@ -4,12 +4,16 @@ import { palette } from 'lib/styles/palette';
 import React from 'react';
 import styled from 'styled-components';
 
-function RecommendBox({ recommendKeyword }) {
+function RecommendBox({ recommendKeyword, onChangeValue }) {
   return (
     <DropBox>
       <Recommend>추천 검색어</Recommend>
       {recommendKeyword.map((item, index) => (
-        <DropEle key={item + index}>
+        <DropEle
+          key={item + index}
+          value={item}
+          onClick={() => onChangeValue(item)}
+        >
           <Icon src={SearchIcon} alt="검색 돋보기" />
           {item}
         </DropEle>
