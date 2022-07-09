@@ -2,10 +2,15 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import MovieCard from 'components/movieCard/MovieCard';
+import useIntersectObserver from 'hooks/useIntersectObserver';
 import { BASE_URL } from 'constants';
+
+const DOMAIN = 'http://localhost:8080/';
 
 function MainPage() {
   const [movieList, setMovieList] = useState([]);
+  const [isInitialLoading, setInitialLoading] = useState(true);
+  const { isTargetVisible, observeTargetRef } = useIntersectObserver();
 
   useEffect(() => {
     const getMovieList = async () => {
@@ -16,6 +21,18 @@ function MainPage() {
 
     getMovieList();
   }, []);
+
+  useEffect(() => {
+    setInitialLoading(false);
+
+    const getMoreMovies = async () => {
+      const response = await axios.get(`${DOMAIN}movies?_page=2`);
+      const { data } = response;
+      setMovieList((prev) => [...prev, ...data]);
+    };
+
+    isTargetVisible && !isInitialLoading && getMoreMovies();
+  }, [isTargetVisible, isInitialLoading]);
 
   return (
     <MainPageCnt>
@@ -34,6 +51,7 @@ function MainPage() {
           ),
         )}
       </MainMovieList>
+      <div ref={observeTargetRef}>observe target</div>
     </MainPageCnt>
   );
 }
@@ -42,6 +60,7 @@ export default MainPage;
 
 export const MainPageCnt = styled.section`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   width: 100%;
   padding: 90px 30px;
