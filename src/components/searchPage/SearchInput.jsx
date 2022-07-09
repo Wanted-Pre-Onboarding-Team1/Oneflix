@@ -1,9 +1,9 @@
-import { SearchIcon } from 'assets/imgs';
+import React, { useEffect, useState, useRef } from 'react';
 import useInput from 'hooks/common/useInput';
+import { SearchIcon } from 'assets/imgs';
 import media from 'lib/styles/media';
 import { palette } from 'lib/styles/palette';
 import useMovieModel from 'models/useMovieModel';
-import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import RecommendBox from './RecommendBox';
@@ -14,6 +14,8 @@ function SearchInput() {
   const [keyword, onChangeValue, onClickChange] = useInput('');
   const [recommendKeyword, setRecommendKeyword] = useState(movies);
   const navigate = useNavigate();
+
+  const searchInput = useRef();
   useEffect(() => {
     if (keyword) {
       const onChangeKeyword = () => {
@@ -27,11 +29,12 @@ function SearchInput() {
   }, [keyword, searchData]);
 
   return (
-    <SearchInputBox onSubmit={() => navigate(`/search/${keyword}`)}>
+    <SearchForm onSubmit={() => navigate(`/search/${keyword}`)}>
       {keyword && (
         <RecommendBox
           recommendKeyword={recommendKeyword}
           onChangeValue={onClickChange}
+          inputRef={searchInput.current}
         />
       )}
       <Icon src={SearchIcon} alt="검색 돋보기" />
@@ -41,17 +44,19 @@ function SearchInput() {
         value={keyword}
         onChange={onChangeValue}
       />
-
-      <SearchBtn type="submit">검색</SearchBtn>
-    </SearchInputBox>
+      <SearchBtn type="button">검색</SearchBtn>
+    </SearchForm>
   );
 }
 
 export default SearchInput;
 
-const SearchInputBox = styled.form`
+const { borderColor, fontColor } = palette;
+
+const SearchForm = styled.form`
   width: 100%;
-  border: 1px solid ${palette.borderColor};
+  width: 75%;
+  border: 1px solid ${borderColor};
   display: flex;
   align-items: center;
   border-radius: 6px;
@@ -64,7 +69,6 @@ const SearchInputBox = styled.form`
     height: 30px;
   }
 `;
-
 const Icon = styled.img`
   width: 21px;
   height: 21px;
@@ -74,14 +78,12 @@ const Icon = styled.img`
     height: 16px;
   }
 `;
-
 const InputStyled = styled.input`
   width: 100%;
   padding: 4px 9px 4px 10px;
   background-color: rgba(0, 0, 0, 0.1);
-  color: ${palette.fontColor};
+  color: ${fontColor};
 `;
-
 const SearchBtn = styled.button`
   background-color: #bb65ff;
   border-radius: 6px;

@@ -39,16 +39,19 @@ function SearchPage() {
   );
 }
 
+const { backgroundColor, fontColor } = palette;
+
 const StyledSearchPage = styled.section`
+  position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: flex-start;
+  width: 100%;
+  height: max-content;
 `;
-
 const StyledSearchSection = styled.div`
-  background-color: ${palette.backgroundColor};
+  background-color: ${backgroundColor};
   width: 75vw;
-  height: 100vh;
   margin: 0 auto;
   ${media.medium} {
     height: 100%;
@@ -60,18 +63,16 @@ const StyledSearchSection = styled.div`
     height: 100%;
   }
 `;
-
 const StyledSerchText = styled.div`
+  margin-top: 50%;
   display: flex;
   justify-content: center;
-  color: ${palette.fontColor};
+  color: ${fontColor};
   font-size: 2.2rem;
 `;
-
 const StyledSearchResults = styled.div`
   margin: 0px 40px;
   display: grid;
-
   grid-template-columns: repeat(5, 1fr);
   ${media.medium} {
     grid-template-columns: repeat(3, 1fr);

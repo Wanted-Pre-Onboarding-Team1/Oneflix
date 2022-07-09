@@ -1,12 +1,17 @@
+import React from 'react';
+import styled from 'styled-components';
 import { SearchIcon } from 'assets/imgs';
 import media from 'lib/styles/media';
 import { palette } from 'lib/styles/palette';
-import React from 'react';
-import styled from 'styled-components';
 
-function RecommendBox({ recommendKeyword, onChangeValue }) {
+function RecommendBox({ recommendKeyword, onChangeValue, inputRef }) {
+  const { clientHeight, clientTop } = inputRef;
+  const inputRefStyleInfo = window.getComputedStyle(inputRef);
+  const { marginTop } = inputRefStyleInfo;
+  const inputRefTopMargin = parseInt(marginTop, 10);
+
   return (
-    <DropBox>
+    <DropBox top={clientTop + clientHeight + inputRefTopMargin}>
       <Recommend>추천 검색어</Recommend>
       {recommendKeyword?.map((item, index) => (
         <DropEle
@@ -24,15 +29,19 @@ function RecommendBox({ recommendKeyword, onChangeValue }) {
 
 export default RecommendBox;
 
+const { backgroundColorLight, fontColor, backgroundColorLighter, mainColor } =
+  palette;
+
 const DropBox = styled.ul`
-  width: 100%;
   position: absolute;
-  top: 75px;
-  background-color: ${palette.backgroundLightColor};
-  color: ${palette.fontColor};
+  width: 75%;
+  top: ${({ top }) => top}px;
+  background-color: ${backgroundColorLight};
+  color: ${fontColor};
   padding: 10px;
   border-radius: 10px;
   max-width: 1060px;
+  z-index: 10;
 `;
 const DropEle = styled.li`
   display: flex;
@@ -41,13 +50,13 @@ const DropEle = styled.li`
   cursor: pointer;
   border-radius: 4px;
   :hover {
-    background-color: ${palette.backgroundLighterColor};
+    background-color: ${backgroundColorLighter};
   }
 `;
 const Recommend = styled.p`
   font-size: 12px;
   margin-bottom: 4px;
-  color: ${palette.mainColor};
+  color: ${mainColor};
 `;
 const Icon = styled.img`
   width: 21px;
