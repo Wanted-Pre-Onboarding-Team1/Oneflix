@@ -48,7 +48,7 @@ const StyledSearchPage = styled.section`
 
 const StyledSearchSection = styled.div`
   background-color: ${palette.backgroundColor};
-  width: 75vw;
+  width: 80vw;
   height: 100vh;
   margin: 0 auto;
   ${media.medium} {

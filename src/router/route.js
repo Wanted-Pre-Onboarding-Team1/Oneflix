@@ -11,8 +11,8 @@ function Routing() {
       <Route element={<SideNavbarLayout />}>
         <Route path="/" element={<LandingPage />} />
         <Route path=":id" element={<DetailPage />} />
+        <Route path="/search" element={<SearchPage />} />
       </Route>
-      <Route path="/search" element={<SearchPage />} />
     </Routes>
   );
 }
