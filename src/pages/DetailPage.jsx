@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import TitleArea from 'components/detailPage/TitleArea';
 import NumericCnt from 'components/detailPage/NumericCnt';
 import ProdCrew from 'components/detailPage/ProdCrew';
 import { useParams } from 'react-router-dom';
 import useDetailModel from 'models/useDetailModel';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { palette } from 'lib/styles/palette';
 
 export default function DetailPage() {
   const [movieMetaData, setmovieMetaData] = useState(null);
@@ -22,7 +21,7 @@ export default function DetailPage() {
   }, [movies, movieMetaData]);
 
   return (
-    <Article>
+    <div>
       {movieMetaData && (
         <>
           <DetailsCnt>
@@ -42,7 +41,7 @@ export default function DetailPage() {
           </MovieDescBox>
         </>
       )}
-    </Article>
+    </div>
   );
 }
 

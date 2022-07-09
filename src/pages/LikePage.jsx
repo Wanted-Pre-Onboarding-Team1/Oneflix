@@ -7,7 +7,7 @@ import useMovieModel from 'models/useMovieModel';
 import MovieCard from 'components/movieCard/MovieCard';
 import { useParams } from 'react-router-dom';
 
-function SearchPage() {
+function LikePage() {
   const params = useParams();
   const { movies } = useMovieModel(params.title, 1);
   const requestedMovieList = movies?.data.map(
@@ -30,7 +30,7 @@ function SearchPage() {
       <SearchInput />
       <StyledSearchSection>
         {movies?.data.length === 0 ? (
-          <StyledSerchText>검색결과가 없습니다.</StyledSerchText>
+          <StyledSerchText>즐겨찾기 한 항목이 없습니다.</StyledSerchText>
         ) : (
           <StyledSearchResults>{requestedMovieList}</StyledSearchResults>
         )}
@@ -85,4 +85,4 @@ const StyledSearchResults = styled.div`
   }
 `;
 
-export default SearchPage;
+export default LikePage;
