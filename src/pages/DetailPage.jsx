@@ -1,34 +1,52 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import TitleArea from 'components/detailPage/TitleArea';
 import NumericCnt from 'components/detailPage/NumericCnt';
 import ProdCrew from 'components/detailPage/ProdCrew';
-import { useParams } from 'react-router-dom';
+import RecommendMovies from 'components/detailPage/RecommendMovies';
 import useDetailModel from 'models/useDetailModel';
 import { palette } from 'lib/styles/palette';
 
 export default function DetailPage() {
   const [movieMetaData, setmovieMetaData] = useState(null);
-  const [recommList, setRecommList] = useState([1, 2, 3, 4]); // 비슷한 장르 목록으로 대체
 
   const paramId = useParams().id.slice();
   const movies = useDetailModel(paramId);
-
-  const recommendMovies = recommList.map((recommendTitle, index) => {
-    return (
-      <RecommMoviePoster
-        src={movieMetaData.medium_cover_image}
-        key={`${recommendTitle}_${index}`}
-      />
-    );
-  });
+  // requestedGenres: 동일 장르 검색을 위해 사용
+  const requestedGenres = useDetailModel('Action', 'genres');
+  // genreSearchResult: 장르 목록을 저장하기 위한 ref. state 사용시 무한 렌더링 발생
+  const genreSearchResult = useRef();
 
   useEffect(() => {
     if (movies.movies) {
       const movie = movies.movies?.data[0];
       setmovieMetaData(movie);
     }
-  }, [movies, movieMetaData]);
+  }, [movies]);
+
+  // 추천 영화 목록 업데이트를 위한 useEffect
+  useEffect(() => {
+    if (requestedGenres.movies) {
+      const initialResponse = requestedGenres.movies?.data;
+      const isListContainsCurrentId = initialResponse.find(
+        (movieData) => movieData.id === Number(paramId),
+      );
+      // 추천 영화 목록에 현재 페이지가 있을 경우 제외
+      if (isListContainsCurrentId) {
+        genreSearchResult.current = initialResponse
+          .filter((movieData) => movieData.id !== Number(paramId))
+          .slice(0, 4);
+        // 추천 영화 목록에 현재 페이지가 없을 경우
+      } else {
+        genreSearchResult.current = initialResponse.slice(0, 4);
+      }
+    }
+    // 목록을 비우기 위한 clean up
+    return () => {
+      genreSearchResult.current = undefined;
+    };
+  }, [requestedGenres]);
 
   return (
     <DetailsCnt>
@@ -50,7 +68,10 @@ export default function DetailPage() {
             </MovieDescBox>
             <RecommMovieCnt>
               <RecommMovieHeader>추천 영화</RecommMovieHeader>
-              <RecommPosterBox>{recommendMovies}</RecommPosterBox>
+              <RecommPosterBox>
+                {/* 추천 영화 목록 + 클릭시 해당 페이지로 이동 */}
+                <RecommendMovies recommList={genreSearchResult.current} />
+              </RecommPosterBox>
             </RecommMovieCnt>
           </MovieBoxContinaer>
         </>
@@ -68,9 +89,6 @@ const DetailsCnt = styled.article`
   display: flex;
   justify-content: center;
   align-items: center;
-  * {
-    /* border: 1px solid white; */
-  }
 `;
 const MoviePosterBox = styled.section`
   width: 100%;
@@ -99,10 +117,5 @@ const RecommPosterBox = styled(MovieDescBox)`
   & img {
     margin-right: 1rem;
   }
-`;
-const RecommMoviePoster = styled(MoviePoster)`
-  width: 100%;
-  min-width: 0;
-  height: auto;
 `;
 const MovieBoxContinaer = styled(MovieDescBox)``;
