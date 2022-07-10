@@ -4,14 +4,16 @@ import MovieCard from 'components/movieCard/MovieCard';
 import useIntersectObserver from 'hooks/useIntersectObserver';
 import { HttpRequest } from 'lib/api/httpRequest';
 
+const MOVIE_PER_PAGE = 10;
+
 function MainPage() {
   const [movieList, setMovieList] = useState([]);
   const [isInitialLoading, setInitialLoading] = useState(true);
   const { isTargetVisible, observeTargetRef } = useIntersectObserver();
   const movieRequest = new HttpRequest();
 
-  const getCurrentPageNumber = (list) => {
-    const pageNumber = list.length * 0.1;
+  const getCurrentPageNumber = (movies) => {
+    const pageNumber = movies.length / MOVIE_PER_PAGE;
     return Number.isInteger(pageNumber) ? pageNumber : Math.ceil(pageNumber);
   };
 
@@ -20,7 +22,10 @@ function MainPage() {
 
     movieRequest.getWithParams({
       url: 'movies',
-      config: { _page: getCurrentPageNumber(movieList) },
+      config: {
+        _page: getCurrentPageNumber(movieList),
+        _limit: MOVIE_PER_PAGE,
+      },
       callback,
     });
   }, []);
@@ -60,8 +65,8 @@ function MainPage() {
             </li>
           ),
         )}
-        <div ref={observeTargetRef} />
       </MainMovieList>
+      <div ref={observeTargetRef} />
     </MainPageCnt>
   );
 }
