@@ -3,12 +3,13 @@ import styled from 'styled-components';
 
 export default function TitleArea(props) {
   const { title, year, genres, runtime } = props;
+
   return (
     <TitleInfoCnt>
       <Title>
         {title} ({year})
       </Title>
-      <Genres>{genres}</Genres>
+      <Genres>{genres.join(', ')}</Genres>
       <Runtime>{runtime}</Runtime>
     </TitleInfoCnt>
   );
