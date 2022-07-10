@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import TitleArea from 'components/detailPage/TitleArea';
@@ -13,10 +13,6 @@ export default function DetailPage() {
 
   const paramId = useParams().id.slice();
   const movies = useDetailModel(paramId);
-  // requestedGenres: 동일 장르 검색을 위해 사용
-  const requestedGenres = useDetailModel('Action', 'genres');
-  // genreSearchResult: 장르 목록을 저장하기 위한 ref. state 사용시 무한 렌더링 발생
-  const genreSearchResult = useRef();
 
   useEffect(() => {
     if (movies.movies) {
@@ -24,29 +20,6 @@ export default function DetailPage() {
       setmovieMetaData(movie);
     }
   }, [movies]);
-
-  // 추천 영화 목록 업데이트를 위한 useEffect
-  useEffect(() => {
-    if (requestedGenres.movies) {
-      const initialResponse = requestedGenres.movies?.data;
-      const isListContainsCurrentId = initialResponse.find(
-        (movieData) => movieData.id === Number(paramId),
-      );
-      // 추천 영화 목록에 현재 페이지가 있을 경우 제외
-      if (isListContainsCurrentId) {
-        genreSearchResult.current = initialResponse
-          .filter((movieData) => movieData.id !== Number(paramId))
-          .slice(0, 4);
-        // 추천 영화 목록에 현재 페이지가 없을 경우
-      } else {
-        genreSearchResult.current = initialResponse.slice(0, 4);
-      }
-    }
-    // 목록을 비우기 위한 clean up
-    return () => {
-      genreSearchResult.current = undefined;
-    };
-  }, [requestedGenres]);
 
   return (
     <DetailsCnt>
@@ -70,7 +43,7 @@ export default function DetailPage() {
               <RecommMovieHeader>추천 영화</RecommMovieHeader>
               <RecommPosterBox>
                 {/* 추천 영화 목록 + 클릭시 해당 페이지로 이동 */}
-                <RecommendMovies recommList={genreSearchResult.current} />
+                <RecommendMovies currentMovie={movieMetaData} />
               </RecommPosterBox>
             </RecommMovieCnt>
           </MovieBoxContinaer>

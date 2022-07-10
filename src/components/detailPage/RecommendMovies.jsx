@@ -1,10 +1,41 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import useDetailModel from 'models/useDetailModel';
 
-export default function RecommendMovies({ recommList }) {
+export default function RecommendMovies({ currentMovie }) {
   const navigate = useNavigate();
-  return recommList?.map(
+  // requestedGenres: 동일 장르 검색을 위해 사용
+  const requestedGenres = useDetailModel(currentMovie.genres[0], 'genres');
+  // genreSearchResult: 장르 목록을 저장하기 위한 ref. state 사용시 무한 렌더링 발생
+  const genreSearchResult = useRef();
+
+  // 추천 영화 목록 업데이트를 위한 useEffect
+  useEffect(() => {
+    // useDetailModel의 데이터가 들어오면
+    if (requestedGenres.movies) {
+      const { data } = requestedGenres.movies;
+      // isRGIncludesCurrMovie: 추출한 데이터(= 추천 영화 목록)가 현재 영화를 포함하는지 검사
+      const isRGIncludesCurrMovie = data.find(
+        (movieData) => movieData.id === currentMovie.id,
+      );
+      // recommendsList: 추천 영화 목록 저장을 위한 변수
+      let recommendsList = null;
+      // 추천 영화 목록이 현재 영화를 포함할 경우, 해당 영화를 제외한 4개 영화를 선정
+      if (isRGIncludesCurrMovie) {
+        recommendsList = data
+          .filter((movieData) => movieData.id !== currentMovie.id)
+          .slice(0, 4);
+        // 추천 영화 목록이 현재 영화를 포함하지 않으면 4개 영화 선정
+      } else {
+        recommendsList = data.slice(0, 4);
+      }
+      // 장르 목록을 저장함
+      genreSearchResult.current = recommendsList;
+    }
+  }, [requestedGenres]);
+
+  return genreSearchResult.current?.map(
     ({ id, title, medium_cover_image: posterImg }, index) => {
       return (
         <RecommMoviePoster
