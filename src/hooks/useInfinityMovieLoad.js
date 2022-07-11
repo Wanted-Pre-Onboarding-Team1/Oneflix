@@ -1,30 +1,50 @@
-import { getMoviesAPI } from 'lib/api/movieAPI';
+import { HttpRequest } from 'lib/api/httpRequest';
 import { useEffect, useState } from 'react';
 import useIntersectObserver from './useIntersectObserver';
 
-const useInfinityMovieLoad = (title = '', year = '') => {
+const MOVIE_PER_PAGE = 10;
+const useInfinityMovieLoad = (title, year) => {
   const [movieList, setMovieList] = useState([]);
+  const [isInitialLoading, setInitialLoading] = useState(true);
   const { isTargetVisible, observeTargetRef } = useIntersectObserver();
-  const [pageNo, setPageNo] = useState(1);
+  const movieRequest = new HttpRequest();
+
+  const getCurrentPageNumber = (list) => {
+    const pageNumber = list.length * 0.1;
+    return Number.isInteger(pageNumber) ? pageNumber : Math.ceil(pageNumber);
+  };
 
   useEffect(() => {
-    const getMovies = async () => {
-      try {
-        const response = await getMoviesAPI(title, year, pageNo);
-        pageNo === 1
-          ? setMovieList(response)
-          : setMovieList((prev) => [...prev, ...response]);
-        setPageNo(pageNo + 1);
-      } catch (error) {
-        // eslint-disable-next-line no-alert
-        alert(error);
-      }
-    };
-    getMovies();
+    const callback = (response) => setMovieList(response.data);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [title, year, isTargetVisible]);
+    movieRequest.getWithParams({
+      url: 'movies',
+      config: {
+        _page: getCurrentPageNumber(movieList),
+        _limit: MOVIE_PER_PAGE,
+        q: title,
+        year_like: year,
+      },
+      callback,
+    });
+  }, [title, year]);
 
+  useEffect(() => {
+    getCurrentPageNumber(movieList) === 1 && setInitialLoading(false);
+    const callback = ({ data }) => setMovieList((prev) => [...prev, ...data]);
+
+    isTargetVisible &&
+      !isInitialLoading &&
+      movieRequest.getWithParams({
+        url: 'movies',
+        config: {
+          _page: getCurrentPageNumber(movieList) + 1,
+          q: title,
+          year_like: year,
+        },
+        callback,
+      });
+  }, [isTargetVisible, isInitialLoading]);
   return { movieList, observeTargetRef };
 };
 
