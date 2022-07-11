@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { AiFillStar } from 'react-icons/ai';
-import { NavLink } from 'react-router-dom';
+// import { NavLink } from 'react-router-dom';
 import { palette } from 'lib/styles/palette';
+import ModalPortal from 'components/detailModal/ModalPortal';
 
 export default function MovieCard({ id, title, year, rating, image }) {
   const [isLikeClicked, setLikeClicked] = useState(false);
+  const [modalOn, setModalOn] = useState(false);
+
   const likeIconColor = isLikeClicked ? highlightColor : fontColor;
 
   function changeClickState(event) {
@@ -13,27 +16,40 @@ export default function MovieCard({ id, title, year, rating, image }) {
     setLikeClicked(!isLikeClicked);
   }
 
+  const modalOnOff = () => {
+    setModalOn(!modalOn);
+  };
+
   return (
-    <CardLayout>
-      <NavLink to={`/detail/${id}`}>
-        <button type="button" onClick={changeClickState}>
-          <LikeIcon color={likeIconColor} />
+    <>
+      <CardLayout>
+        {/* <NavLink to={`/detail/${id}`}> */}
+        <button type="button" onClick={modalOnOff}>
+          <button type="button" onClick={changeClickState}>
+            <LikeIcon color={likeIconColor} />
+          </button>
+          <CardPoster src={image} alt={`${title} 포스터`} />
+          <CardMovieInfo>
+            <strong>
+              <span style={{ color: `${highlightColor}` }}>{rating}</span>
+              <span> / 10</span>
+            </strong>
+            <CardMovieHeading>
+              {' '}
+              {`${
+                title.length < 25 ? title : `${title.substring(0, 20)}...`
+              }(${year})`}{' '}
+            </CardMovieHeading>
+          </CardMovieInfo>
         </button>
-        <CardPoster src={image} alt={`${title} 포스터`} />
-        <CardMovieInfo>
-          <strong>
-            <span style={{ color: `${highlightColor}` }}>{rating}</span>
-            <span> / 10</span>
-          </strong>
-          <CardMovieHeading>
-            {' '}
-            {`${
-              title.length < 25 ? title : `${title.substring(0, 20)}...`
-            }(${year})`}{' '}
-          </CardMovieHeading>
-        </CardMovieInfo>
-      </NavLink>
-    </CardLayout>
+        {/* </NavLink> */}
+      </CardLayout>
+      {modalOn && (
+        <ModalPortal>
+          <ModalMovieDetail />
+        </ModalPortal>
+      )}
+    </>
   );
 }
 

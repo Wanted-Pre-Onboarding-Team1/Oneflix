@@ -1,10 +1,11 @@
 import SearchPage from 'pages/SearchPage';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import DetailPage from 'pages/DetailPage';
+import DetailPage from 'pages/ModalMovieDetail';
 import SideNavbarLayout from 'components/sideNavbar/SideNavbarLayout';
 import LandingPage from 'pages/LandingPage';
 import LikePage from 'pages/LikePage';
+import { useLocation } from 'react-router-dom';
 
 function Routing() {
   return (

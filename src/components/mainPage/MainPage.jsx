@@ -7,6 +7,7 @@ import { HttpRequest } from 'lib/api/httpRequest';
 function MainPage() {
   const [movieList, setMovieList] = useState([]);
   const [isInitialLoading, setInitialLoading] = useState(true);
+
   const { isTargetVisible, observeTargetRef } = useIntersectObserver();
   const movieRequest = new HttpRequest();
 
