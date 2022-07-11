@@ -2,7 +2,7 @@ import { getMoviesAPI } from 'lib/api/movieAPI';
 import { useEffect, useState } from 'react';
 
 const useMovieModel = (title = '', year = '', page = 1) => {
-  const [movies, setMovies] = useState(null);
+  const [movies, setMovies] = useState([]);
 
   useEffect(() => {
     const getMovies = async () => {

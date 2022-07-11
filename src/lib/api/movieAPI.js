@@ -12,4 +12,3 @@ export const getMoviesTitleAPI = async () => {
   const response = await request.get(`/movies?_limit=50`);
   return response.data;
 };
-// &year=${year}
