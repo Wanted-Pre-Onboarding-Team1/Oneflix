@@ -1,23 +1,35 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { AiFillStar } from 'react-icons/ai';
+import { HttpRequest } from 'lib/api/httpRequest';
 import { palette } from 'lib/styles/palette';
 
-export default function NumericCnt({ rating }) {
+export default function NumericCnt({ id, rating }) {
+  const [isLikeClicked, setLikeClicked] = useState(false);
+  const likeIconColor = isLikeClicked ? highlightColor : fontColor;
+  const request = new HttpRequest();
+
+  const handleClick = useCallback(() => markAsLike(), [isLikeClicked]);
+
+  function markAsLike() {
+    request.patch(`/movies/${id}`, { like: !isLikeClicked });
+    setLikeClicked(!isLikeClicked);
+  }
+
   return (
     <NumericInfoCnt>
       <Rating>
         평점
         <strong>{rating}</strong>
       </Rating>
-      <LikeBtn type="button">
-        즐겨찾기 <AiFillStar className="like" />
+      <LikeBtn type="button" onClick={handleClick}>
+        즐겨찾기 <AiFillStar className="like" color={likeIconColor} />
       </LikeBtn>
     </NumericInfoCnt>
   );
 }
 
-const { highlightColor } = palette;
+const { highlightColor, fontColor } = palette;
 
 const NumericInfoCnt = styled.section`
   font-size: 1.4rem;
@@ -46,7 +58,7 @@ const LikeBtn = styled.button`
   .like {
     width: 2rem;
     height: 2rem;
-    color: ${highlightColor};
+    color: ${({ color }) => color};
     vertical-align: middle;
   }
 `;

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { HttpRequest } from 'lib/api/httpRequest';
 import { AiFillStar } from 'react-icons/ai';
 import { NavLink } from 'react-router-dom';
 import { palette } from 'lib/styles/palette';
@@ -7,16 +8,18 @@ import { palette } from 'lib/styles/palette';
 export default function MovieCard({ id, title, year, rating, image }) {
   const [isLikeClicked, setLikeClicked] = useState(false);
   const likeIconColor = isLikeClicked ? highlightColor : fontColor;
+  const request = new HttpRequest();
 
-  function changeClickState(event) {
+  function markAsLike(event) {
     event.preventDefault();
     setLikeClicked(!isLikeClicked);
+    request.patch(`/movies/${id}`, { like: !isLikeClicked });
   }
 
   return (
     <CardLayout>
       <NavLink to={`/detail/${id}`}>
-        <button type="button" onClick={changeClickState}>
+        <button type="button" onClick={markAsLike}>
           <LikeIcon color={likeIconColor} />
         </button>
         <CardPoster src={image} alt={`${title} 포스터`} />

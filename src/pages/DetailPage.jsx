@@ -36,7 +36,7 @@ export default function DetailPage() {
                 genres={movieMetaData.genres}
                 runtime={movieMetaData.runtime}
               />
-              <NumericCnt rating={movieMetaData.rating} />
+              <NumericCnt id={movieMetaData.id} rating={movieMetaData.rating} />
               <ProdCrew summary={movieMetaData.summary} />
             </MovieDescBox>
             <RecommMovieCnt>
