@@ -47,6 +47,10 @@ const CardLayout = styled.article`
   font-weight: 400;
   background: ${sideTabColor};
   color: ${sideTextColor};
+  transition: transform 300ms ease-in-out;
+  &:hover {
+    transform: scale(1.05);
+  }
   & strong {
     display: block;
     text-align: right;
