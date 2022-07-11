@@ -11,35 +11,97 @@ import useOutSideClick from 'hooks/common/useOutsideClick';
 import RecommendBox from './RecommendBox';
 import SelectBox from './SelectBox';
 
+const selectData = ['제목', '개봉년도'];
+const searchYearData = [
+  '2022',
+  '2021',
+  '2020',
+  '2019',
+  '2018',
+  '2017',
+  '2016',
+  '2015',
+  '2014',
+  '2013',
+  '2012',
+  '2011',
+  '2010',
+  '2009',
+  '2008',
+  '2007',
+  '2006',
+  '2005',
+  '2004',
+  '2003',
+  '2002',
+  '2001',
+  '2000',
+  '1999',
+  '1998',
+  '1997',
+  '1996',
+  '1995',
+  '1994',
+  '1993',
+  '1992',
+  '1991',
+  '1990',
+  '1989',
+  '1988',
+  '1987',
+  '1986',
+  '1985',
+  '1984',
+  '1983',
+  '1982',
+  '1981',
+  '1980',
+  '1970',
+];
 function SearchInput() {
   const [keyword, onChangeValue, onClickChange] = useInput('');
+  const [select, onChangeSelect] = useInput(selectData[0]);
   const [isActive, onToggleIsActive] = useToggle();
   const { targetEl } = useOutSideClick(isActive, onToggleIsActive);
-
   const navigate = useNavigate();
   const searchInput = useRef();
-
   const { movies } = useMovieModel(' ', 1);
-  const searchData = movies?.map((movie) => movie.title);
+  const searchTitleData = movies?.map((movie) => movie.title);
   const [recommendKeyword, setRecommendKeyword] = useState(movies);
   useEffect(() => {
-    if (keyword) {
-      const onChangeKeyword = () => {
-        const choosenTextList = searchData.filter((textItem) =>
+    if (keyword && select === '제목') {
+      const onChangeRecommend = () => {
+        const choosenTextList = searchTitleData.filter((textItem) =>
           textItem.includes(keyword),
         );
         setRecommendKeyword(choosenTextList);
       };
-      onChangeKeyword();
+      onChangeRecommend();
+    }
+    if (keyword && select === '개봉년도') {
+      const onChangeRecommend = () => {
+        const choosenTextList = searchYearData.filter((textItem) =>
+          textItem.includes(keyword),
+        );
+        setRecommendKeyword(choosenTextList);
+      };
+      onChangeRecommend();
     }
   }, [keyword]);
+  const onSubmit = (e) => {
+    e.preventDefault();
+    keyword && select === '제목'
+      ? navigate(`/search?title=${keyword}&year=`)
+      : navigate(`/search?title=&year=${keyword}`);
+  };
 
   return (
-    <SearchForm
-      onSubmit={() => navigate(`/search/${keyword}`)}
-      ref={searchInput}
-    >
-      <SelectBox selectData={['제목', '개봉년도']} />
+    <SearchForm onSubmit={onSubmit} ref={searchInput}>
+      <SelectBox
+        selectData={selectData}
+        value={select}
+        onChangeValue={onChangeSelect}
+      />
       {isActive && (
         <RecommendBox
           recommendKeyword={recommendKeyword}
@@ -57,7 +119,9 @@ function SearchInput() {
         onFocus={onToggleIsActive}
         ref={targetEl}
       />
-      <SearchBtn type="submit">검색</SearchBtn>
+      <SearchBtn type="button" onClick={onSubmit}>
+        검색
+      </SearchBtn>
     </SearchForm>
   );
 }
