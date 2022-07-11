@@ -4,8 +4,8 @@ import { AiFillStar } from 'react-icons/ai';
 import { HttpRequest } from 'lib/api/httpRequest';
 import { palette } from 'lib/styles/palette';
 
-export default function NumericCnt({ id, rating }) {
-  const [isLikeClicked, setLikeClicked] = useState(false);
+export default function NumericCnt({ id, rating, like }) {
+  const [isLikeClicked, setLikeClicked] = useState(like);
   const likeIconColor = isLikeClicked ? highlightColor : fontColor;
   const request = new HttpRequest();
 
