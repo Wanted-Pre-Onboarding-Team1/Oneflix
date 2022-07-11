@@ -13,7 +13,7 @@ function SearchPage() {
   // const { movieList } = useMovieModel(params.title, 1);
   const { observeTargetRef, movieList } = useInfinityMovieLoad();
   const requestedMovieList = movieList.map(
-    ({ id, title, year, rating, medium_cover_image: image }, index) => {
+    ({ id, title, year, rating, medium_cover_image: image, like }, index) => {
       return (
         <MovieCard
           id={id}
@@ -22,6 +22,8 @@ function SearchPage() {
           rating={rating}
           image={image}
           key={`${title}_${index}`}
+          // 즐겨찾기 표시를 위해 like props 추가
+          like={like}
         />
       );
     },

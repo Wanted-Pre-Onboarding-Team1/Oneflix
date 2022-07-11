@@ -14,6 +14,8 @@ function Routing() {
         <Route path="/search" element={<SearchPage />} />
         <Route path="/search/:title" element={<SearchPage />} />
         <Route path="/like" element={<LikePage />} />
+        {/* 검색 결과 페이지 표시용 라우터 */}
+        <Route path="/like/:title" element={<LikePage />} />
         <Route path="/detail/:id" element={<DetailPage />} />
       </Route>
     </Routes>

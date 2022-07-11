@@ -38,10 +38,6 @@ function MainPage() {
       });
   }, [isTargetVisible, isInitialLoading]);
 
-  useEffect(() => {
-    movieRequest.get('/movies?like=true').then((res) => console.log(res));
-  }, []);
-
   return (
     <MainPageCnt>
       <MainMovieList>
