@@ -12,7 +12,6 @@ html,
 body,
 #root {
   height: 100%;
-
   background-color: ${palette.backgroundColor};
 }
 * {
