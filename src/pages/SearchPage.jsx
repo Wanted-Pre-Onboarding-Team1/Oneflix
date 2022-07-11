@@ -16,7 +16,6 @@ function SearchPage() {
     ignoreQueryPrefix: true,
   });
 
-  const { movies } = useMovieModel(query.title, query.year, 1);
   const { observeTargetRef, movieList } = useInfinityMovieLoad();
   const requestedMovieList = movieList.map(
     ({ id, title, year, rating, medium_cover_image: image }, index) => {
@@ -32,7 +31,6 @@ function SearchPage() {
       );
     },
   );
-  console.log(movieList);
   return (
     <StyledSearchPage>
       <SearchInput />
@@ -43,7 +41,7 @@ function SearchPage() {
           <StyledSearchResults>{requestedMovieList}</StyledSearchResults>
         )}
       </StyledSearchSection>
-      <div ref={observeTargetRef} />
+      <LoadMark ref={observeTargetRef} />
     </StyledSearchPage>
   );
 }
@@ -93,5 +91,7 @@ const StyledSearchResults = styled.div`
     grid-template-columns: repeat(1, 1fr);
   }
 `;
-
+const LoadMark = styled.div`
+  height: 40px;
+`;
 export default SearchPage;
