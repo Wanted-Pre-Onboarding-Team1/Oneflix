@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { palette } from 'lib/styles/palette';
 import media from 'lib/styles/media';
 import SearchInput from 'components/searchPage/SearchInput';
-import useMovieModel from 'models/useMovieModel';
 import MovieCard from 'components/movieCard/MovieCard';
 import { useLocation } from 'react-router-dom';
 import useInfinityMovieLoad from 'hooks/useInfinityMovieLoad';
@@ -16,7 +15,10 @@ function SearchPage() {
     ignoreQueryPrefix: true,
   });
 
-  const { observeTargetRef, movieList } = useInfinityMovieLoad();
+  const { observeTargetRef, movieList } = useInfinityMovieLoad(
+    query.title,
+    query.year,
+  );
   const requestedMovieList = movieList.map(
     ({ id, title, year, rating, medium_cover_image: image }, index) => {
       return (
