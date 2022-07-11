@@ -1,40 +1,30 @@
-import { HttpRequest } from 'lib/api/httpRequest';
+import { getMoviesAPI } from 'lib/api/movieAPI';
 import { useEffect, useState } from 'react';
 import useIntersectObserver from './useIntersectObserver';
 
-const useInfinityMovieLoad = () => {
+const useInfinityMovieLoad = (title = '', year = '') => {
   const [movieList, setMovieList] = useState([]);
-  const [isInitialLoading, setInitialLoading] = useState(true);
   const { isTargetVisible, observeTargetRef } = useIntersectObserver();
-  const movieRequest = new HttpRequest();
-
-  const getCurrentPageNumber = (list) => {
-    const pageNumber = list.length * 0.1;
-    return Number.isInteger(pageNumber) ? pageNumber : Math.ceil(pageNumber);
-  };
+  const [pageNo, setPageNo] = useState(1);
 
   useEffect(() => {
-    const callback = (response) => setMovieList(response.data);
+    const getMovies = async () => {
+      try {
+        const response = await getMoviesAPI(title, year, pageNo);
+        pageNo === 1
+          ? setMovieList(response)
+          : setMovieList((prev) => [...prev, ...response]);
+        setPageNo(pageNo + 1);
+      } catch (error) {
+        // eslint-disable-next-line no-alert
+        alert(error);
+      }
+    };
+    getMovies();
 
-    movieRequest.getWithParams({
-      url: 'movies',
-      config: { _page: getCurrentPageNumber(movieList) },
-      callback,
-    });
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [title, year, isTargetVisible]);
 
-  useEffect(() => {
-    getCurrentPageNumber(movieList) === 1 && setInitialLoading(false);
-    const callback = ({ data }) => setMovieList((prev) => [...prev, ...data]);
-
-    isTargetVisible &&
-      !isInitialLoading &&
-      movieRequest.getWithParams({
-        url: 'movies',
-        config: { _page: getCurrentPageNumber(movieList) + 1 },
-        callback,
-      });
-  }, [isTargetVisible, isInitialLoading]);
   return { movieList, observeTargetRef };
 };
 
