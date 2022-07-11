@@ -5,11 +5,17 @@ import media from 'lib/styles/media';
 import SearchInput from 'components/searchPage/SearchInput';
 import useMovieModel from 'models/useMovieModel';
 import MovieCard from 'components/movieCard/MovieCard';
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import qs from 'qs';
 
 function SearchPage() {
-  const params = useParams();
-  const { movies } = useMovieModel(params.title, 1);
+  const location = useLocation();
+
+  const query = qs.parse(location.search, {
+    ignoreQueryPrefix: true,
+  });
+
+  const { movies } = useMovieModel(query.title, query.year, 1);
   const requestedMovieList = movies?.map(
     ({ id, title, year, rating, medium_cover_image: image }, index) => {
       return (

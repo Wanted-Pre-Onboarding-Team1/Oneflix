@@ -1,13 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { AiFillCaretDown } from 'react-icons/ai';
-import useInput from 'hooks/common/useInput';
 import useToggle from 'hooks/common/useToggle';
 import useOutSideClick from 'hooks/common/useOutsideClick';
 import media from 'lib/styles/media';
 
-function SelectBox({ selectData }) {
-  const [value, onChangeValue] = useInput(selectData[0]);
+function SelectBox({ selectData, value, onChangeValue }) {
   const [isSelect, onToggleSelect] = useToggle();
   const { targetEl } = useOutSideClick(isSelect, onToggleSelect);
   return (
