@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import MovieCard from 'components/movieCard/MovieCard';
-import useIntersectObserver from 'hooks/useIntersectObserver';
 import { HttpRequest } from 'lib/api/httpRequest';
+import { useEffect, useState } from 'react';
+import useIntersectObserver from './useIntersectObserver';
 
-function MainPage() {
+const useInfinityMovieLoad = () => {
   const [movieList, setMovieList] = useState([]);
   const [isInitialLoading, setInitialLoading] = useState(true);
   const { isTargetVisible, observeTargetRef } = useIntersectObserver();
@@ -37,43 +35,7 @@ function MainPage() {
         callback,
       });
   }, [isTargetVisible, isInitialLoading]);
+  return { movieList, observeTargetRef };
+};
 
-  return (
-    <MainPageCnt>
-      <MainMovieList>
-        {movieList.map(
-          ({ id, title, year, rating, medium_cover_image: image }) => (
-            <li key={`${title}_${id}`}>
-              <MovieCard
-                id={id}
-                title={title}
-                year={year}
-                rating={rating}
-                image={image}
-              />
-            </li>
-          ),
-        )}
-        <div ref={observeTargetRef} />
-      </MainMovieList>
-    </MainPageCnt>
-  );
-}
-
-export default MainPage;
-
-export const MainPageCnt = styled.section`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  padding: 90px 30px;
-`;
-const MainMovieList = styled.ul`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-`;
+export default useInfinityMovieLoad;
