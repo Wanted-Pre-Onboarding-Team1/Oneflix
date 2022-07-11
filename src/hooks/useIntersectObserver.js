@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 const defaultOption = {
   root: null,
   rootMargin: '0px',
-  threshold: 1,
+  threshold: 0.5,
 };
 
 const useIntersectObserver = (options = defaultOption) => {

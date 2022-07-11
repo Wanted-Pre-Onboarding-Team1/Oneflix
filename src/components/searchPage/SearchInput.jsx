@@ -1,39 +1,45 @@
-import React, { useEffect, useState, useRef } from 'react';
-import useInput from 'hooks/common/useInput';
+import React, { useRef } from 'react';
 import { SearchIcon } from 'assets/imgs';
 import media from 'lib/styles/media';
 import { palette } from 'lib/styles/palette';
-import useMovieModel from 'models/useMovieModel';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import useToggle from 'hooks/common/useToggle';
+import useOutSideClick from 'hooks/common/useOutsideClick';
+import { SELECT_ITEM } from 'constants';
+import useRecommendForm from 'hooks/useRecommendForm';
 import RecommendBox from './RecommendBox';
+import SelectBox from './SelectBox';
 
 function SearchInput() {
-  const { movies } = useMovieModel(' ', 1);
-  const searchData = movies?.data.map((movie) => movie.title);
-  const [keyword, onChangeValue, onClickChange] = useInput('');
-  const [recommendKeyword, setRecommendKeyword] = useState(movies);
+  const {
+    keyword,
+    onChangeSelect,
+    onChangeValue,
+    onClickChange,
+    recommendKeyword,
+    select,
+  } = useRecommendForm();
+  const [isActive, onToggleIsActive] = useToggle();
+  const { targetEl } = useOutSideClick(isActive, onToggleIsActive);
   const navigate = useNavigate();
   const searchInput = useRef();
 
-  useEffect(() => {
-    if (keyword) {
-      const onChangeKeyword = () => {
-        const choosenTextList = searchData.filter((textItem) =>
-          textItem.includes(keyword),
-        );
-        setRecommendKeyword(choosenTextList);
-      };
-      onChangeKeyword();
-    }
-  }, [keyword]);
+  const onSubmit = (e) => {
+    e.preventDefault();
+    keyword && select === '제목'
+      ? navigate(`/search?title=${keyword}&year=`)
+      : navigate(`/search?title=&year=${keyword}`);
+  };
 
   return (
-    <SearchForm
-      onSubmit={() => navigate(`/search/${keyword}`)}
-      ref={searchInput}
-    >
-      {keyword && (
+    <SearchForm onSubmit={onSubmit} ref={searchInput}>
+      <SelectBox
+        selectData={SELECT_ITEM}
+        value={select}
+        onChangeValue={onChangeSelect}
+      />
+      {isActive && (
         <RecommendBox
           recommendKeyword={recommendKeyword}
           onChangeValue={onClickChange}
@@ -43,11 +49,15 @@ function SearchInput() {
       <Icon src={SearchIcon} alt="검색 돋보기" />
       <InputStyled
         type="text"
-        placeholder="영화를 제목으로 검색해보세요"
+        placeholder={`영화를 ${select}으로 검색해보세요`}
         value={keyword}
         onChange={onChangeValue}
+        onFocus={onToggleIsActive}
+        ref={targetEl}
       />
-      <SearchBtn type="button">검색</SearchBtn>
+      <SearchBtn type="button" onClick={onSubmit}>
+        검색
+      </SearchBtn>
     </SearchForm>
   );
 }
