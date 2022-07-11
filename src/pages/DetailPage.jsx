@@ -22,14 +22,12 @@ export default function DetailPage() {
   }, [movies, movieMetaData]);
 
   return (
-    <Article>
+    <DetailsCnt>
       {movieMetaData && (
         <>
-          <DetailsCnt>
-            <MoviePosterBox>
-              <MoviePoster src={movieMetaData.medium_cover_image} />
-            </MoviePosterBox>
-          </DetailsCnt>
+          <MoviePosterBox>
+            <MoviePoster src={movieMetaData.medium_cover_image} />
+          </MoviePosterBox>
           <MovieDescBox>
             <TitleArea
               title={movieMetaData.title}
@@ -42,7 +40,7 @@ export default function DetailPage() {
           </MovieDescBox>
         </>
       )}
-    </Article>
+    </DetailsCnt>
   );
 }
 
