@@ -5,7 +5,7 @@ import useIntersectObserver from 'hooks/useIntersectObserver';
 import { HttpRequest } from 'lib/api/httpRequest';
 import MovieCard from 'components/movieCard/MovieCard';
 
-const MOVIE_PER_PAGE = 10;
+const MOVIES_PER_PAGE = 10;
 
 function LandingPage() {
   const [movieList, setMovieList] = useState([]);
@@ -14,18 +14,18 @@ function LandingPage() {
   const movieRequest = new HttpRequest();
 
   const getCurrentPageNumber = (currentMovieList) => {
-    const pageNumber = currentMovieList.length / MOVIE_PER_PAGE;
+    const pageNumber = currentMovieList.length / MOVIES_PER_PAGE;
     return Number.isInteger(pageNumber) ? pageNumber : Math.ceil(pageNumber);
   };
 
   useEffect(() => {
-    const callback = (response) => setMovieList(response.data);
+    const callback = ({ data }) => setMovieList(data);
 
     movieRequest.getWithParams({
       url: 'movies',
       config: {
         _page: getCurrentPageNumber(movieList),
-        _limit: MOVIE_PER_PAGE,
+        _limit: MOVIES_PER_PAGE,
       },
       callback,
     });
@@ -42,7 +42,7 @@ function LandingPage() {
         url: 'movies',
         config: {
           _page: getCurrentPageNumber(movieList) + 1,
-          _limit: MOVIE_PER_PAGE,
+          _limit: MOVIES_PER_PAGE,
         },
         callback,
       });
