@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { AiFillStar } from 'react-icons/ai';
 import { HttpRequest } from 'lib/api/httpRequest';
@@ -8,6 +8,14 @@ export default function NumericCnt({ id, rating, like }) {
   const [isLikeClicked, setLikeClicked] = useState(like);
   const likeIconColor = isLikeClicked ? highlightColor : fontColor;
   const request = new HttpRequest();
+  const previousLikeState = useRef(like);
+
+  useEffect(() => {
+    if (previousLikeState.current !== like) {
+      setLikeClicked(!isLikeClicked);
+      previousLikeState.current = like;
+    }
+  }, [like]);
 
   const handleClick = useCallback(() => markAsLike(), [isLikeClicked]);
 
