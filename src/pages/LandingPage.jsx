@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { palette } from 'lib/styles/palette';
 import useIntersectObserver from 'hooks/useIntersectObserver';
+import useDynamicScroll from 'hooks/useDynamicScroll';
 import { HttpRequest } from 'lib/api/httpRequest';
 import MovieCard from 'components/movieCard/MovieCard';
 
@@ -12,9 +13,19 @@ function LandingPage() {
   const [isInitialLoading, setInitialLoading] = useState(true);
   const { isTargetVisible, observeTargetRef } = useIntersectObserver();
   const movieRequest = new HttpRequest();
+  const movieListItem = React.useRef();
+  const mainMovieList = React.useRef();
+  const { minimumLength } = useDynamicScroll(
+    movieList,
+    movieListItem,
+    mainMovieList,
+  );
 
   const getCurrentPageNumber = (currentMovieList) => {
-    const pageNumber = currentMovieList.length / MOVIES_PER_PAGE;
+    // const pageNumber = currentMovieList.length / MOVIES_PER_PAGE;
+    const pageNumber = minimumLength
+      ? currentMovieList.length / minimumLength
+      : currentMovieList.length / MOVIES_PER_PAGE;
     return Number.isInteger(pageNumber) ? pageNumber : Math.ceil(pageNumber);
   };
 
@@ -25,11 +36,11 @@ function LandingPage() {
       url: 'movies',
       config: {
         _page: getCurrentPageNumber(movieList),
-        _limit: MOVIES_PER_PAGE,
+        _limit: minimumLength || MOVIES_PER_PAGE,
       },
       callback,
     });
-  }, []);
+  }, [minimumLength]);
 
   useEffect(() => {
     getCurrentPageNumber(movieList) === 1 && setInitialLoading(false);
@@ -42,19 +53,19 @@ function LandingPage() {
         url: 'movies',
         config: {
           _page: getCurrentPageNumber(movieList) + 1,
-          _limit: MOVIES_PER_PAGE,
+          _limit: minimumLength || MOVIES_PER_PAGE,
         },
         callback,
       });
-  }, [isTargetVisible, isInitialLoading]);
+  }, [isTargetVisible, isInitialLoading, minimumLength]);
 
   return (
     <LandingPageLayout>
       <MainPageCnt>
-        <MainMovieList>
+        <MainMovieList ref={mainMovieList}>
           {movieList.map(
             ({ id, title, year, rating, medium_cover_image: image, like }) => (
-              <li key={`${title}_${id}`}>
+              <li key={`${title}_${id}`} ref={movieListItem}>
                 <MovieCard
                   id={id}
                   title={title}

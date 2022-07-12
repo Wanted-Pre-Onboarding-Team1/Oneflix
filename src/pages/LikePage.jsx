@@ -8,7 +8,8 @@ import { palette } from 'lib/styles/palette';
 import media from 'lib/styles/media';
 
 function LikePage() {
-  // useInfinityLikeLoad에 검색어 전달을 위한 useParams
+  const movieListItem = useRef();
+  const mainMovieList = useRef();
   const params = useParams();
   // useInfinityLikeLoad에 검색어 전달 -> 상세 검색 페이지에서 /like로 페이지 이동할 때 검색 목록을 갱신시키는 용도
   const { observeTargetRef, movieList } = useInfinityLikeLoad(params.title);
@@ -42,10 +43,12 @@ function LikePage() {
         {movieList?.length === 0 ? (
           <StyledSerchText>즐겨찾기 항목이 없습니다.</StyledSerchText>
         ) : (
-          <StyledSearchResults>{requestedMovieList}</StyledSearchResults>
+          <StyledSearchResults ref={mainMovieList}>
+            {requestedMovieList}
+          </StyledSearchResults>
         )}
       </StyledSearchSection>
-      <div ref={observeTargetRef} />
+      <LoadMark ref={observeTargetRef} />
     </StyledSearchPage>
   );
 }
@@ -94,6 +97,9 @@ const StyledSearchResults = styled.div`
   ${media.custom(576)} {
     grid-template-columns: repeat(1, 1fr);
   }
+`;
+const LoadMark = styled.div`
+  height: 40px;
 `;
 
 export default LikePage;

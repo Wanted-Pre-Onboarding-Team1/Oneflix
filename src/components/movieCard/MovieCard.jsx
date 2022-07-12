@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { HttpRequest } from 'lib/api/httpRequest';
 import { AiFillStar } from 'react-icons/ai';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { palette } from 'lib/styles/palette';
+
+export default function MovieCard({ id, title, year, rating, image, like }) {
+  const location = useLocation();
 
 export default function MovieCard({
   id,
@@ -30,7 +33,7 @@ export default function MovieCard({
 
   return (
     <CardLayout>
-      <NavLink to={`/detail/${id}`}>
+      <NavLink to={`/detail/${id}`} state={{ background: { location } }}>
         <button type="button" onClick={markAsLike}>
           <LikeIcon color={likeIconColor} />
         </button>
@@ -47,6 +50,7 @@ export default function MovieCard({
             }(${year})`}{' '}
           </CardMovieHeading>
         </CardMovieInfo>
+        {/* </button> */}
       </NavLink>
     </CardLayout>
   );
@@ -60,7 +64,7 @@ const CardLayout = styled.article`
   margin-bottom: 16px;
   border-radius: 0 0 4px 4px;
   font-weight: 400;
-  background: ${sideTabColor};
+  /* background: ${sideTabColor}; */
   color: ${sideTextColor};
   transition: transform 300ms ease-in-out;
   &:hover {
