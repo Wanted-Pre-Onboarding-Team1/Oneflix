@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { palette } from 'lib/styles/palette';
 import media from 'lib/styles/media';
@@ -10,8 +10,8 @@ import qs from 'qs';
 import SortBox from 'components/searchPage/SortBox';
 
 function SearchPage() {
-  const movieListItem = React.useRef();
-  const mainMovieList = React.useRef();
+  const movieListItem = useRef();
+  const mainMovieList = useRef();
 
   const location = useLocation();
   const [sortBy, setSortBy] = useState('title');
@@ -40,7 +40,6 @@ function SearchPage() {
             rating={rating}
             image={image}
             key={`${title}_${index}`}
-            // 즐겨찾기 표시를 위해 like props 추가
             like={like}
           />
         </li>

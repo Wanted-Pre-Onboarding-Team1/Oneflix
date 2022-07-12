@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import useIntersectObserver from './useIntersectObserver';
 import useDynamicScroll from './useDynamicScroll';
 
-// 검색 목록 갱신을 위한 paramTitle
+const MOVIE_PER_PAGE = 10;
+
 const useInfinityLikeLoad = ({ paramTitle, movieListItem, mainMovieList }) => {
   const [movieList, setMovieList] = useState([]);
   const [isInitialLoading, setInitialLoading] = useState(true);
@@ -25,18 +26,15 @@ const useInfinityLikeLoad = ({ paramTitle, movieListItem, mainMovieList }) => {
   useEffect(() => {
     const callback = (response) => setMovieList(response.data);
 
-    // like=true 파라미터 추가로 즐겨찾기 항목에서만 검색 진행
     movieRequest.getWithParams({
       url: 'movies?like=true',
-      // q: paramTitle 추가로 검색어 입력 후 해당 검색결과만 조회 가능
       config: {
         _page: getCurrentPageNumber(movieList),
+        _limit: minimumLength || MOVIE_PER_PAGE,
         q: paramTitle,
-        _limit: minimumLength,
       },
       callback,
     });
-    // dependency array에 paramTitle 추가로 세부 검색 페이지 -> /like 페이지로 이동시 검색 목록 갱신 가능
   }, [paramTitle, minimumLength]);
 
   useEffect(() => {
@@ -46,19 +44,16 @@ const useInfinityLikeLoad = ({ paramTitle, movieListItem, mainMovieList }) => {
     isTargetVisible &&
       !isInitialLoading &&
       movieRequest.getWithParams({
-        // like=true 파라미터 추가로 즐겨찾기 항목에서만 검색 진행
         url: 'movies?like=true',
-        /*
-          q: paramTitle 추가로 검색어 입력 후 해당 검색결과만 조회 가능한 효과를 의도했으나, 아직 테스트를 진행하지 못함
-        */
         config: {
           _page: getCurrentPageNumber(movieList) + 1,
           q: paramTitle,
-          _list: minimumLength,
+          _list: minimumLength || MOVIE_PER_PAGE,
         },
         callback,
       });
   }, [isTargetVisible, isInitialLoading, minimumLength]);
+
   return { movieList, observeTargetRef };
 };
 

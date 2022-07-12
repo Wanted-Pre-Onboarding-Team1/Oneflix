@@ -4,6 +4,7 @@ import useIntersectObserver from './useIntersectObserver';
 import useDynamicScroll from './useDynamicScroll';
 
 const MOVIE_PER_PAGE = 10;
+
 const useInfinityMovieLoad = ({
   queryTitle,
   queryYear,
