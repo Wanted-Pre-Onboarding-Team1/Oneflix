@@ -6,7 +6,7 @@ export default function ProdCrew({ summary }) {
     <section>
       <MovieSummary>
         {summary && summary.length > 500 ? summary.substring(0, 501) : summary}
-        {!summary && <NoSummary>등록된 줄거리가 없습니다.</NoSummary>}
+        {!summary && '등록된 줄거리가 없습니다.'}
       </MovieSummary>
     </section>
   );
