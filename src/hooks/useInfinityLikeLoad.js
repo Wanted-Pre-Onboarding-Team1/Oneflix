@@ -24,7 +24,7 @@ const useInfinityLikeLoad = ({
   const getCurrentPageNumber = (list) => {
     const pageNumber = minimumLength
       ? list.length / minimumLength
-      : list.length * 0.1;
+      : list.length / MOVIE_PER_PAGE;
     return Number.isInteger(pageNumber) ? pageNumber : Math.ceil(pageNumber);
   };
 
@@ -46,7 +46,7 @@ const useInfinityLikeLoad = ({
       },
       callback,
     });
-  }, [queryTitle, queryYear, minimumLength]);
+  }, [queryTitle, queryYear, minimumLength, movieList]);
 
   useEffect(() => {
     getCurrentPageNumber(movieList) === 1 && setInitialLoading(false);
