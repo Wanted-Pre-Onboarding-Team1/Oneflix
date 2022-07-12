@@ -8,6 +8,15 @@ import { palette } from 'lib/styles/palette';
 export default function MovieCard({ id, title, year, rating, image, like }) {
   const location = useLocation();
 
+export default function MovieCard({
+  id,
+  title,
+  year,
+  rating,
+  image,
+  like,
+  onRemoveLikeMovie,
+}) {
   const [isLikeClicked, setLikeClicked] = useState(like);
   const likeIconColor = isLikeClicked ? highlightColor : fontColor;
   const request = new HttpRequest();
@@ -16,6 +25,10 @@ export default function MovieCard({ id, title, year, rating, image, like }) {
     event.preventDefault();
     setLikeClicked(!isLikeClicked);
     request.patch(`/movies/${id}`, { like: !isLikeClicked });
+    like &&
+      onRemoveLikeMovie((previousLikeList) =>
+        previousLikeList.filter((movie) => movie.id !== id),
+      );
   }
 
   return (

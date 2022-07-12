@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import MovieCard from 'components/movieCard/MovieCard';
@@ -11,26 +11,27 @@ function LikePage() {
   const movieListItem = useRef();
   const mainMovieList = useRef();
   const params = useParams();
-  const { observeTargetRef, movieList } = useInfinityLikeLoad({
-    paramTitle: params.title,
-    movieListItem,
-    mainMovieList,
-  });
+  // useInfinityLikeLoad에 검색어 전달 -> 상세 검색 페이지에서 /like로 페이지 이동할 때 검색 목록을 갱신시키는 용도
+  const { observeTargetRef, movieList } = useInfinityLikeLoad(params.title);
+  const [likeList, setLikeList] = useState([]);
 
-  const requestedMovieList = movieList.map(
+  useEffect(() => {
+    movieList && setLikeList(movieList);
+  }, [movieList]);
+
+  const requestedMovieList = likeList?.map(
     ({ id, title, year, rating, medium_cover_image: image, like }, index) => {
       return (
-        <li key={`${title}_${index}`} ref={movieListItem}>
-          <MovieCard
-            id={id}
-            title={title}
-            year={year}
-            rating={rating}
-            image={image}
-            key={`${title}_${index}`}
-            like={like}
-          />
-        </li>
+        <MovieCard
+          id={id}
+          title={title}
+          year={year}
+          rating={rating}
+          image={image}
+          key={`${title}_${index}`}
+          like={like}
+          onRemoveLikeMovie={setLikeList}
+        />
       );
     },
   );
