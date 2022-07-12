@@ -94,22 +94,21 @@ const CloseButton = styled.button`
   }
   color: ${palette.fontColor};
   position: absolute;
-  right: -50px;
-  top: 0;
+  right: 10%;
+  top: 17%;
 `;
 
 const DetailsCnt = styled.article`
   width: 85vw;
-  min-height: 69vh;
+  height: 69vh;
   color: ${palette.fontColor};
   background-color: ${palette.backgroundColorLight};
   display: flex;
-  position: relative;
   justify-content: center;
   align-items: center;
   padding-right: 2.8rem;
   /* border: 1px solid white; */
-  border-radius: 50px;
+  border-radius: 5%;
 `;
 const MoviePosterBox = styled.section`
   width: 100%;
