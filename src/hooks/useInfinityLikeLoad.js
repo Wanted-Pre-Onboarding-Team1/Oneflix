@@ -15,7 +15,12 @@ const useInfinityLikeLoad = (searchTarget) => {
   };
 
   useEffect(() => {
-    const callback = (response) => setMovieList(response.data);
+    const callback = (response) => {
+      const isSameLikeList =
+        JSON.stringify(response.data) === JSON.stringify(movieList);
+      if (isSameLikeList) return;
+      setMovieList(response.data);
+    };
 
     // like=true 파라미터 추가로 즐겨찾기 항목에서만 검색 진행
     movieRequest.getWithParams({
