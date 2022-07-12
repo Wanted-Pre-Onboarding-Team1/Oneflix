@@ -22,13 +22,6 @@ function SearchPage() {
     ignoreQueryPrefix: true,
   });
 
-<<<<<<< HEAD
-  const { observeTargetRef, movieList } = useInfinityMovieLoad(
-    query.title,
-    query.year,
-    sortBy,
-  );
-=======
   const { observeTargetRef, movieList } = useInfinityMovieLoad({
     queryTitle: query.title,
     queryYear: query.year,
@@ -36,7 +29,6 @@ function SearchPage() {
     mainMovieList,
   });
 
->>>>>>> 2fa58b9 (test : useDynamicScroll 분리 테스트)
   const requestedMovieList = movieList.map(
     ({ id, title, year, rating, medium_cover_image: image, like }, index) => {
       return (
