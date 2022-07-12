@@ -6,7 +6,7 @@ export default function ProdCrew({ summary }) {
     <section>
       <MovieSummary>
         {summary && summary.length > 500 ? summary.substring(0, 501) : summary}
-        {!summary && '등록된 줄거리가 없습니다.'}
+        {!summary && <NoSummary>등록된 줄거리가 없습니다.</NoSummary>}
       </MovieSummary>
     </section>
   );
@@ -18,4 +18,7 @@ const MovieSummary = styled.p`
   font-size: 1rem;
   line-height: 1.3rem;
   margin-top: 1rem;
+`;
+const NoSummary = styled.p`
+  margin: 3.125rem 0;
 `;

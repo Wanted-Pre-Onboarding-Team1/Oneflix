@@ -50,9 +50,8 @@ export default function ModalMovieDetail() {
                 <ProdCrew summary={movieMetaData.summary} />
               </MovieDescBox>
               <RecommMovieCnt>
-                <RecommMovieHeader>추천 영화</RecommMovieHeader>
+                <RecommMovieHeader>이 영화와 비슷한 영화</RecommMovieHeader>
                 <RecommPosterBox>
-                  {/* 추천 영화 목록 + 클릭시 해당 페이지로 이동 */}
                   <RecommendMovies currentMovie={movieMetaData} />
                 </RecommPosterBox>
               </RecommMovieCnt>
@@ -83,21 +82,22 @@ const CloseButton = styled.button`
   }
   color: ${palette.fontColor};
   position: absolute;
-  right: 10%;
-  top: 17%;
+  right: -50px;
+  top: 0;
 `;
 
 const DetailsCnt = styled.article`
   width: 85vw;
-  height: 69vh;
+  min-height: 69vh;
   color: ${palette.fontColor};
   background-color: ${palette.backgroundColorLight};
   display: flex;
+  position: relative;
   justify-content: center;
   align-items: center;
   padding-right: 2.8rem;
   /* border: 1px solid white; */
-  border-radius: 5%;
+  border-radius: 50px;
 `;
 const MoviePosterBox = styled.section`
   width: 100%;
