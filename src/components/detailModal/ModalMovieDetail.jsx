@@ -7,9 +7,12 @@ import ProdCrew from 'components/detailPage/ProdCrew';
 import RecommendMovies from 'components/detailPage/RecommendMovies';
 import useDetailModel from 'models/useDetailModel';
 import { palette } from 'lib/styles/palette';
+import { FiXCircle as CloseIcon } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 
 export default function ModalMovieDetail() {
   const [movieMetaData, setmovieMetaData] = useState(null);
+  const navigate = useNavigate();
 
   const paramId = useParams().id.slice();
   const movies = useDetailModel(paramId);
@@ -21,9 +24,16 @@ export default function ModalMovieDetail() {
     }
   }, [movies]);
 
+  const closeModal = () => {
+    navigate(-1);
+  };
+
   return (
     <ModalBackground>
       <DetailsCnt>
+        <CloseButton type="button" onClick={closeModal}>
+          <CloseIcon className="closeIcon" />
+        </CloseButton>
         {movieMetaData && (
           <>
             <MoviePosterBox>
@@ -59,28 +69,40 @@ const ModalBackground = styled.div`
   width: 100vw;
   height: 100%;
   min-height: 100vh;
-  position: absolute;
+  position: fixed;
   top: 0;
-  background-color: rgba(91, 112, 131, 0.4);
+  background-color: rgba(25, 25, 25, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
+const CloseButton = styled.button`
+  .closeIcon {
+    width: 40px;
+    height: 40px;
+  }
+  color: ${palette.fontColor};
+  position: absolute;
+  right: 10%;
+  top: 17%;
+`;
+
 const DetailsCnt = styled.article`
-  /* width: 100%; */
-  /* height: 1000px; */
-  /* min-height: 100vh; */
-  color: #ffffff;
-  background-color: ${palette.backgroundColor};
+  width: 85vw;
+  height: 69vh;
+  color: ${palette.fontColor};
+  background-color: ${palette.backgroundColorLight};
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-right: 2.8rem;
+  /* border: 1px solid white; */
+  border-radius: 5%;
 `;
 const MoviePosterBox = styled.section`
   width: 100%;
-  text-align: right;
-  padding-right: 2rem;
+  text-align: center;
 `;
 const MoviePoster = styled.img`
   width: 30vw;
