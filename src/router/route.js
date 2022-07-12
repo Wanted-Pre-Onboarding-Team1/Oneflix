@@ -11,7 +11,7 @@ function Routing() {
   const background = location.state && location.state.background;
 
   return (
-    <Routes location={!background || location}>
+    <Routes>
       <Route element={<SideNavbarLayout />}>
         <Route path="/" element={<LandingPage />} />
         <Route path="/search" element={<SearchPage />} />
