@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import useIntersectObserver from './useIntersectObserver';
 
 const MOVIE_PER_PAGE = 10;
-const useInfinityMovieLoad = (title, year) => {
+const useInfinityMovieLoad = (title, year, sort) => {
   const [movieList, setMovieList] = useState([]);
   const [isInitialLoading, setInitialLoading] = useState(true);
   const { isTargetVisible, observeTargetRef } = useIntersectObserver();
@@ -24,10 +24,12 @@ const useInfinityMovieLoad = (title, year) => {
         _limit: MOVIE_PER_PAGE,
         q: title,
         year_like: year,
+        _sort: sort,
+        _order: 'desc',
       },
       callback,
     });
-  }, [title, year]);
+  }, [title, year, sort]);
 
   useEffect(() => {
     getCurrentPageNumber(movieList) === 1 && setInitialLoading(false);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { palette } from 'lib/styles/palette';
 import media from 'lib/styles/media';
@@ -7,10 +7,14 @@ import MovieCard from 'components/movieCard/MovieCard';
 import { useLocation } from 'react-router-dom';
 import useInfinityMovieLoad from 'hooks/useInfinityMovieLoad';
 import qs from 'qs';
+import SortBox from 'components/searchPage/SortBox';
 
 function SearchPage() {
   const location = useLocation();
-
+  const [sortBy, setSortBy] = useState('title');
+  const onChangeSort = (event) => {
+    setSortBy(event.target.value);
+  };
   const query = qs.parse(location.search, {
     ignoreQueryPrefix: true,
   });
@@ -18,6 +22,7 @@ function SearchPage() {
   const { observeTargetRef, movieList } = useInfinityMovieLoad(
     query.title,
     query.year,
+    sortBy,
   );
   const requestedMovieList = movieList.map(
     ({ id, title, year, rating, medium_cover_image: image, like }, index) => {
@@ -39,6 +44,7 @@ function SearchPage() {
     <StyledSearchPage>
       <SearchInput />
       <StyledSearchSection>
+        <SortBox sortBy={sortBy} onChangeSort={onChangeSort} />
         {movieList?.length === 0 ? (
           <StyledSerchText>검색결과가 없습니다.</StyledSerchText>
         ) : (
