@@ -1,21 +1,26 @@
 import SearchPage from 'pages/SearchPage';
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-import DetailPage from 'pages/ModalMovieDetail';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import SideNavbarLayout from 'components/sideNavbar/SideNavbarLayout';
 import LandingPage from 'pages/LandingPage';
 import LikePage from 'pages/LikePage';
-import { useLocation } from 'react-router-dom';
+import ModalMovieDetail from 'components/detailModal/ModalMovieDetail';
 
 function Routing() {
+  const location = useLocation();
+  console.log(location);
+  const background = location.state && location.state.background;
+
   return (
-    <Routes>
+    <Routes location={!background || location}>
       <Route element={<SideNavbarLayout />}>
         <Route path="/" element={<LandingPage />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/search/:title" element={<SearchPage />} />
         <Route path="/like" element={<LikePage />} />
-        <Route path="/detail/:id" element={<DetailPage />} />
+        {background && (
+          <Route path="/detail/:id" element={<ModalMovieDetail />} />
+        )}
       </Route>
     </Routes>
   );

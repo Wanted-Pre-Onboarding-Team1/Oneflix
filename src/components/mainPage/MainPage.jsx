@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import MovieCard from 'components/movieCard/MovieCard';
 import useIntersectObserver from 'hooks/useIntersectObserver';
 import { HttpRequest } from 'lib/api/httpRequest';
+import { useLocation } from 'react-router-dom';
 
 function MainPage() {
   const [movieList, setMovieList] = useState([]);
@@ -10,6 +11,8 @@ function MainPage() {
 
   const { isTargetVisible, observeTargetRef } = useIntersectObserver();
   const movieRequest = new HttpRequest();
+
+  // const location = useLocation();
 
   const getCurrentPageNumber = (list) => {
     const pageNumber = list.length * 0.1;
@@ -51,6 +54,7 @@ function MainPage() {
                 year={year}
                 rating={rating}
                 image={image}
+                // location={location.state}
               />
             </li>
           ),

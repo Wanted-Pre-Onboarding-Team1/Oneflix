@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { AiFillStar } from 'react-icons/ai';
-// import { NavLink } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { palette } from 'lib/styles/palette';
-import ModalPortal from 'components/detailModal/ModalPortal';
 
 export default function MovieCard({ id, title, year, rating, image }) {
+  const location = useLocation();
   const [isLikeClicked, setLikeClicked] = useState(false);
-  const [modalOn, setModalOn] = useState(false);
 
   const likeIconColor = isLikeClicked ? highlightColor : fontColor;
 
@@ -16,40 +15,29 @@ export default function MovieCard({ id, title, year, rating, image }) {
     setLikeClicked(!isLikeClicked);
   }
 
-  const modalOnOff = () => {
-    setModalOn(!modalOn);
-  };
-
   return (
-    <>
-      <CardLayout>
-        {/* <NavLink to={`/detail/${id}`}> */}
-        <button type="button" onClick={modalOnOff}>
-          <button type="button" onClick={changeClickState}>
-            <LikeIcon color={likeIconColor} />
-          </button>
-          <CardPoster src={image} alt={`${title} 포스터`} />
-          <CardMovieInfo>
-            <strong>
-              <span style={{ color: `${highlightColor}` }}>{rating}</span>
-              <span> / 10</span>
-            </strong>
-            <CardMovieHeading>
-              {' '}
-              {`${
-                title.length < 25 ? title : `${title.substring(0, 20)}...`
-              }(${year})`}{' '}
-            </CardMovieHeading>
-          </CardMovieInfo>
+    <CardLayout>
+      <Link to={`/detail/${id}`} state={{ background: { location } }}>
+        {/* <NavLink to={ModalMovieDetail}> */}
+        <button type="button" onClick={changeClickState}>
+          <LikeIcon color={likeIconColor} />
         </button>
-        {/* </NavLink> */}
-      </CardLayout>
-      {modalOn && (
-        <ModalPortal>
-          <ModalMovieDetail />
-        </ModalPortal>
-      )}
-    </>
+        <CardPoster src={image} alt={`${title} 포스터`} />
+        <CardMovieInfo>
+          <strong>
+            <span style={{ color: `${highlightColor}` }}>{rating}</span>
+            <span> / 10</span>
+          </strong>
+          <CardMovieHeading>
+            {' '}
+            {`${
+              title.length < 25 ? title : `${title.substring(0, 20)}...`
+            }(${year})`}{' '}
+          </CardMovieHeading>
+        </CardMovieInfo>
+        {/* </button> */}
+      </Link>
+    </CardLayout>
   );
 }
 
@@ -61,7 +49,7 @@ const CardLayout = styled.article`
   margin-bottom: 16px;
   border-radius: 0 0 4px 4px;
   font-weight: 400;
-  background: ${sideTabColor};
+  /* background: ${sideTabColor}; */
   color: ${sideTextColor};
   & strong {
     display: block;

@@ -7,9 +7,8 @@ import ProdCrew from 'components/detailPage/ProdCrew';
 import RecommendMovies from 'components/detailPage/RecommendMovies';
 import useDetailModel from 'models/useDetailModel';
 import { palette } from 'lib/styles/palette';
-import ModalPortal from 'components/detailModal/ModalPortal';
 
-export default function DetailPage({ onClose }) {
+export default function ModalMovieDetail() {
   const [movieMetaData, setmovieMetaData] = useState(null);
 
   const paramId = useParams().id.slice();
@@ -23,51 +22,55 @@ export default function DetailPage({ onClose }) {
   }, [movies]);
 
   return (
-    <ModalPortal>
-      <ModalBackground>
-        <DetailsCnt>
-          {movieMetaData && (
-            <>
-              <MoviePosterBox>
-                <MoviePoster src={movieMetaData.medium_cover_image} />
-              </MoviePosterBox>
-              <MovieBoxContinaer>
-                <MovieDescBox>
-                  <TitleArea
-                    title={movieMetaData.title}
-                    year={movieMetaData.year}
-                    genres={movieMetaData.genres}
-                    runtime={movieMetaData.runtime}
-                  />
-                  <NumericCnt rating={movieMetaData.rating} />
-                  <ProdCrew summary={movieMetaData.summary} />
-                </MovieDescBox>
-                <RecommMovieCnt>
-                  <RecommMovieHeader>추천 영화</RecommMovieHeader>
-                  <RecommPosterBox>
-                    {/* 추천 영화 목록 + 클릭시 해당 페이지로 이동 */}
-                    <RecommendMovies currentMovie={movieMetaData} />
-                  </RecommPosterBox>
-                </RecommMovieCnt>
-              </MovieBoxContinaer>
-            </>
-          )}
-        </DetailsCnt>
-      </ModalBackground>
-    </ModalPortal>
+    <Div id="modal">
+      <DetailsCnt>
+        {movieMetaData && (
+          <>
+            <MoviePosterBox>
+              <MoviePoster src={movieMetaData.medium_cover_image} />
+            </MoviePosterBox>
+            <MovieBoxContinaer>
+              <MovieDescBox>
+                <TitleArea
+                  title={movieMetaData.title}
+                  year={movieMetaData.year}
+                  genres={movieMetaData.genres}
+                  runtime={movieMetaData.runtime}
+                />
+                <NumericCnt rating={movieMetaData.rating} />
+                <ProdCrew summary={movieMetaData.summary} />
+              </MovieDescBox>
+              <RecommMovieCnt>
+                <RecommMovieHeader>추천 영화</RecommMovieHeader>
+                <RecommPosterBox>
+                  {/* 추천 영화 목록 + 클릭시 해당 페이지로 이동 */}
+                  <RecommendMovies currentMovie={movieMetaData} />
+                </RecommPosterBox>
+              </RecommMovieCnt>
+            </MovieBoxContinaer>
+          </>
+        )}
+      </DetailsCnt>
+    </Div>
   );
 }
 
-const ModalBackground = styled.div`
+const Div = styled.div`
   width: 100vw;
-  height: 100vh;
-  background-color: #000000;
+  height: 100%;
+  min-height: 100vh;
+  position: absolute;
+  top: 0;
+  background-color: rgba(91, 112, 131, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const DetailsCnt = styled.article`
-  width: 85vw;
-  height: max-content;
-  min-height: 100vh;
+  /* width: 100%; */
+  /* height: 1000px; */
+  /* min-height: 100vh; */
   color: #ffffff;
   background-color: ${palette.backgroundColor};
   display: flex;
