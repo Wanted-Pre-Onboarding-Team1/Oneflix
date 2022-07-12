@@ -5,7 +5,12 @@ import useDynamicScroll from './useDynamicScroll';
 
 const MOVIE_PER_PAGE = 10;
 
-const useInfinityLikeLoad = ({ paramTitle, movieListItem, mainMovieList }) => {
+const useInfinityLikeLoad = ({
+  queryTitle,
+  queryYear,
+  movieListItem,
+  mainMovieList,
+}) => {
   const [movieList, setMovieList] = useState([]);
   const [isInitialLoading, setInitialLoading] = useState(true);
   const { isTargetVisible, observeTargetRef } = useIntersectObserver();
@@ -36,11 +41,12 @@ const useInfinityLikeLoad = ({ paramTitle, movieListItem, mainMovieList }) => {
       config: {
         _page: getCurrentPageNumber(movieList),
         _limit: minimumLength || MOVIE_PER_PAGE,
-        q: paramTitle,
+        q: queryTitle,
+        year_like: queryYear,
       },
       callback,
     });
-  }, [paramTitle, minimumLength]);
+  }, [queryTitle, queryYear, minimumLength]);
 
   useEffect(() => {
     getCurrentPageNumber(movieList) === 1 && setInitialLoading(false);
@@ -52,7 +58,8 @@ const useInfinityLikeLoad = ({ paramTitle, movieListItem, mainMovieList }) => {
         url: 'movies?like=true',
         config: {
           _page: getCurrentPageNumber(movieList) + 1,
-          q: paramTitle,
+          q: queryTitle,
+          year_like: queryYear,
           _list: minimumLength || MOVIE_PER_PAGE,
         },
         callback,

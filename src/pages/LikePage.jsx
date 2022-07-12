@@ -1,19 +1,28 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import MovieCard from 'components/movieCard/MovieCard';
 import LikeSearchInput from 'components/likePage/LikeSearchInput';
 import useInfinityLikeLoad from 'hooks/useInfinityLikeLoad';
 import { palette } from 'lib/styles/palette';
 import media from 'lib/styles/media';
+import qs from 'qs';
+import SortBox from 'components/searchPage/SortBox';
 
 function LikePage() {
   const movieListItem = useRef();
   const mainMovieList = useRef();
-  const params = useParams();
-  // useInfinityLikeLoad에 검색어 전달 -> 상세 검색 페이지에서 /like로 페이지 이동할 때 검색 목록을 갱신시키는 용도
+  const location = useLocation();
+  const [sortBy, setSortBy] = useState('title');
+  const onChangeSort = (event) => {
+    setSortBy(event.target.value);
+  };
+  const query = qs.parse(location.search, {
+    ignoreQueryPrefix: true,
+  });
   const { observeTargetRef, movieList } = useInfinityLikeLoad({
-    paramTitle: params.title,
+    queryTitle: query.title,
+    queryYear: query.year,
     movieListItem,
     mainMovieList,
   });
@@ -46,6 +55,7 @@ function LikePage() {
     <StyledSearchPage>
       <LikeSearchInput />
       <StyledSearchSection>
+        <SortBox sortBy={sortBy} onChangeSort={onChangeSort} />
         {movieList?.length === 0 ? (
           <StyledSerchText>즐겨찾기 항목이 없습니다.</StyledSerchText>
         ) : (

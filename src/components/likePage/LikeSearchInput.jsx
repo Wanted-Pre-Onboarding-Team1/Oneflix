@@ -1,55 +1,45 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import styled from 'styled-components';
-import RecommendBox from 'components/searchPage/RecommendBox';
-import useInput from 'hooks/common/useInput';
-import useLikeModel from 'models/useLikeModel';
+import React, { useRef } from 'react';
 import { SearchIcon } from 'assets/imgs';
 import media from 'lib/styles/media';
 import { palette } from 'lib/styles/palette';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import useToggle from 'hooks/common/useToggle';
+import useOutSideClick from 'hooks/common/useOutsideClick';
+import { SELECT_ITEM } from 'constants';
+import useLikeRecommendForm from 'hooks/useLikeRecommendForm';
+import RecommendBox from 'components/searchPage/RecommendBox';
+import SelectBox from 'components/searchPage/SelectBox';
 
-function LikeSearchInput() {
-  // 검색어 전달을 위한 useParams
-  const params = useParams();
-  // useLikeModel에 검색어를 전달해 검색어를 포함하는 목록 수령
-  const { movies } = useLikeModel(params.title);
-  const searchData = movies?.data.map((movie) => movie.title);
-  const [keyword, onChangeValue, onClickChange] = useInput('');
-  const [recommendKeyword, setRecommendKeyword] = useState(movies);
+function SearchInput() {
+  const {
+    keyword,
+    onChangeSelect,
+    onChangeValue,
+    onClickChange,
+    recommendKeyword,
+    select,
+  } = useLikeRecommendForm();
+  const [isActive, onToggleIsActive] = useToggle();
+  const { targetEl } = useOutSideClick(isActive, onToggleIsActive);
   const navigate = useNavigate();
   const searchInput = useRef();
 
-  /*
-    submit 개선
-      - 기존: submit시 실제 페이지 이동 발생? -> 뒤로 가기 2번을 눌러야 /like로 되돌아옴
-      - 개선: event.preventDefault + React.useCallback 사용으로 라우팅만 발생
-        => 뒤로 가기 1번만 눌러도 /like로 되돌아옴
-  */
-  const handleSubmit = useCallback(
-    (event) => navigateToSearchResult(event),
-    [keyword],
-  );
-  // 라우팅 직접 담당
-  function navigateToSearchResult(event) {
-    event.preventDefault();
-    navigate(`/like/${keyword}`);
-  }
-
-  useEffect(() => {
-    if (keyword) {
-      const onChangeKeyword = () => {
-        const choosenTextList = searchData.filter((textItem) =>
-          textItem.includes(keyword),
-        );
-        setRecommendKeyword(choosenTextList);
-      };
-      onChangeKeyword();
-    }
-  }, [keyword]);
+  const onSubmit = (e) => {
+    e.preventDefault();
+    keyword && select === '제목'
+      ? navigate(`/like?title=${keyword}&year=`)
+      : navigate(`/like?title=&year=${keyword}`);
+  };
 
   return (
-    <SearchForm onSubmit={handleSubmit} ref={searchInput}>
-      {keyword && (
+    <SearchForm onSubmit={onSubmit} ref={searchInput}>
+      <SelectBox
+        selectData={SELECT_ITEM}
+        value={select}
+        onChangeValue={onChangeSelect}
+      />
+      {isActive && (
         <RecommendBox
           recommendKeyword={recommendKeyword}
           onChangeValue={onClickChange}
@@ -59,16 +49,20 @@ function LikeSearchInput() {
       <Icon src={SearchIcon} alt="검색 돋보기" />
       <InputStyled
         type="text"
-        placeholder="영화를 제목으로 검색해보세요"
+        placeholder={`영화를 ${select}으로 검색해보세요`}
         value={keyword}
         onChange={onChangeValue}
+        onFocus={onToggleIsActive}
+        ref={targetEl}
       />
-      <SearchBtn type="button">검색</SearchBtn>
+      <SearchBtn type="button" onClick={onSubmit}>
+        검색
+      </SearchBtn>
     </SearchForm>
   );
 }
 
-export default LikeSearchInput;
+export default SearchInput;
 
 const { borderColor, fontColor } = palette;
 
