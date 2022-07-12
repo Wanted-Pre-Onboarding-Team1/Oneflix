@@ -1,19 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { palette } from 'lib/styles/palette';
 import media from 'lib/styles/media';
 import SearchInput from 'components/searchPage/SearchInput';
-import useMovieModel from 'models/useMovieModel';
 import MovieCard from 'components/movieCard/MovieCard';
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import useInfinityMovieLoad from 'hooks/useInfinityMovieLoad';
+import qs from 'qs';
+import SortBox from 'components/searchPage/SortBox';
 
 function SearchPage() {
-  const params = useParams();
-  // const { movieList } = useMovieModel(params.title, 1);
-  const { observeTargetRef, movieList } = useInfinityMovieLoad();
+  const location = useLocation();
+  const [sortBy, setSortBy] = useState('title');
+  const onChangeSort = (event) => {
+    setSortBy(event.target.value);
+  };
+  const query = qs.parse(location.search, {
+    ignoreQueryPrefix: true,
+  });
+
+  const { observeTargetRef, movieList } = useInfinityMovieLoad(
+    query.title,
+    query.year,
+    sortBy,
+  );
   const requestedMovieList = movieList.map(
-    ({ id, title, year, rating, medium_cover_image: image }, index) => {
+    ({ id, title, year, rating, medium_cover_image: image, like }, index) => {
       return (
         <MovieCard
           id={id}
@@ -22,22 +34,24 @@ function SearchPage() {
           rating={rating}
           image={image}
           key={`${title}_${index}`}
+          // 즐겨찾기 표시를 위해 like props 추가
+          like={like}
         />
       );
     },
   );
-  console.log(movieList);
   return (
     <StyledSearchPage>
       <SearchInput />
       <StyledSearchSection>
+        <SortBox sortBy={sortBy} onChangeSort={onChangeSort} />
         {movieList?.length === 0 ? (
           <StyledSerchText>검색결과가 없습니다.</StyledSerchText>
         ) : (
           <StyledSearchResults>{requestedMovieList}</StyledSearchResults>
         )}
       </StyledSearchSection>
-      <div ref={observeTargetRef} />
+      <LoadMark ref={observeTargetRef} />
     </StyledSearchPage>
   );
 }
@@ -87,5 +101,7 @@ const StyledSearchResults = styled.div`
     grid-template-columns: repeat(1, 1fr);
   }
 `;
-
+const LoadMark = styled.div`
+  height: 40px;
+`;
 export default SearchPage;

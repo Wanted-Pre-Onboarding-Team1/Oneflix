@@ -1,17 +1,20 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import MovieCard from 'components/movieCard/MovieCard';
+import LikeSearchInput from 'components/likePage/LikeSearchInput';
+import useInfinityLikeLoad from 'hooks/useInfinityLikeLoad';
 import { palette } from 'lib/styles/palette';
 import media from 'lib/styles/media';
-import SearchInput from 'components/searchPage/SearchInput';
-import useMovieModel from 'models/useMovieModel';
-import MovieCard from 'components/movieCard/MovieCard';
-import { useParams } from 'react-router-dom';
 
 function LikePage() {
+  // useInfinityLikeLoad에 검색어 전달을 위한 useParams
   const params = useParams();
-  const { movies } = useMovieModel(params.title, 1);
-  const requestedMovieList = movies?.data.map(
-    ({ id, title, year, rating, medium_cover_image: image }, index) => {
+  // useInfinityLikeLoad에 검색어 전달 -> 상세 검색 페이지에서 /like로 페이지 이동할 때 검색 목록을 갱신시키는 용도
+  const { observeTargetRef, movieList } = useInfinityLikeLoad(params.title);
+
+  const requestedMovieList = movieList?.map(
+    ({ id, title, year, rating, medium_cover_image: image, like }, index) => {
       return (
         <MovieCard
           id={id}
@@ -20,6 +23,7 @@ function LikePage() {
           rating={rating}
           image={image}
           key={`${title}_${index}`}
+          like={like}
         />
       );
     },
@@ -27,14 +31,15 @@ function LikePage() {
 
   return (
     <StyledSearchPage>
-      <SearchInput />
+      <LikeSearchInput />
       <StyledSearchSection>
-        {movies?.data.length === 0 ? (
-          <StyledSerchText>즐겨찾기 한 항목이 없습니다.</StyledSerchText>
+        {movieList?.length === 0 ? (
+          <StyledSerchText>즐겨찾기 항목이 없습니다.</StyledSerchText>
         ) : (
           <StyledSearchResults>{requestedMovieList}</StyledSearchResults>
         )}
       </StyledSearchSection>
+      <div ref={observeTargetRef} />
     </StyledSearchPage>
   );
 }

@@ -1,25 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { HttpRequest } from 'lib/api/httpRequest';
 import { AiFillStar } from 'react-icons/ai';
 import { Link, useLocation } from 'react-router-dom';
 import { palette } from 'lib/styles/palette';
 
-export default function MovieCard({ id, title, year, rating, image }) {
-  const location = useLocation();
-  const [isLikeClicked, setLikeClicked] = useState(false);
-
+export default function MovieCard({ id, title, year, rating, image, like }) {
+  const [isLikeClicked, setLikeClicked] = useState(like);
   const likeIconColor = isLikeClicked ? highlightColor : fontColor;
+  const request = new HttpRequest();
 
-  function changeClickState(event) {
+  function markAsLike(event) {
     event.preventDefault();
     setLikeClicked(!isLikeClicked);
+    request.patch(`/movies/${id}`, { like: !isLikeClicked });
   }
 
   return (
     <CardLayout>
-      <Link to={`/detail/${id}`} state={{ background: { location } }}>
-        {/* <NavLink to={ModalMovieDetail}> */}
-        <button type="button" onClick={changeClickState}>
+      <NavLink to={`/detail/${id}`} state={{ background: { location } }}>
+        <button type="button" onClick={markAsLike}>
           <LikeIcon color={likeIconColor} />
         </button>
         <CardPoster src={image} alt={`${title} 포스터`} />
@@ -51,6 +51,10 @@ const CardLayout = styled.article`
   font-weight: 400;
   /* background: ${sideTabColor}; */
   color: ${sideTextColor};
+  transition: transform 300ms ease-in-out;
+  &:hover {
+    transform: scale(1.05);
+  }
   & strong {
     display: block;
     text-align: right;

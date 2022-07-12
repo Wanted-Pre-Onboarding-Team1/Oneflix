@@ -21,6 +21,8 @@ function Routing() {
         {background && (
           <Route path="/detail/:id" element={<ModalMovieDetail />} />
         )}
+        {/* 검색 결과 페이지 표시용 라우터 */}
+        <Route path="/like/:title" element={<LikePage />} />
       </Route>
     </Routes>
   );

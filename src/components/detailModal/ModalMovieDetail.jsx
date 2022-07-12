@@ -22,6 +22,7 @@ export default function ModalMovieDetail() {
   }, [movies]);
 
   return (
+<<<<<<< HEAD:src/components/detailModal/ModalMovieDetail.jsx
     <Div id="modal">
       <DetailsCnt>
         {movieMetaData && (
@@ -52,6 +53,40 @@ export default function ModalMovieDetail() {
         )}
       </DetailsCnt>
     </Div>
+=======
+    <DetailsCnt>
+      {movieMetaData && (
+        <>
+          <MoviePosterBox>
+            <MoviePoster src={movieMetaData.medium_cover_image} />
+          </MoviePosterBox>
+          <MovieBoxContinaer>
+            <MovieDescBox>
+              <TitleArea
+                title={movieMetaData.title}
+                year={movieMetaData.year}
+                genres={movieMetaData.genres}
+                runtime={movieMetaData.runtime}
+              />
+              <NumericCnt
+                id={movieMetaData.id}
+                rating={movieMetaData.rating}
+                like={movieMetaData.like}
+              />
+              <ProdCrew summary={movieMetaData.summary} />
+            </MovieDescBox>
+            <RecommMovieCnt>
+              <RecommMovieHeader>추천 영화</RecommMovieHeader>
+              <RecommPosterBox>
+                {/* 추천 영화 목록 + 클릭시 해당 페이지로 이동 */}
+                <RecommendMovies currentMovie={movieMetaData} />
+              </RecommPosterBox>
+            </RecommMovieCnt>
+          </MovieBoxContinaer>
+        </>
+      )}
+    </DetailsCnt>
+>>>>>>> 8701e7fcf4a366b68d06e845749c0ae6f5b337b9:src/pages/DetailPage.jsx
   );
 }
 
