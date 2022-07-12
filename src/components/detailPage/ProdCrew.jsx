@@ -2,15 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 export default function ProdCrew({ summary }) {
-  const sliceSummary = (text) => {
-    if (text.length > 500) return `${text.substring(0, 501)}...`;
-    return text;
-  };
-
   return (
     <section>
       <MovieSummary>
-        {summary.length > 500 ? `${summary.substring(0, 501)}...` : summary}
+        {summary && summary.length > 500 ? summary.substring(0, 501) : summary}
+        {!summary && '등록된 줄거리가 없습니다.'}
       </MovieSummary>
     </section>
   );
