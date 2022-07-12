@@ -29,7 +29,12 @@ const useInfinityLikeLoad = ({
   };
 
   useEffect(() => {
-    const callback = (response) => setMovieList(response.data);
+    const callback = (response) => {
+      const isSameLikeList =
+        JSON.stringify(response.data) === JSON.stringify(movieList);
+      if (isSameLikeList) return;
+      setMovieList(response.data);
+    };
 
     movieRequest.getWithParams({
       url: 'movies?like=true',

@@ -1,24 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { HttpRequest } from 'lib/api/httpRequest';
 import { AiFillStar } from 'react-icons/ai';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { palette } from 'lib/styles/palette';
 
-export default function MovieCard({ id, title, year, rating, image, like }) {
+export default function MovieCard({
+  id,
+  title,
+  year,
+  rating,
+  image,
+  like,
+  onRemoveLikeMovie,
+}) {
   const [isLikeClicked, setLikeClicked] = useState(like);
   const likeIconColor = isLikeClicked ? highlightColor : fontColor;
+  const location = useLocation();
   const request = new HttpRequest();
 
   function markAsLike(event) {
     event.preventDefault();
     setLikeClicked(!isLikeClicked);
     request.patch(`/movies/${id}`, { like: !isLikeClicked });
+    like &&
+      onRemoveLikeMovie((previousLikeList) =>
+        previousLikeList.filter((movie) => movie.id !== id),
+      );
   }
 
   return (
     <CardLayout>
-      <NavLink to={`/detail/${id}`}>
+      <NavLink to={`/detail/${id}`} state={{ background: { location } }}>
         <button type="button" onClick={markAsLike}>
           <LikeIcon color={likeIconColor} />
         </button>
@@ -35,6 +48,7 @@ export default function MovieCard({ id, title, year, rating, image, like }) {
             }(${year})`}{' '}
           </CardMovieHeading>
         </CardMovieInfo>
+        {/* </button> */}
       </NavLink>
     </CardLayout>
   );
@@ -48,7 +62,7 @@ const CardLayout = styled.article`
   margin-bottom: 16px;
   border-radius: 0 0 4px 4px;
   font-weight: 400;
-  background: ${sideTabColor};
+  /* background: ${sideTabColor}; */
   color: ${sideTextColor};
   transition: transform 300ms ease-in-out;
   &:hover {

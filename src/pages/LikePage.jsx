@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import MovieCard from 'components/movieCard/MovieCard';
@@ -26,8 +26,13 @@ function LikePage() {
     movieListItem,
     mainMovieList,
   });
+  const [likeList, setLikeList] = useState([]);
 
-  const requestedMovieList = movieList.map(
+  useEffect(() => {
+    movieList && setLikeList(movieList);
+  }, [movieList]);
+
+  const requestedMovieList = likeList?.map(
     ({ id, title, year, rating, medium_cover_image: image, like }, index) => {
       return (
         <li key={`${title}_${index}`} ref={movieListItem}>
@@ -39,6 +44,7 @@ function LikePage() {
             image={image}
             key={`${title}_${index}`}
             like={like}
+            onRemoveLikeMovie={setLikeList}
           />
         </li>
       );

@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 export default function TitleArea(props) {
   const { title, year, genres, runtime } = props;
+  const runtimeHour = parseInt(runtime / 60, 10);
+  const runtimeMinute = runtime % 60;
 
   return (
     <TitleInfoCnt>
@@ -10,7 +12,9 @@ export default function TitleArea(props) {
         {title} ({year})
       </Title>
       <Genres>{genres.join(', ')}</Genres>
-      <Runtime>{runtime}</Runtime>
+      <Runtime>
+        {runtimeHour}h {runtimeMinute}m
+      </Runtime>
     </TitleInfoCnt>
   );
 }
