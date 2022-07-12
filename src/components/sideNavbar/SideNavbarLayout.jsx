@@ -6,12 +6,12 @@ import LandingPage from 'pages/LandingPage';
 import SideNavbar from './SideNavbar';
 
 function SideNavbarLayout() {
-  const location = useLocation();
+  const location = useLocation().state;
 
   return (
     <NavbarLayout>
       <SideNavbar />
-      {location.state && <LandingPage />}
+      {location && <LandingPage />}
       <Outlet />
     </NavbarLayout>
   );

@@ -78,8 +78,8 @@ function LandingPage() {
             ),
           )}
         </MainMovieList>
+        <div ref={observeTargetRef} />
       </MainPageCnt>
-      <div ref={observeTargetRef} />
     </LandingPageLayout>
   );
 }

@@ -1,35 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export default function ProdCrew({ director, actor, summary }) {
+export default function ProdCrew({ summary }) {
+  const sliceSummary = (text) => {
+    if (text.length > 500) return `${text.substring(0, 501)}...`;
+    return text;
+  };
+
   return (
     <section>
-      <ul>
-        {/* <List>
-          <InfoTitle>감독</InfoTitle>
-          <InfoCont>{director}</InfoCont>
-        </CrewInfoBox>
-        <CrewInfoBox>
-          <InfoTitle>출연진</InfoTitle>
-          <InfoCont>{actor}</InfoCont>
-        </List> */}
-      </ul>
-      <MovieSummary>{summary}</MovieSummary>
+      <MovieSummary>
+        {summary.length > 500 ? `${summary.substring(0, 501)}...` : summary}
+      </MovieSummary>
     </section>
   );
 }
 
-// const CrewInfoBox = styled.li`
-//   display: flex;
-//   margin-top: 1rem;
-// `;
-// const InfoTitle = styled.h3`
-//   font-size: 2rem;
-//   margin-right: 0.8rem;
-// `;
-// const InfoCont = styled.p`
-//   font-size: 1.4rem;
-// `;
 const MovieSummary = styled.p`
   width: 30vw;
   overflow: visible;
