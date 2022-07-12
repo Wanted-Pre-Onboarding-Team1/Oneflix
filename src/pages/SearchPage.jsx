@@ -3,15 +3,22 @@ import styled from 'styled-components';
 import { palette } from 'lib/styles/palette';
 import media from 'lib/styles/media';
 import SearchInput from 'components/searchPage/SearchInput';
-import useMovieModel from 'models/useMovieModel';
 import MovieCard from 'components/movieCard/MovieCard';
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import useInfinityMovieLoad from 'hooks/useInfinityMovieLoad';
+import qs from 'qs';
 
 function SearchPage() {
-  const params = useParams();
-  // const { movieList } = useMovieModel(params.title, 1);
-  const { observeTargetRef, movieList } = useInfinityMovieLoad();
+  const location = useLocation();
+
+  const query = qs.parse(location.search, {
+    ignoreQueryPrefix: true,
+  });
+
+  const { observeTargetRef, movieList } = useInfinityMovieLoad(
+    query.title,
+    query.year,
+  );
   const requestedMovieList = movieList.map(
     ({ id, title, year, rating, medium_cover_image: image, like }, index) => {
       return (
@@ -28,7 +35,6 @@ function SearchPage() {
       );
     },
   );
-  console.log(movieList);
   return (
     <StyledSearchPage>
       <SearchInput />
@@ -39,7 +45,7 @@ function SearchPage() {
           <StyledSearchResults>{requestedMovieList}</StyledSearchResults>
         )}
       </StyledSearchSection>
-      <div ref={observeTargetRef} />
+      <LoadMark ref={observeTargetRef} />
     </StyledSearchPage>
   );
 }
@@ -89,5 +95,7 @@ const StyledSearchResults = styled.div`
     grid-template-columns: repeat(1, 1fr);
   }
 `;
-
+const LoadMark = styled.div`
+  height: 40px;
+`;
 export default SearchPage;

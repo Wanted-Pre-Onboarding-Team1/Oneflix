@@ -2,7 +2,8 @@ import { HttpRequest } from 'lib/api/httpRequest';
 import { useEffect, useState } from 'react';
 import useIntersectObserver from './useIntersectObserver';
 
-const useInfinityMovieLoad = () => {
+const MOVIE_PER_PAGE = 10;
+const useInfinityMovieLoad = (title, year) => {
   const [movieList, setMovieList] = useState([]);
   const [isInitialLoading, setInitialLoading] = useState(true);
   const { isTargetVisible, observeTargetRef } = useIntersectObserver();
@@ -18,10 +19,15 @@ const useInfinityMovieLoad = () => {
 
     movieRequest.getWithParams({
       url: 'movies',
-      config: { _page: getCurrentPageNumber(movieList) },
+      config: {
+        _page: getCurrentPageNumber(movieList),
+        _limit: MOVIE_PER_PAGE,
+        q: title,
+        year_like: year,
+      },
       callback,
     });
-  }, []);
+  }, [title, year]);
 
   useEffect(() => {
     getCurrentPageNumber(movieList) === 1 && setInitialLoading(false);
@@ -31,7 +37,11 @@ const useInfinityMovieLoad = () => {
       !isInitialLoading &&
       movieRequest.getWithParams({
         url: 'movies',
-        config: { _page: getCurrentPageNumber(movieList) + 1 },
+        config: {
+          _page: getCurrentPageNumber(movieList) + 1,
+          q: title,
+          year_like: year,
+        },
         callback,
       });
   }, [isTargetVisible, isInitialLoading]);
