@@ -1,11 +1,4 @@
-<<<<<<< HEAD
-import MainPage from 'components/mainPage/MainPage';
-import { palette } from 'lib/styles/palette';
-import React from 'react';
-import { Outlet } from 'react-router-dom';
-=======
 import React, { useState, useEffect } from 'react';
->>>>>>> 8701e7fcf4a366b68d06e845749c0ae6f5b337b9
 import styled from 'styled-components';
 import { palette } from 'lib/styles/palette';
 import useIntersectObserver from 'hooks/useIntersectObserver';
