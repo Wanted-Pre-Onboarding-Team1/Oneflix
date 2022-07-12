@@ -53,13 +53,7 @@ function LandingPage() {
       <MainPageCnt>
         <MainMovieList>
           {movieList.map(
-            ({
-              imdb_code: id,
-              title,
-              year,
-              rating,
-              medium_cover_image: image,
-            }) => (
+            ({ id, title, year, rating, medium_cover_image: image, like }) => (
               <li key={`${title}_${id}`}>
                 <MovieCard
                   id={id}
@@ -67,6 +61,7 @@ function LandingPage() {
                   year={year}
                   rating={rating}
                   image={image}
+                  like={like}
                 />
               </li>
             ),
