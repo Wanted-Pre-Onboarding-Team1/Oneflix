@@ -8,10 +8,16 @@ import { palette } from 'lib/styles/palette';
 import media from 'lib/styles/media';
 
 function LikePage() {
+  const movieListItem = React.useRef();
+  const mainMovieList = React.useRef();
   // useInfinityLikeLoad에 검색어 전달을 위한 useParams
   const params = useParams();
   // useInfinityLikeLoad에 검색어 전달 -> 상세 검색 페이지에서 /like로 페이지 이동할 때 검색 목록을 갱신시키는 용도
-  const { observeTargetRef, movieList } = useInfinityLikeLoad(params.title);
+  const { observeTargetRef, movieList } = useInfinityLikeLoad({
+    paramTitle: params.title,
+    movieListItem,
+    mainMovieList,
+  });
 
   const requestedMovieList = movieList?.map(
     ({ id, title, year, rating, medium_cover_image: image, like }, index) => {

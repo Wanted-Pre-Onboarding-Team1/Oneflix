@@ -1,42 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { palette } from 'lib/styles/palette';
 import media from 'lib/styles/media';
 import SearchInput from 'components/searchPage/SearchInput';
+import useMovieModel from 'models/useMovieModel';
 import MovieCard from 'components/movieCard/MovieCard';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import useInfinityMovieLoad from 'hooks/useInfinityMovieLoad';
-import qs from 'qs';
-import SortBox from 'components/searchPage/SortBox';
 
 function SearchPage() {
-  const movieListItem = React.useRef();
-  const mainMovieList = React.useRef();
-
-  const location = useLocation();
-  const [sortBy, setSortBy] = useState('title');
-  const onChangeSort = (event) => {
-    setSortBy(event.target.value);
-  };
-  const query = qs.parse(location.search, {
-    ignoreQueryPrefix: true,
-  });
-
-<<<<<<< HEAD
-  const { observeTargetRef, movieList } = useInfinityMovieLoad(
-    query.title,
-    query.year,
-    sortBy,
-  );
-=======
+  const [minimumLength, setMinimumLength] = useState();
+  const movieListItem = useRef();
+  const mainMovieList = useRef();
+  const params = useParams();
   const { observeTargetRef, movieList } = useInfinityMovieLoad({
-    queryTitle: query.title,
-    queryYear: query.year,
-    movieListItem,
-    mainMovieList,
+    minimumLength,
   });
 
->>>>>>> 2fa58b9 (test : useDynamicScroll 분리 테스트)
+  useEffect(() => {
+    console.log(movieListItem, mainMovieList);
+    if (movieListItem.current) {
+      const maxColumn = Math.ceil(
+        window.innerHeight / movieListItem.current.clientHeight,
+      );
+      const maxRow = Math.floor(
+        mainMovieList.current.clientWidth / movieListItem.current.clientWidth,
+      );
+      const minimumNeededLength = maxColumn * maxRow;
+      if (movieList.length < minimumNeededLength) {
+        setMinimumLength(minimumNeededLength);
+        console.log(minimumNeededLength);
+      }
+    }
+  }, [movieListItem.current, movieList]);
+
   const requestedMovieList = movieList.map(
     ({ id, title, year, rating, medium_cover_image: image, like }, index) => {
       return (
@@ -55,11 +52,11 @@ function SearchPage() {
       );
     },
   );
+  // console.log(movieList);
   return (
     <StyledSearchPage>
       <SearchInput />
       <StyledSearchSection>
-        <SortBox sortBy={sortBy} onChangeSort={onChangeSort} />
         {movieList?.length === 0 ? (
           <StyledSerchText>검색결과가 없습니다.</StyledSerchText>
         ) : (
@@ -68,7 +65,7 @@ function SearchPage() {
           </StyledSearchResults>
         )}
       </StyledSearchSection>
-      <LoadMark ref={observeTargetRef} />
+      <div ref={observeTargetRef} id="foo" />
     </StyledSearchPage>
   );
 }
@@ -104,7 +101,8 @@ const StyledSerchText = styled.div`
   color: ${fontColor};
   font-size: 2.2rem;
 `;
-const StyledSearchResults = styled.div`
+// const StyledSearchResults = styled.div`
+const StyledSearchResults = styled.ul`
   margin: 0px 40px;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -118,7 +116,5 @@ const StyledSearchResults = styled.div`
     grid-template-columns: repeat(1, 1fr);
   }
 `;
-const LoadMark = styled.div`
-  height: 40px;
-`;
+
 export default SearchPage;
