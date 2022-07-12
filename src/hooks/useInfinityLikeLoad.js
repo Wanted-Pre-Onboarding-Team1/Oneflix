@@ -40,12 +40,7 @@ const useInfinityLikeLoad = ({ paramTitle, movieListItem, mainMovieList }) => {
       },
       callback,
     });
-<<<<<<< HEAD
   }, [paramTitle, minimumLength]);
-=======
-    // dependency array에 searchTarget 추가로 세부 검색 페이지 -> /like 페이지로 이동시 검색 목록 갱신 가능
-  }, [searchTarget, movieList]);
->>>>>>> dc694d8063154d071a6b035031a4ce6df228de49
 
   useEffect(() => {
     getCurrentPageNumber(movieList) === 1 && setInitialLoading(false);

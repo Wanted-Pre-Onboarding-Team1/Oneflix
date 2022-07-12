@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import TitleArea from 'components/detailPage/TitleArea';
 import NumericCnt from 'components/detailPage/NumericCnt';
@@ -8,7 +8,6 @@ import RecommendMovies from 'components/detailPage/RecommendMovies';
 import useDetailModel from 'models/useDetailModel';
 import { palette } from 'lib/styles/palette';
 import { FiXCircle as CloseIcon } from 'react-icons/fi';
-import { useNavigate } from 'react-router-dom';
 
 export default function ModalMovieDetail() {
   const [movieMetaData, setmovieMetaData] = useState(null);

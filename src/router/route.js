@@ -8,7 +8,6 @@ import ModalMovieDetail from 'components/detailModal/ModalMovieDetail';
 
 function Routing() {
   const location = useLocation();
-  console.log(location);
   const background = location.state && location.state.background;
 
   return (

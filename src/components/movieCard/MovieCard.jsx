@@ -5,9 +5,6 @@ import { AiFillStar } from 'react-icons/ai';
 import { NavLink, useLocation } from 'react-router-dom';
 import { palette } from 'lib/styles/palette';
 
-export default function MovieCard({ id, title, year, rating, image, like }) {
-  const location = useLocation();
-
 export default function MovieCard({
   id,
   title,
@@ -19,6 +16,7 @@ export default function MovieCard({
 }) {
   const [isLikeClicked, setLikeClicked] = useState(like);
   const likeIconColor = isLikeClicked ? highlightColor : fontColor;
+  const location = useLocation();
   const request = new HttpRequest();
 
   function markAsLike(event) {
