@@ -46,6 +46,7 @@
 ```
 - 메인 페이지 퍼블리싱, 무한 스크롤 로직
 - 사이드 메뉴 퍼블리싱
+- 즐겨찾기 실시간 목록 렌더링
 ```
 
 <br />
@@ -167,7 +168,16 @@
 2. SideNavBar가 모든 컴포넌트에서 표시되지 않는 문제
     - 원인: 라우팅 설정 문제
     - 해결: Route, Outlet을 사용한 중첩 라우팅 구성으로 해결
-```
+3. 즐겨찾기 목록이 바뀔 때마다 페이지를 새로 렌더링하는 방법을 이용했을 때 무한 렌더링 발생
+    - 원인 : 요청 => state 업데이트 => 요청 ... 무한으로 발생 
+    - 해결 : ```js
+    const callback = (response) => {
+      const isSameLikeList =
+        JSON.stringify(response.data) === JSON.stringify(movieList);
+      if (isSameLikeList) return;
+      setMovieList(response.data);
+    };
+    ```
 
 <br />
 
