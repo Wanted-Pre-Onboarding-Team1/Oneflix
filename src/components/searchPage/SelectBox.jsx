@@ -66,6 +66,7 @@ const SelectLabel = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 5px;
+  min-width: 94px;
   height: 45px;
   height: 100%;
   border-radius: 6px;
