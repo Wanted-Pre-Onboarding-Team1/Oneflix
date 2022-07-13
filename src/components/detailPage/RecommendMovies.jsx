@@ -59,8 +59,7 @@ export default function RecommendMovies({ currentMovie }) {
 }
 
 const RecommMoviePoster = styled.img`
-  width: 100%;
-  min-width: 0;
-  height: auto;
+  width: auto;
+  height: 275px;
   cursor: pointer;
 `;
