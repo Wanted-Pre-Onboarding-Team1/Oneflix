@@ -64,10 +64,7 @@
 
 ## **3. 프로젝트 소개**
 
-
-- 프로젝트 기능 일람
-  ![영화정보사이트](https://user-images.githubusercontent.com/99126860/177974656-33c24277-8c5b-410f-b6f8-e97836b0450d.jpg)
-
+![OneFlix (1)](https://user-images.githubusercontent.com/73277502/178664897-8aa3e578-cc67-4a82-9de2-8ff9ca072263.jpg)
 
 <br />
 
