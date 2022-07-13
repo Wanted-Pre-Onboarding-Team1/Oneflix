@@ -31,18 +31,19 @@ const useInfinityMovieLoad = ({
   useEffect(() => {
     const callback = (response) => setMovieList(response.data);
 
-    movieRequest.getWithParams({
-      url: 'movies',
-      config: {
-        _page: getCurrentPageNumber(movieList),
-        _limit: minimumLength || MOVIES_AMOUNT_PER_PAGE,
-        q: queryTitle,
-        year_like: queryYear,
-        _sort: sort,
-        _order: 'desc',
-      },
-      callback,
-    });
+    (queryTitle || queryYear) &&
+      movieRequest.getWithParams({
+        url: 'movies',
+        config: {
+          _page: getCurrentPageNumber(movieList),
+          _limit: minimumLength || MOVIES_AMOUNT_PER_PAGE,
+          q: queryTitle,
+          year_like: queryYear,
+          _sort: sort,
+          _order: 'desc',
+        },
+        callback,
+      });
   }, [queryTitle, queryYear, sort, minimumLength]);
 
   useEffect(() => {
