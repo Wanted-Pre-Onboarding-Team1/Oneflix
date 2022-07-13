@@ -29,9 +29,7 @@
 
 ```
  - 상세 페이지 마크업
- - 즐겨찾기 페이지 데이터 표시 로직, 검색 로직
- - 무한 스크롤 로직의 동적 기능 추가
- - 상세 페이지 내 추천 영화 표시, 페이지 이동 로직
+ - 작업 Merge, 리팩토링
 ```
 
 ### # <a href="https://github.com/devMarco14">임종혁</a>
@@ -197,4 +195,10 @@ $ npm start
 
 ```
 $ git checkout -b feature/page
+```
+
+### # json server 실행
+
+```
+$ npm run server
 ```
