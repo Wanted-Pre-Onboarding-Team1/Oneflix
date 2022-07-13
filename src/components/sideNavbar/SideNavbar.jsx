@@ -24,7 +24,6 @@ export default function SideNavbar() {
       <Menu isToggled={isToggled}>
         <Link to="/">
           <Logo>
-            <StyledHomeIcon />
             <img src="/assets/ONEFLIX.svg" alt="원플릭스 로고" />
           </Logo>
         </Link>

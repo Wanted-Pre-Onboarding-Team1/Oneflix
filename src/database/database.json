@@ -213,7 +213,7 @@
       "state": "ok",
       "date_uploaded": "2022-04-27 23:20:53",
       "date_uploaded_unix": 1651094453,
-      "like": true
+      "like": false
     },
     {
       "id": 37027,
@@ -243,7 +243,7 @@
       "state": "ok",
       "date_uploaded": "2021-10-21 19:56:57",
       "date_uploaded_unix": 1634839017,
-      "like": true
+      "like": false
     },
     {
       "id": 40589,
@@ -394,7 +394,7 @@
       "state": "ok",
       "date_uploaded": "2021-03-22 22:10:28",
       "date_uploaded_unix": 1616447428,
-      "like": true
+      "like": false
     },
     {
       "id": 2640,
