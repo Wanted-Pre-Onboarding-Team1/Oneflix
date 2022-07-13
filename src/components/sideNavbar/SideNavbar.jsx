@@ -6,6 +6,7 @@ import {
   FiMenu as MenuIcon,
   FiSearch as SearchIcon,
   FiHeart as LikeIcon,
+  FiHome as HomeIcon,
 } from 'react-icons/fi';
 import { palette } from 'lib/styles/palette';
 
@@ -23,6 +24,7 @@ export default function SideNavbar() {
       </ToggleButton>
       <Menu isToggled={isToggled}>
         <Link to="/">
+          <StyledHomeIcon />
           <Logo>
             <img src="/assets/ONEFLIX.svg" alt="원플릭스 로고" />
           </Logo>
@@ -129,4 +131,11 @@ const Link = styled(NavLink)`
   justify-content: center;
   color: ${sideTextColor};
   align-items: center;
+`;
+
+const StyledHomeIcon = styled(HomeIcon)`
+  display: none;
+  ${media.small} {
+    display: block;
+  }
 `;
