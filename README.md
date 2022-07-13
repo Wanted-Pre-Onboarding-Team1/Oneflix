@@ -32,7 +32,7 @@
  - 작업 Merge, 리팩토링
 ```
 
-### # <a hreff="https://github.com/devMarco14">임종혁</a>
+### # <a href="https://github.com/devMarco14">임종혁</a>
 
 ```
  - 검색 페이지 퍼블리싱
