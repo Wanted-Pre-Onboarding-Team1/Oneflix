@@ -51,3 +51,4 @@ export const SORT_ITEMS = [
   { text: '별점 높은순', value: 'rating' },
   { text: '개봉년도 최신순', value: 'year' },
 ];
+export const LAST_LOCATION_KEY = 'LAST_LOCATION';
