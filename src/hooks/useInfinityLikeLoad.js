@@ -1,9 +1,8 @@
 import { HttpRequest } from 'lib/api/httpRequest';
 import { useEffect, useState } from 'react';
+import { MOVIES_AMOUNT_PER_PAGE } from 'constants';
 import useIntersectObserver from './useIntersectObserver';
 import useDynamicScroll from './useDynamicScroll';
-
-const MOVIE_PER_PAGE = 10;
 
 const useInfinityLikeLoad = ({
   queryTitle,
@@ -24,7 +23,7 @@ const useInfinityLikeLoad = ({
   const getCurrentPageNumber = (list) => {
     const pageNumber = minimumLength
       ? list.length / minimumLength
-      : list.length / MOVIE_PER_PAGE;
+      : list.length / MOVIES_AMOUNT_PER_PAGE;
     return Number.isInteger(pageNumber) ? pageNumber : Math.ceil(pageNumber);
   };
 
@@ -40,7 +39,7 @@ const useInfinityLikeLoad = ({
       url: 'movies?like=true',
       config: {
         _page: getCurrentPageNumber(movieList),
-        _limit: minimumLength || MOVIE_PER_PAGE,
+        _limit: minimumLength || MOVIES_AMOUNT_PER_PAGE,
         q: queryTitle,
         year_like: queryYear,
       },
@@ -60,7 +59,7 @@ const useInfinityLikeLoad = ({
           _page: getCurrentPageNumber(movieList) + 1,
           q: queryTitle,
           year_like: queryYear,
-          _list: minimumLength || MOVIE_PER_PAGE,
+          _list: minimumLength || MOVIES_AMOUNT_PER_PAGE,
         },
         callback,
       });
