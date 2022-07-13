@@ -73,7 +73,12 @@ const SelectOption = styled.button`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  width: 6.25rem;
+  border: 1px solid ${palette.borderColor};
+  color: ${palette.fontColor};
+  background: ${palette.backgroundColor};
   :hover {
     background: rgba(168, 156, 235, 0.35);
+    color: ${palette.backgroundColor};
   }
 `;

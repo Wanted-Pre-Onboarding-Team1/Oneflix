@@ -67,7 +67,6 @@ export default SearchInput;
 const { borderColor, fontColor } = palette;
 
 const SearchForm = styled.form`
-  width: 100%;
   width: 75%;
   border: 1px solid ${borderColor};
   display: flex;
@@ -75,7 +74,8 @@ const SearchForm = styled.form`
   border-radius: 6px;
   font-size: 16px;
   box-sizing: border-box;
-  height: 45px;
+  height: 3.3rem;
+  min-height: 3rem;
   max-width: 1060px;
   margin: 28px auto;
   ${media.small} {
