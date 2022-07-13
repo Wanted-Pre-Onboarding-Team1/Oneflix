@@ -191,14 +191,14 @@
     - 해결: Route, Outlet을 사용한 중첩 라우팅 구성으로 해결
 3. 즐겨찾기 목록이 바뀔 때마다 페이지를 새로 렌더링하는 방법을 이용했을 때 무한 렌더링 발생
     - 원인 : 요청 => state 업데이트 => 요청 ... 무한으로 발생 
-    - 해결 : ```js
+    - 해결 : js
     const callback = (response) => {
       const isSameLikeList =
         JSON.stringify(response.data) === JSON.stringify(movieList);
       if (isSameLikeList) return;
       setMovieList(response.data);
     };
-    ```
+ ```   
 
 <br />
 
