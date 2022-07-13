@@ -33,13 +33,13 @@ export default function SideNavbar() {
             <MenuBtnItem>
               <Move to="search">
                 <SearchIcon />
-                <span>Search</span>
+                <p>Search</p>
               </Move>
             </MenuBtnItem>
             <MenuBtnItem>
               <Move to="like">
                 <LikeIcon />
-                <span>Like</span>
+                <p>Like</p>
               </Move>
             </MenuBtnItem>
           </ul>
@@ -112,6 +112,10 @@ const MenuBtnItem = styled.li`
   margin-bottom: 20px;
   border-radius: 6px;
   height: 40px;
+
+  p {
+    margin-left: 0.5rem;
+  }
 `;
 const Move = styled(NavLink)`
   width: 100%;

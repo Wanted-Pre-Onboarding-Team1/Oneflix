@@ -38,7 +38,8 @@ export default SelectBox;
 const SelectBoxStyled = styled.div`
   display: inline-block;
   width: 8rem;
-  height: 45px;
+  height: 3.3rem;
+  min-height: 3rem;
   border: 1px solid ${palette.borderColor};
   background: ${palette.backgroundColor};
   color: ${palette.fontColor};
@@ -58,7 +59,7 @@ const SelectBoxStyled = styled.div`
 const SelectLabel = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   padding: 8px 5px;
   height: 45px;
   border-radius: 6px;
