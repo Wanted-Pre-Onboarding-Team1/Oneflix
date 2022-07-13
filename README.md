@@ -1,6 +1,8 @@
 # [Wanted Pre Onboarding FE 5th] 팀 과제 # 1-2
 
-- 주제: 영화 정보 사이트
+- 주제: 영화 정보 사이트  
+<img src="https://user-images.githubusercontent.com/73277502/178656762-a651e524-d0a2-4d4a-96ff-0d463c2ccfa1.svg" width=300px;/>
+
 - 프로젝트 기간: 2022.07.07 ~ 2022.07.13
 
 <br />
@@ -16,28 +18,28 @@
  - 원플릭스 로고 디자인
 ```
 
-### # 이지호
+### # <a href="https://github.com/leejiho9898">이지호</a>
 
 ```
  - 검색 페이지
  - 검색 페이지 인풋, 연관 검색어 로직
 ```
 
-### # 이치행
+### # <a href="https://github.com/godcl1623">이치행<a>
 
 ```
  - 상세 페이지 마크업
  - 작업 Merge, 리팩토링
 ```
 
-### # 임종혁
+### # <a hreff="https://github.com/devMarco14">임종혁</a>
 
 ```
  - 검색 페이지 퍼블리싱
  - 검색 리스트 무한 스크롤 로직
 ```
 
-### # 천현주
+### # <a href="https://github.com/HyeonJu-C">천현주</a>
 
 ```
 - 메인 페이지 퍼블리싱, 무한 스크롤 로직
