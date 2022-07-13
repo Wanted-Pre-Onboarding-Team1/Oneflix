@@ -37,7 +37,7 @@ const useInfinityMovieLoad = ({
         config: {
           _page: getCurrentPageNumber(movieList),
           _limit: minimumLength || MOVIES_AMOUNT_PER_PAGE,
-          q: queryTitle,
+          title_like: queryTitle,
           year_like: queryYear,
           _sort: sort,
           _order: 'desc',
