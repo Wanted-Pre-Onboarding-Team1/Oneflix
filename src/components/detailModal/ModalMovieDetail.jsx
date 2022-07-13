@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import TitleArea from 'components/detailPage/TitleArea';
-import NumericCnt from 'components/detailPage/NumericCnt';
-import ProdCrew from 'components/detailPage/ProdCrew';
+import NumericContent from 'components/detailPage/NumericContent';
+import Summary from 'components/detailPage/Summary';
 import RecommendMovies from 'components/detailPage/RecommendMovies';
 import useDetailModel from 'models/useDetailModel';
 import { palette } from 'lib/styles/palette';
@@ -56,8 +56,8 @@ export default function ModalMovieDetail() {
                   genres={movieMetaData.genres}
                   runtime={movieMetaData.runtime}
                 />
-                <NumericCnt rating={movieMetaData.rating} />
-                <ProdCrew summary={movieMetaData.summary} />
+                <NumericContent rating={movieMetaData.rating} />
+                <Summary summary={movieMetaData.summary} />
               </MovieDescBox>
               <RecommMovieCnt>
                 <RecommMovieHeader>이 영화와 비슷한 영화</RecommMovieHeader>
