@@ -19,6 +19,7 @@ const useInfinityLikeLoad = ({
     movieListItem,
     mainMovieList,
   );
+  console.log('likeList', movieList);
 
   const getCurrentPageNumber = (list) => {
     const pageNumber = minimumLength
