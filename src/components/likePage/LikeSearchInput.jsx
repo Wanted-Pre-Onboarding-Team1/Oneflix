@@ -99,14 +99,15 @@ const InputStyled = styled.input`
 `;
 const SearchButton = styled.button`
   background-color: #bb65ff;
-  border-radius: 6px;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
   font-weight: 500;
-  width: 91px;
-  height: 45px;
+  width: 6.5rem;
+  min-width: 3rem;
+  height: 100%;
   box-sizing: content-box;
   ${media.small} {
     width: 50px;
-    height: 30px;
     font-size: 14px;
   }
 `;

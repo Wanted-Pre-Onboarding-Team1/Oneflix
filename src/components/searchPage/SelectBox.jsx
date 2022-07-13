@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { AiFillCaretDown } from 'react-icons/ai';
 import useToggle from 'hooks/common/useToggle';
@@ -9,6 +9,7 @@ import { palette } from 'lib/styles/palette';
 function SelectBox({ selectData, value, onChangeValue }) {
   const [isSelect, onToggleSelect] = useToggle();
   const { targetEl } = useOutSideClick(isSelect, onToggleSelect);
+
   return (
     <SelectBoxStyled>
       <SelectLabel onClick={onToggleSelect} ref={targetEl}>
@@ -22,6 +23,7 @@ function SelectBox({ selectData, value, onChangeValue }) {
               key={data + index}
               type="button"
               value={data}
+              parentWidth={targetEl.current?.clientWidth}
               onClick={onChangeValue}
             >
               {data}
@@ -55,16 +57,24 @@ const SelectBoxStyled = styled.div`
     display: flex;
     flex-direction: column;
   }
+  ${media.small} {
+    height: 30px;
+  }
 `;
 const SelectLabel = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  padding: 8px 5px;
+  align-items: center;
+  padding: 0 5px;
   height: 45px;
+  height: 100%;
   border-radius: 6px;
   ${media.small} {
     height: 30px;
+    height: 100%;
+  }
+  div {
+    margin-top: 5px;
   }
 `;
 
@@ -73,7 +83,7 @@ const SelectOption = styled.button`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 6.25rem;
+  width: ${({ parentWidth }) => parentWidth}px;
   border: 1px solid ${palette.borderColor};
   color: ${palette.fontColor};
   background: ${palette.backgroundColor};
