@@ -15,7 +15,7 @@ function SearchInput() {
   const {
     keyword,
     onChangeSelect,
-    onChangeValue,
+    onChangeKeyword,
     onClickChange,
     recommendKeyword,
     select,
@@ -51,7 +51,7 @@ function SearchInput() {
         type="text"
         placeholder={`영화를 ${select}으로 검색해보세요`}
         value={keyword}
-        onChange={onChangeValue}
+        onChange={onChangeKeyword}
         onFocus={onToggleIsActive}
         ref={targetEl}
       />
