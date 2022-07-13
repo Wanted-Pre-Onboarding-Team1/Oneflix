@@ -117,6 +117,12 @@ const MenuBtnItem = styled.li`
   p {
     margin-left: 0.5rem;
   }
+
+  ${media.small} {
+    p {
+      display: none;
+    }
+  }
 `;
 const Move = styled(NavLink)`
   width: 100%;
