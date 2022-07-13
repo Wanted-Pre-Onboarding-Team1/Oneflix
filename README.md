@@ -21,8 +21,11 @@
 ### # <a href="https://github.com/leejiho9898">이지호</a>
 
 ```
- - 검색 페이지
- - 검색 페이지 인풋, 연관 검색어 로직
+ - 프로젝트 초기 설정 
+ - 검색 로직, 검색 정렬 작업
+ - 연관 검색어 로직 작업 (debounce, fuzzy string matching)
+ - <select> 태그 직접 구현
+ - 검색 기준으로 검색(제목, 제작년도) 설정
 ```
 
 ### # <a href="https://github.com/godcl1623">이치행<a>

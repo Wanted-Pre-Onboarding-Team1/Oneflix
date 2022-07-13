@@ -13,6 +13,7 @@ export default function MovieCard({
   image,
   like,
   onRemoveLikeMovie,
+  isLanding,
 }) {
   const [isLikeClicked, setLikeClicked] = useState(like);
   const likeIconColor = isLikeClicked ? highlightColor : fontColor;
@@ -32,9 +33,11 @@ export default function MovieCard({
   return (
     <CardLayout>
       <NavLink to={`/detail/${id}`} state={{ background: { location } }}>
-        <button type="button" onClick={markAsLike}>
-          <LikeIcon color={likeIconColor} />
-        </button>
+        {isLanding || (
+          <button type="button" onClick={markAsLike}>
+            <LikeIcon color={likeIconColor} />
+          </button>
+        )}
         <CardPoster src={image} alt={`${title} 포스터`} />
         <CardMovieInfo>
           <strong>
