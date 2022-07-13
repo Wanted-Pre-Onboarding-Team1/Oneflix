@@ -20,10 +20,8 @@ export default function ModalMovieDetail() {
 
   useEffect(() => {
     if (location.state?.background.location) {
-      sessionStorage.setItem(
-        LAST_LOCATION_KEY,
-        location.state.background.location.pathname,
-      );
+      const { pathname, search } = location.state.background.location;
+      sessionStorage.setItem(LAST_LOCATION_KEY, pathname + search);
     }
   }, []);
 
