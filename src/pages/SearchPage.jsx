@@ -90,7 +90,7 @@ const StyledSearchSection = styled.div`
   }
 `;
 const StyledSerchText = styled.div`
-  margin-top: 50%; //위치속성 다른 것으로
+  margin-top: 100px; //위치속성 다른 것으로
   display: flex;
   justify-content: center;
   color: ${fontColor};

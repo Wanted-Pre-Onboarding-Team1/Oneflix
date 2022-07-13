@@ -60,6 +60,7 @@ function LandingPage() {
 
   return (
     <LandingPageLayout>
+      <LandingTitle>전체 영화 목록</LandingTitle>
       <MainPageCnt>
         <MainMovieList ref={mainMovieList}>
           {movieList.map(
@@ -72,6 +73,7 @@ function LandingPage() {
                   rating={rating}
                   image={image}
                   like={like}
+                  isLanding
                 />
               </li>
             ),
@@ -102,7 +104,13 @@ const MainMovieList = styled.ul`
 `;
 
 const LandingPageLayout = styled.div`
-  display: flex;
   width: 100%;
   background: ${palette.backgroundColor};
+`;
+
+const LandingTitle = styled.h1`
+  margin: 50px 10px 0 10px;
+  font-size: 24px;
+  text-align: center;
+  color: ${palette.fontColor};
 `;

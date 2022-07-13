@@ -57,7 +57,7 @@
       "state": "ok",
       "date_uploaded": "2021-04-15 16:08:57",
       "date_uploaded_unix": 1618495737,
-      "like": false
+      "like": true
     },
     {
       "id": 3709,
@@ -213,7 +213,7 @@
       "state": "ok",
       "date_uploaded": "2022-04-27 23:20:53",
       "date_uploaded_unix": 1651094453,
-      "like": true
+      "like": false
     },
     {
       "id": 37027,
@@ -331,7 +331,7 @@
       "state": "ok",
       "date_uploaded": "2022-07-02 20:56:25",
       "date_uploaded_unix": 1656788185,
-      "like": false
+      "like": true
     },
     {
       "id": 15527,
@@ -394,7 +394,7 @@
       "state": "ok",
       "date_uploaded": "2021-03-22 22:10:28",
       "date_uploaded_unix": 1616447428,
-      "like": true
+      "like": false
     },
     {
       "id": 2640,
