@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { MOVIES_AMOUNT_PER_PAGE } from 'constants';
 import { palette } from 'lib/styles/palette';
 import useIntersectObserver from 'hooks/useIntersectObserver';
 import useDynamicScroll from 'hooks/useDynamicScroll';
 import { HttpRequest } from 'lib/api/httpRequest';
 import MovieCard from 'components/movieCard/MovieCard';
-
-const MOVIES_PER_PAGE = 10;
 
 function LandingPage() {
   const [movieList, setMovieList] = useState([]);
@@ -22,10 +21,10 @@ function LandingPage() {
   );
 
   const getCurrentPageNumber = (currentMovieList) => {
-    // const pageNumber = currentMovieList.length / MOVIES_PER_PAGE;
+    // const pageNumber = currentMovieList.length / MOVIES_AMOUNT_PER_PAGE;
     const pageNumber = minimumLength
       ? currentMovieList.length / minimumLength
-      : currentMovieList.length / MOVIES_PER_PAGE;
+      : currentMovieList.length / MOVIES_AMOUNT_PER_PAGE;
     return Number.isInteger(pageNumber) ? pageNumber : Math.ceil(pageNumber);
   };
 
@@ -36,7 +35,7 @@ function LandingPage() {
       url: 'movies',
       config: {
         _page: getCurrentPageNumber(movieList),
-        _limit: minimumLength || MOVIES_PER_PAGE,
+        _limit: minimumLength || MOVIES_AMOUNT_PER_PAGE,
       },
       callback,
     });
@@ -53,7 +52,7 @@ function LandingPage() {
         url: 'movies',
         config: {
           _page: getCurrentPageNumber(movieList) + 1,
-          _limit: minimumLength || MOVIES_PER_PAGE,
+          _limit: minimumLength || MOVIES_AMOUNT_PER_PAGE,
         },
         callback,
       });
