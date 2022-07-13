@@ -32,7 +32,9 @@
 
 ```
  - 상세 페이지 마크업
- - 작업 Merge, 리팩토링
+ - 즐겨찾기 페이지 데이터 표시 로직, 검색 로직
+ - 무한 스크롤 로직의 동적 기능 추가
+ - 상세 페이지 내 추천 영화 표시, 페이지 이동 로직
 ```
 
 ### # <a href="https://github.com/devMarco14">임종혁</a>
@@ -40,6 +42,8 @@
 ```
  - 검색 페이지 퍼블리싱
  - 검색 리스트 무한 스크롤 로직
+ - 검색 페이지 무한스크롤 훅 생성
+ - 즐겨찾기 페이지 생성
 ```
 
 ### # <a href="https://github.com/HyeonJu-C">천현주</a>
@@ -47,6 +51,7 @@
 ```
 - 메인 페이지 퍼블리싱, 무한 스크롤 로직
 - 사이드 메뉴 퍼블리싱
+- 즐겨찾기 실시간 목록 렌더링
 ```
 
 <br />
@@ -82,8 +87,7 @@
 ```
 📦public
  ┣ 📂assets
- ┃ ┗ 📂img
- ┃ ┃ ┗ 📜movieposter.jpeg
+ ┃ ┗ 📜ONEFLIX.svg
  ┣ 📜favicon.ico
  ┣ 📜index.html
  ┣ 📜manifest.json
@@ -94,38 +98,59 @@
  ┃ ┃ ┣ 📜SearchIcon.png
  ┃ ┃ ┗ 📜index.js
  ┣ 📂components
+ ┃ ┣ 📂detailModal
+ ┃ ┃ ┗ 📜ModalMovieDetail.jsx
  ┃ ┣ 📂detailPage
- ┃ ┃ ┣ 📜Cnt.jsx
- ┃ ┃ ┣ 📜ProdCrew.jsx
+ ┃ ┃ ┣ 📜NumericContent.jsx
+ ┃ ┃ ┣ 📜RecommendMovies.jsx
+ ┃ ┃ ┣ 📜Summary.jsx
  ┃ ┃ ┗ 📜TitleArea.jsx
  ┃ ┣ 📂likePage
- ┃ ┃ ┗ 📜LikePage.jsx
- ┃ ┣ 📂mainPage
- ┃ ┃ ┗ 📜MainPage.jsx
+ ┃ ┃ ┣ 📜LikeSearchInput.jsx
+ ┃ ┃ ┗ 📜_LikeSearchInput.jsx
  ┃ ┣ 📂movieCard
  ┃ ┃ ┗ 📜MovieCard.jsx
- ┃ ┣ 📂sideNavbar
+ ┃ ┣ 📂searchPage
+ ┃ ┃ ┣ 📜RecommendBox.jsx
+ ┃ ┃ ┣ 📜SearchInput.jsx
+ ┃ ┃ ┣ 📜SelectBox.jsx
+ ┃ ┃ ┗ 📜SortBox.jsx
+ ┃ ┗ 📂sideNavbar
  ┃ ┃ ┣ 📜SideNavbar.jsx
- ┃ ┃ ┗ 📜SideNavbarLayout.jsx
- ┃ ┣ 📜RecommendBox.jsx
- ┃ ┗ 📜SearchInput.jsx
+ ┃ ┃ ┗ 📜AppLayout.jsx
+ ┣ 📂constants
+ ┃ ┗ 📜index.js
  ┣ 📂database
  ┃ ┗ 📜database.json
  ┣ 📂hooks
- ┃ ┗ 📂common
- ┃ ┃ ┗ 📜useInput.js
+ ┃ ┣ 📂common
+ ┃ ┃ ┣ 📜useDebounce.js
+ ┃ ┃ ┣ 📜useInput.js
+ ┃ ┃ ┣ 📜useOutsideClick.js
+ ┃ ┃ ┗ 📜useToggle.js
+ ┃ ┣ 📜useDynamicScroll.js
+ ┃ ┣ 📜useInfinityLikeLoad.js
+ ┃ ┣ 📜useInfinityMovieLoad.js
+ ┃ ┣ 📜useIntersectObserver.js
+ ┃ ┣ 📜useLikeRecommendForm.js
+ ┃ ┗ 📜useRecommendForm.js
  ┣ 📂lib
  ┃ ┣ 📂api
- ┃ ┃ ┗ 📜httpRequest.js
+ ┃ ┃ ┣ 📜httpRequest.js
+ ┃ ┃ ┗ 📜movieAPI.js
  ┃ ┗ 📂styles
  ┃ ┃ ┣ 📜globalStyles.js
  ┃ ┃ ┣ 📜media.js
  ┃ ┃ ┗ 📜palette.js
  ┣ 📂models
- ┃ ┗ 📜useMovieModel.js
+ ┃ ┣ 📜useDetailModel.js
+ ┃ ┣ 📜useLikeModel.js
+ ┃ ┣ 📜useLikeRecommendModel.js
+ ┃ ┣ 📜useMovieModel.js
+ ┃ ┗ 📜useRecommendModel.js
  ┣ 📂pages
- ┃ ┣ 📜DetailPage.jsx
  ┃ ┣ 📜LandingPage.jsx
+ ┃ ┣ 📜LikePage.jsx
  ┃ ┗ 📜SearchPage.jsx
  ┣ 📂router
  ┃ ┗ 📜route.js
@@ -168,7 +193,16 @@
 2. SideNavBar가 모든 컴포넌트에서 표시되지 않는 문제
     - 원인: 라우팅 설정 문제
     - 해결: Route, Outlet을 사용한 중첩 라우팅 구성으로 해결
-```
+3. 즐겨찾기 목록이 바뀔 때마다 페이지를 새로 렌더링하는 방법을 이용했을 때 무한 렌더링 발생
+    - 원인 : 요청 => state 업데이트 => 요청 ... 무한으로 발생 
+    - 해결 : js
+    const callback = (response) => {
+      const isSameLikeList =
+        JSON.stringify(response.data) === JSON.stringify(movieList);
+      if (isSameLikeList) return;
+      setMovieList(response.data);
+    };
+ ```   
 
 <br />
 

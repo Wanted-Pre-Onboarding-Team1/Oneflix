@@ -7,7 +7,7 @@ export default function TitleArea(props) {
   const runtimeMinute = runtime % 60;
 
   return (
-    <TitleInfoCnt>
+    <TitleInfoContainer>
       <Title>
         {title} ({year})
       </Title>
@@ -15,11 +15,11 @@ export default function TitleArea(props) {
       <Runtime>
         {runtimeHour}h {runtimeMinute}m
       </Runtime>
-    </TitleInfoCnt>
+    </TitleInfoContainer>
   );
 }
 
-const TitleInfoCnt = styled.section`
+const TitleInfoContainer = styled.section`
   font-size: 1.2rem;
 `;
 const Title = styled.h1`

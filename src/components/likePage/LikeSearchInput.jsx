@@ -55,9 +55,9 @@ function SearchInput() {
         onFocus={onToggleIsActive}
         ref={targetEl}
       />
-      <SearchBtn type="button" onClick={onSubmit}>
+      <SearchButton type="button" onClick={onSubmit}>
         검색
-      </SearchBtn>
+      </SearchButton>
     </SearchForm>
   );
 }
@@ -67,7 +67,6 @@ export default SearchInput;
 const { borderColor, fontColor } = palette;
 
 const SearchForm = styled.form`
-  width: 100%;
   width: 75%;
   border: 1px solid ${borderColor};
   display: flex;
@@ -75,7 +74,8 @@ const SearchForm = styled.form`
   border-radius: 6px;
   font-size: 16px;
   box-sizing: border-box;
-  height: 45px;
+  height: 3.3rem;
+  min-height: 3rem;
   max-width: 1060px;
   margin: 28px auto;
   ${media.small} {
@@ -97,7 +97,7 @@ const InputStyled = styled.input`
   background-color: rgba(0, 0, 0, 0.1);
   color: ${fontColor};
 `;
-const SearchBtn = styled.button`
+const SearchButton = styled.button`
   background-color: #bb65ff;
   border-radius: 6px;
   font-weight: 500;

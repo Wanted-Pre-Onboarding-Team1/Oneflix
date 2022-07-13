@@ -21,7 +21,6 @@ function LandingPage() {
   );
 
   const getCurrentPageNumber = (currentMovieList) => {
-    // const pageNumber = currentMovieList.length / MOVIES_AMOUNT_PER_PAGE;
     const pageNumber = minimumLength
       ? currentMovieList.length / minimumLength
       : currentMovieList.length / MOVIES_AMOUNT_PER_PAGE;
@@ -61,7 +60,7 @@ function LandingPage() {
   return (
     <LandingPageLayout>
       <LandingTitle>전체 영화 목록</LandingTitle>
-      <MainPageCnt>
+      <MainPageContainer>
         <MainMovieList ref={mainMovieList}>
           {movieList.map(
             ({ id, title, year, rating, medium_cover_image: image, like }) => (
@@ -80,14 +79,14 @@ function LandingPage() {
           )}
         </MainMovieList>
         <div ref={observeTargetRef} />
-      </MainPageCnt>
+      </MainPageContainer>
     </LandingPageLayout>
   );
 }
 
 export default LandingPage;
 
-export const MainPageCnt = styled.section`
+export const MainPageContainer = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
