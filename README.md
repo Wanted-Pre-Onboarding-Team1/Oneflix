@@ -1,45 +1,52 @@
 # [Wanted Pre Onboarding FE 5th] 팀 과제 # 1-2
 
-- 주제: 영화 정보 사이트
+- 주제: 영화 정보 사이트  
+<img src="https://user-images.githubusercontent.com/73277502/178656762-a651e524-d0a2-4d4a-96ff-0d463c2ccfa1.svg" width=300px;/>
+
 - 프로젝트 기간: 2022.07.07 ~ 2022.07.13
 
 <br />
 
 ## **1. 팀원 소개 · 맡은 부분**
 
-### # 심채영
+### # <a href="https://github.com/chaengs">심채영</a>
 
 ```
  - 상세 페이지 CSS 작성
  - 상세 페이지 JSON data 반영 작업
+ - 영화 상세 페이지 모달창으로 변경 작업
+ - 원플릭스 로고 디자인
 ```
 
-### # 이지호
+### # <a href="https://github.com/leejiho9898">이지호</a>
 
 ```
  - 검색 페이지
  - 검색 페이지 인풋, 연관 검색어 로직
 ```
 
-### # 이치행
+### # <a href="https://github.com/godcl1623">이치행<a>
 
 ```
  - 상세 페이지 마크업
  - 작업 Merge, 리팩토링
 ```
 
-### # 임종혁
+### # <a href="https://github.com/devMarco14">임종혁</a>
 
 ```
  - 검색 페이지 퍼블리싱
  - 검색 리스트 무한 스크롤 로직
+ - 검색 페이지 무한스크롤 훅 생성
+ - 즐겨찾기 페이지 생성
 ```
 
-### # 천현주
+### # <a href="https://github.com/HyeonJu-C">천현주</a>
 
 ```
 - 메인 페이지 퍼블리싱, 무한 스크롤 로직
 - 사이드 메뉴 퍼블리싱
+- 즐겨찾기 실시간 목록 렌더링
 ```
 
 <br />
@@ -75,8 +82,7 @@
 ```
 📦public
  ┣ 📂assets
- ┃ ┗ 📂img
- ┃ ┃ ┗ 📜movieposter.jpeg
+ ┃ ┗ 📜ONEFLIX.svg
  ┣ 📜favicon.ico
  ┣ 📜index.html
  ┣ 📜manifest.json
@@ -87,38 +93,59 @@
  ┃ ┃ ┣ 📜SearchIcon.png
  ┃ ┃ ┗ 📜index.js
  ┣ 📂components
+ ┃ ┣ 📂detailModal
+ ┃ ┃ ┗ 📜ModalMovieDetail.jsx
  ┃ ┣ 📂detailPage
- ┃ ┃ ┣ 📜Cnt.jsx
- ┃ ┃ ┣ 📜ProdCrew.jsx
+ ┃ ┃ ┣ 📜NumericContent.jsx
+ ┃ ┃ ┣ 📜RecommendMovies.jsx
+ ┃ ┃ ┣ 📜Summary.jsx
  ┃ ┃ ┗ 📜TitleArea.jsx
  ┃ ┣ 📂likePage
- ┃ ┃ ┗ 📜LikePage.jsx
- ┃ ┣ 📂mainPage
- ┃ ┃ ┗ 📜MainPage.jsx
+ ┃ ┃ ┣ 📜LikeSearchInput.jsx
+ ┃ ┃ ┗ 📜_LikeSearchInput.jsx
  ┃ ┣ 📂movieCard
  ┃ ┃ ┗ 📜MovieCard.jsx
- ┃ ┣ 📂sideNavbar
+ ┃ ┣ 📂searchPage
+ ┃ ┃ ┣ 📜RecommendBox.jsx
+ ┃ ┃ ┣ 📜SearchInput.jsx
+ ┃ ┃ ┣ 📜SelectBox.jsx
+ ┃ ┃ ┗ 📜SortBox.jsx
+ ┃ ┗ 📂sideNavbar
  ┃ ┃ ┣ 📜SideNavbar.jsx
- ┃ ┃ ┗ 📜SideNavbarLayout.jsx
- ┃ ┣ 📜RecommendBox.jsx
- ┃ ┗ 📜SearchInput.jsx
+ ┃ ┃ ┗ 📜AppLayout.jsx
+ ┣ 📂constants
+ ┃ ┗ 📜index.js
  ┣ 📂database
  ┃ ┗ 📜database.json
  ┣ 📂hooks
- ┃ ┗ 📂common
- ┃ ┃ ┗ 📜useInput.js
+ ┃ ┣ 📂common
+ ┃ ┃ ┣ 📜useDebounce.js
+ ┃ ┃ ┣ 📜useInput.js
+ ┃ ┃ ┣ 📜useOutsideClick.js
+ ┃ ┃ ┗ 📜useToggle.js
+ ┃ ┣ 📜useDynamicScroll.js
+ ┃ ┣ 📜useInfinityLikeLoad.js
+ ┃ ┣ 📜useInfinityMovieLoad.js
+ ┃ ┣ 📜useIntersectObserver.js
+ ┃ ┣ 📜useLikeRecommendForm.js
+ ┃ ┗ 📜useRecommendForm.js
  ┣ 📂lib
  ┃ ┣ 📂api
- ┃ ┃ ┗ 📜httpRequest.js
+ ┃ ┃ ┣ 📜httpRequest.js
+ ┃ ┃ ┗ 📜movieAPI.js
  ┃ ┗ 📂styles
  ┃ ┃ ┣ 📜globalStyles.js
  ┃ ┃ ┣ 📜media.js
  ┃ ┃ ┗ 📜palette.js
  ┣ 📂models
- ┃ ┗ 📜useMovieModel.js
+ ┃ ┣ 📜useDetailModel.js
+ ┃ ┣ 📜useLikeModel.js
+ ┃ ┣ 📜useLikeRecommendModel.js
+ ┃ ┣ 📜useMovieModel.js
+ ┃ ┗ 📜useRecommendModel.js
  ┣ 📂pages
- ┃ ┣ 📜DetailPage.jsx
  ┃ ┣ 📜LandingPage.jsx
+ ┃ ┣ 📜LikePage.jsx
  ┃ ┗ 📜SearchPage.jsx
  ┣ 📂router
  ┃ ┗ 📜route.js
@@ -161,7 +188,16 @@
 2. SideNavBar가 모든 컴포넌트에서 표시되지 않는 문제
     - 원인: 라우팅 설정 문제
     - 해결: Route, Outlet을 사용한 중첩 라우팅 구성으로 해결
-```
+3. 즐겨찾기 목록이 바뀔 때마다 페이지를 새로 렌더링하는 방법을 이용했을 때 무한 렌더링 발생
+    - 원인 : 요청 => state 업데이트 => 요청 ... 무한으로 발생 
+    - 해결 : js
+    const callback = (response) => {
+      const isSameLikeList =
+        JSON.stringify(response.data) === JSON.stringify(movieList);
+      if (isSameLikeList) return;
+      setMovieList(response.data);
+    };
+ ```   
 
 <br />
 
@@ -189,4 +225,10 @@ $ npm start
 
 ```
 $ git checkout -b feature/page
+```
+
+### # json server 실행
+
+```
+$ npm run server
 ```

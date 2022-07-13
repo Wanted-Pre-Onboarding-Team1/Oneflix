@@ -23,6 +23,7 @@ function LikePage() {
   const { observeTargetRef, movieList } = useInfinityLikeLoad({
     queryTitle: query.title,
     queryYear: query.year,
+    sort: sortBy,
     movieListItem,
     mainMovieList,
   });

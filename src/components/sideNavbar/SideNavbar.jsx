@@ -24,6 +24,7 @@ export default function SideNavbar() {
       <Menu isToggled={isToggled}>
         <Link to="/">
           <Logo>
+            <StyledHomeIcon />
             <img src="/assets/ONEFLIX.svg" alt="원플릭스 로고" />
           </Logo>
         </Link>
@@ -91,7 +92,7 @@ const Menu = styled.section`
       border-radius: 6px;
       height: 40px;
     }
-    & a h1 {
+    & a h1 img {
       display: none;
     }
   }
@@ -114,6 +115,12 @@ const MenuButtonItem = styled.li`
 
   p {
     margin-left: 0.5rem;
+  }
+
+  ${media.small} {
+    p {
+      display: none;
+    }
   }
 `;
 const Link = styled(NavLink)`

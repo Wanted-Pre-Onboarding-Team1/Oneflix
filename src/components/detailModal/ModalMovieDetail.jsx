@@ -56,7 +56,11 @@ export default function ModalMovieDetail() {
                   genres={movieMetaData.genres}
                   runtime={movieMetaData.runtime}
                 />
-                <NumericContent rating={movieMetaData.rating} />
+                <NumericContent
+                  id={movieMetaData.id}
+                  rating={movieMetaData.rating}
+                  like={movieMetaData.like}
+                />
                 <Summary summary={movieMetaData.summary} />
               </MovieDescBox>
               <RecommedMovieContainer>
