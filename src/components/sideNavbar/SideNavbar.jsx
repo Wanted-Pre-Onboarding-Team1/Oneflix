@@ -6,7 +6,6 @@ import {
   FiMenu as MenuIcon,
   FiSearch as SearchIcon,
   FiHeart as LikeIcon,
-  FiHome as HomeIcon,
 } from 'react-icons/fi';
 import { palette } from 'lib/styles/palette';
 
@@ -23,25 +22,25 @@ export default function SideNavbar() {
         <MenuIcon />
       </ToggleButton>
       <Menu isToggled={isToggled}>
-        <Move to="/">
+        <Link to="/">
           <Logo>
             <img src="/assets/ONEFLIX.svg" alt="원플릭스 로고" />
           </Logo>
-        </Move>
+        </Link>
         <SidebarMenu>
           <ul>
-            <MenuBtnItem>
-              <Move to="search">
+            <MenuButtonItem>
+              <Link to="search">
                 <SearchIcon />
                 <p>Search</p>
-              </Move>
-            </MenuBtnItem>
-            <MenuBtnItem>
-              <Move to="like">
+              </Link>
+            </MenuButtonItem>
+            <MenuButtonItem>
+              <Link to="like">
                 <LikeIcon />
                 <p>Like</p>
-              </Move>
-            </MenuBtnItem>
+              </Link>
+            </MenuButtonItem>
           </ul>
         </SidebarMenu>
       </Menu>
@@ -106,7 +105,7 @@ const SidebarMenu = styled.nav`
   color: ${sideTextColor};
   margin-top: 2rem;
 `;
-const MenuBtnItem = styled.li`
+const MenuButtonItem = styled.li`
   display: flex;
   background: ${sideTabColor};
   margin-bottom: 20px;
@@ -117,7 +116,7 @@ const MenuBtnItem = styled.li`
     margin-left: 0.5rem;
   }
 `;
-const Move = styled(NavLink)`
+const Link = styled(NavLink)`
   width: 100%;
   height: 100%;
   display: flex;
@@ -125,9 +124,3 @@ const Move = styled(NavLink)`
   color: ${sideTextColor};
   align-items: center;
 `;
-// const StyledHomeIcon = styled(HomeIcon)`
-//   display: none;
-//   ${media.small} {
-//     display: block;
-//   }
-// `;

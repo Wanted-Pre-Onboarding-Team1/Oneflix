@@ -1,7 +1,7 @@
 import SearchPage from 'pages/SearchPage';
 import React from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import SideNavbarLayout from 'components/sideNavbar/SideNavbarLayout';
+import AppLayout from 'components/sideNavbar/AppLayout';
 import LandingPage from 'pages/LandingPage';
 import LikePage from 'pages/LikePage';
 import ModalMovieDetail from 'components/detailModal/ModalMovieDetail';
@@ -13,7 +13,7 @@ function Routing() {
   return (
     <>
       <Routes location={background || location}>
-        <Route element={<SideNavbarLayout />}>
+        <Route element={<AppLayout />}>
           <Route path="/" element={<LandingPage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/search/:title" element={<SearchPage />} />

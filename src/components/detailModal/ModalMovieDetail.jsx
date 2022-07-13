@@ -39,7 +39,7 @@ export default function ModalMovieDetail() {
 
   return (
     <ModalBackground>
-      <DetailsCnt>
+      <DetailsContainer>
         <CloseButton type="button" onClick={closeModal}>
           <CloseIcon className="closeIcon" />
         </CloseButton>
@@ -59,16 +59,16 @@ export default function ModalMovieDetail() {
                 <NumericContent rating={movieMetaData.rating} />
                 <Summary summary={movieMetaData.summary} />
               </MovieDescBox>
-              <RecommMovieCnt>
+              <RecommedMovieContainer>
                 <RecommMovieHeader>이 영화와 비슷한 영화</RecommMovieHeader>
                 <RecommPosterBox>
                   <RecommendMovies currentMovie={movieMetaData} />
                 </RecommPosterBox>
-              </RecommMovieCnt>
+              </RecommedMovieContainer>
             </MovieBoxContinaer>
           </>
         )}
-      </DetailsCnt>
+      </DetailsContainer>
     </ModalBackground>
   );
 }
@@ -96,7 +96,7 @@ const CloseButton = styled.button`
   top: 17%;
 `;
 
-const DetailsCnt = styled.article`
+const DetailsContainer = styled.article`
   width: 85vw;
   height: 69vh;
   color: ${palette.fontColor};
@@ -105,7 +105,6 @@ const DetailsCnt = styled.article`
   justify-content: center;
   align-items: center;
   padding-right: 2.8rem;
-  /* border: 1px solid white; */
   border-radius: 5%;
 `;
 const MoviePosterBox = styled.section`
@@ -122,7 +121,7 @@ const MovieDescBox = styled.section`
   flex-direction: column;
   justify-content: center;
 `;
-const RecommMovieCnt = styled(MovieDescBox)`
+const RecommedMovieContainer = styled(MovieDescBox)`
   margin-top: 2rem;
 `;
 const RecommMovieHeader = styled.h2`
