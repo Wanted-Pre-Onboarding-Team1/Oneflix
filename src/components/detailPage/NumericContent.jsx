@@ -4,7 +4,7 @@ import { AiFillStar } from 'react-icons/ai';
 import { HttpRequest } from 'lib/api/httpRequest';
 import { palette } from 'lib/styles/palette';
 
-export default function NumericCnt({ id, rating, like }) {
+export default function NumericContent({ id, rating, like }) {
   const [isLikeClicked, setLikeClicked] = useState(like);
   const likeIconColor = isLikeClicked ? highlightColor : fontColor;
   const request = new HttpRequest();
@@ -25,7 +25,7 @@ export default function NumericCnt({ id, rating, like }) {
   }
 
   return (
-    <NumericInfoCnt>
+    <NumericInfoContent>
       <Rating>
         평점
         <strong>{rating}</strong>
@@ -33,13 +33,13 @@ export default function NumericCnt({ id, rating, like }) {
       <LikeBtn type="button" onClick={handleClick}>
         즐겨찾기 <AiFillStar className="like" color={likeIconColor} />
       </LikeBtn>
-    </NumericInfoCnt>
+    </NumericInfoContent>
   );
 }
 
 const { highlightColor, fontColor } = palette;
 
-const NumericInfoCnt = styled.section`
+const NumericInfoContent = styled.section`
   font-size: 1.4rem;
   margin-top: 1rem;
   display: flex;

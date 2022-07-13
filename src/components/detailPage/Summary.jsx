@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export default function ProdCrew({ summary }) {
+export default function Summary({ summary }) {
   return (
     <section>
       <MovieSummary>
@@ -18,7 +18,4 @@ const MovieSummary = styled.p`
   font-size: 1rem;
   line-height: 1.3rem;
   margin-top: 1rem;
-`;
-const NoSummary = styled.p`
-  margin: 3.125rem 0;
 `;
