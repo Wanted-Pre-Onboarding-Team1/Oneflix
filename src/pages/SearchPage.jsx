@@ -12,7 +12,6 @@ import SortBox from 'components/searchPage/SortBox';
 function SearchPage() {
   const movieListItem = useRef();
   const mainMovieList = useRef();
-
   const location = useLocation();
   const [sortBy, setSortBy] = useState('title');
   const onChangeSort = (event) => {

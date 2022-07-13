@@ -7,8 +7,8 @@ import useInput from './common/useInput';
 const useRecommendForm = () => {
   const [keyword, onChangeKeyword, onClickChange] = useInput('');
   const [select, onChangeSelect] = useInput(SELECT_ITEM[0]);
-  const DebounceKeyword = useApplyDebounce(keyword, 1000);
-  const { searchTitleData } = useRecommendModel(DebounceKeyword);
+  const debounceKeyword = useApplyDebounce(keyword, 100);
+  const { searchTitleData } = useRecommendModel(debounceKeyword);
   const [recommendKeyword, setRecommendKeyword] = useState(searchTitleData);
   const onChangeRecommend = (array) => {
     const choosenTextList = array.filter((textItem) =>
@@ -21,7 +21,7 @@ const useRecommendForm = () => {
     if (keyword) {
       switch (select) {
         case '제목':
-          onChangeRecommend(searchTitleData);
+          setRecommendKeyword(searchTitleData);
           break;
         case '개봉년도':
           onChangeRecommend(YEAR_ITEMS);
@@ -30,7 +30,7 @@ const useRecommendForm = () => {
           break;
       }
     }
-  }, [keyword, select]);
+  }, [debounceKeyword, select]);
 
   return {
     keyword,

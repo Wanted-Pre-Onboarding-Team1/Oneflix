@@ -9,7 +9,7 @@ export const getMoviesAPI = async (title, year, page) => {
 };
 
 export const getMoviesTitleAPI = async (title) => {
-  const response = await request.get(`/movies?_limit=10&q=${title}`);
+  const response = await request.get(`/movies?_limit=20&title_like=${title}`);
   return response.data;
 };
 
