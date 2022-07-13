@@ -44,6 +44,7 @@ export default function RecommendMovies({ currentMovie }) {
   return genreSearchResult.current?.map(
     ({ id, title, medium_cover_image: posterImg }, index) => {
       return (
+        // <StylePosterWrap>
         <RecommMoviePoster
           src={posterImg}
           alt={`recommend movie: ${title}`}
@@ -59,7 +60,8 @@ export default function RecommendMovies({ currentMovie }) {
 }
 
 const RecommMoviePoster = styled.img`
-  width: auto;
-  height: 275px;
+  width: 25%;
+  min-width: 0;
+  height: auto;
   cursor: pointer;
 `;

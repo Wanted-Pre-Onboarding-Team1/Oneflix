@@ -74,7 +74,8 @@ const SearchForm = styled.form`
   border-radius: 6px;
   font-size: 16px;
   box-sizing: border-box;
-  height: 45px;
+  height: 3.3rem;
+  min-height: 3rem;
   max-width: 1060px;
   margin: 28px auto;
   ${media.small} {
@@ -101,7 +102,8 @@ const SearchBtn = styled.button`
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
   font-weight: 500;
-  width: 91px;
+  width: 6.5rem;
+  min-width: 3rem;
   height: 45px;
   box-sizing: content-box;
   ${media.small} {
