@@ -1,37 +1,40 @@
 import { YEAR_ITEMS, SELECT_ITEM } from 'constants';
 import useRecommendModel from 'models/useRecommendModel';
 import { useEffect, useState } from 'react';
+import useApplyDebounce from './common/useDebounce';
 import useInput from './common/useInput';
 
 const useRecommendForm = () => {
-  const [keyword, onChangeValue, onClickChange] = useInput('');
+  const [keyword, onChangeKeyword, onClickChange] = useInput('');
   const [select, onChangeSelect] = useInput(SELECT_ITEM[0]);
-  const { searchTitleData } = useRecommendModel();
+  const DebounceKeyword = useApplyDebounce(keyword, 1000);
+  const { searchTitleData } = useRecommendModel(DebounceKeyword);
   const [recommendKeyword, setRecommendKeyword] = useState(searchTitleData);
+  const onChangeRecommend = (array) => {
+    const choosenTextList = array.filter((textItem) =>
+      textItem.includes(keyword),
+    );
+    setRecommendKeyword(choosenTextList);
+  };
+
   useEffect(() => {
-    if (keyword && select === '제목') {
-      const onChangeRecommend = () => {
-        const choosenTextList = searchTitleData.filter((textItem) =>
-          textItem.includes(keyword),
-        );
-        setRecommendKeyword(choosenTextList);
-      };
-      onChangeRecommend();
+    if (keyword) {
+      switch (select) {
+        case '제목':
+          onChangeRecommend(searchTitleData);
+          break;
+        case '개봉년도':
+          onChangeRecommend(YEAR_ITEMS);
+          break;
+        default:
+          break;
+      }
     }
-    if (keyword && select === '개봉년도') {
-      const onChangeRecommend = () => {
-        const choosenTextList = YEAR_ITEMS.filter((textItem) =>
-          textItem.includes(keyword),
-        );
-        setRecommendKeyword(choosenTextList);
-      };
-      onChangeRecommend();
-    }
-  }, [keyword]);
+  }, [keyword, select]);
 
   return {
     keyword,
-    onChangeValue,
+    onChangeKeyword,
     onClickChange,
     select,
     onChangeSelect,
