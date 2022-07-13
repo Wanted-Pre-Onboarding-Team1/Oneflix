@@ -82,8 +82,7 @@
 ```
 📦public
  ┣ 📂assets
- ┃ ┗ 📂img
- ┃ ┃ ┗ 📜movieposter.jpeg
+ ┃ ┗ 📜ONEFLIX.svg
  ┣ 📜favicon.ico
  ┣ 📜index.html
  ┣ 📜manifest.json
@@ -94,38 +93,60 @@
  ┃ ┃ ┣ 📜SearchIcon.png
  ┃ ┃ ┗ 📜index.js
  ┣ 📂components
+ ┃ ┣ 📂detailModal
+ ┃ ┃ ┣ 📜ModalMovieDetail.jsx
+ ┃ ┃ ┗ 📜ModalPortal.jsx
  ┃ ┣ 📂detailPage
- ┃ ┃ ┣ 📜Cnt.jsx
- ┃ ┃ ┣ 📜ProdCrew.jsx
+ ┃ ┃ ┣ 📜NumericContent.jsx
+ ┃ ┃ ┣ 📜RecommendMovies.jsx
+ ┃ ┃ ┣ 📜Summary.jsx
  ┃ ┃ ┗ 📜TitleArea.jsx
  ┃ ┣ 📂likePage
- ┃ ┃ ┗ 📜LikePage.jsx
- ┃ ┣ 📂mainPage
- ┃ ┃ ┗ 📜MainPage.jsx
+ ┃ ┃ ┣ 📜LikeSearchInput.jsx
+ ┃ ┃ ┗ 📜_LikeSearchInput.jsx
  ┃ ┣ 📂movieCard
  ┃ ┃ ┗ 📜MovieCard.jsx
- ┃ ┣ 📂sideNavbar
+ ┃ ┣ 📂searchPage
+ ┃ ┃ ┣ 📜RecommendBox.jsx
+ ┃ ┃ ┣ 📜SearchInput.jsx
+ ┃ ┃ ┣ 📜SelectBox.jsx
+ ┃ ┃ ┗ 📜SortBox.jsx
+ ┃ ┗ 📂sideNavbar
  ┃ ┃ ┣ 📜SideNavbar.jsx
  ┃ ┃ ┗ 📜SideNavbarLayout.jsx
- ┃ ┣ 📜RecommendBox.jsx
- ┃ ┗ 📜SearchInput.jsx
+ ┣ 📂constants
+ ┃ ┗ 📜index.js
  ┣ 📂database
  ┃ ┗ 📜database.json
  ┣ 📂hooks
- ┃ ┗ 📂common
- ┃ ┃ ┗ 📜useInput.js
+ ┃ ┣ 📂common
+ ┃ ┃ ┣ 📜useDebounce.js
+ ┃ ┃ ┣ 📜useInput.js
+ ┃ ┃ ┣ 📜useOutsideClick.js
+ ┃ ┃ ┗ 📜useToggle.js
+ ┃ ┣ 📜useDynamicScroll.js
+ ┃ ┣ 📜useInfinityLikeLoad.js
+ ┃ ┣ 📜useInfinityMovieLoad.js
+ ┃ ┣ 📜useIntersectObserver.js
+ ┃ ┣ 📜useLikeRecommendForm.js
+ ┃ ┗ 📜useRecommendForm.js
  ┣ 📂lib
  ┃ ┣ 📂api
- ┃ ┃ ┗ 📜httpRequest.js
+ ┃ ┃ ┣ 📜httpRequest.js
+ ┃ ┃ ┗ 📜movieAPI.js
  ┃ ┗ 📂styles
  ┃ ┃ ┣ 📜globalStyles.js
  ┃ ┃ ┣ 📜media.js
  ┃ ┃ ┗ 📜palette.js
  ┣ 📂models
- ┃ ┗ 📜useMovieModel.js
+ ┃ ┣ 📜useDetailModel.js
+ ┃ ┣ 📜useLikeModel.js
+ ┃ ┣ 📜useLikeRecommendModel.js
+ ┃ ┣ 📜useMovieModel.js
+ ┃ ┗ 📜useRecommendModel.js
  ┣ 📂pages
- ┃ ┣ 📜DetailPage.jsx
  ┃ ┣ 📜LandingPage.jsx
+ ┃ ┣ 📜LikePage.jsx
  ┃ ┗ 📜SearchPage.jsx
  ┣ 📂router
  ┃ ┗ 📜route.js
