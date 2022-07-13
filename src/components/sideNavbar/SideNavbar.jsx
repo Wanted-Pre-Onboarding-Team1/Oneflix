@@ -24,8 +24,9 @@ export default function SideNavbar() {
       </ToggleButton>
       <Menu isToggled={isToggled}>
         <Move to="/">
-          <StyledHomeIcon />
-          <Logo>Watchlists</Logo>
+          <Logo>
+            <img src="/assets/ONEFLIX.svg" alt="원플릭스 로고" />
+          </Logo>
         </Move>
         <SidebarMenu>
           <ul>
@@ -97,12 +98,13 @@ const Menu = styled.section`
   }
 `;
 const Logo = styled.h1`
-  color: ${highlightColor};
-  font-size: 2rem;
-  margin-bottom: 20px;
+  img {
+    width: 15rem;
+  }
 `;
 const SidebarMenu = styled.nav`
   color: ${sideTextColor};
+  margin-top: 2rem;
 `;
 const MenuBtnItem = styled.li`
   display: flex;
@@ -119,9 +121,9 @@ const Move = styled(NavLink)`
   color: ${sideTextColor};
   align-items: center;
 `;
-const StyledHomeIcon = styled(HomeIcon)`
-  display: none;
-  ${media.small} {
-    display: block;
-  }
-`;
+// const StyledHomeIcon = styled(HomeIcon)`
+//   display: none;
+//   ${media.small} {
+//     display: block;
+//   }
+// `;

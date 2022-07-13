@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { palette } from 'lib/styles/palette';
 import media from 'lib/styles/media';
@@ -7,29 +7,42 @@ import MovieCard from 'components/movieCard/MovieCard';
 import { useLocation } from 'react-router-dom';
 import useInfinityMovieLoad from 'hooks/useInfinityMovieLoad';
 import qs from 'qs';
+import SortBox from 'components/searchPage/SortBox';
 
 function SearchPage() {
-  const location = useLocation();
+  const movieListItem = useRef();
+  const mainMovieList = useRef();
 
+  const location = useLocation();
+  const [sortBy, setSortBy] = useState('title');
+  const onChangeSort = (event) => {
+    setSortBy(event.target.value);
+  };
   const query = qs.parse(location.search, {
     ignoreQueryPrefix: true,
   });
 
-  const { observeTargetRef, movieList } = useInfinityMovieLoad(
-    query.title,
-    query.year,
-  );
+  const { observeTargetRef, movieList } = useInfinityMovieLoad({
+    queryTitle: query.title,
+    queryYear: query.year,
+    movieListItem,
+    mainMovieList,
+  });
+
   const requestedMovieList = movieList.map(
-    ({ id, title, year, rating, medium_cover_image: image }, index) => {
+    ({ id, title, year, rating, medium_cover_image: image, like }, index) => {
       return (
-        <MovieCard
-          id={id}
-          title={title}
-          year={year}
-          rating={rating}
-          image={image}
-          key={`${title}_${index}`}
-        />
+        <li key={`${title}_${index}`} ref={movieListItem}>
+          <MovieCard
+            id={id}
+            title={title}
+            year={year}
+            rating={rating}
+            image={image}
+            key={`${title}_${index}`}
+            like={like}
+          />
+        </li>
       );
     },
   );
@@ -37,10 +50,13 @@ function SearchPage() {
     <StyledSearchPage>
       <SearchInput />
       <StyledSearchSection>
+        <SortBox sortBy={sortBy} onChangeSort={onChangeSort} />
         {movieList?.length === 0 ? (
           <StyledSerchText>검색결과가 없습니다.</StyledSerchText>
         ) : (
-          <StyledSearchResults>{requestedMovieList}</StyledSearchResults>
+          <StyledSearchResults ref={mainMovieList}>
+            {requestedMovieList}
+          </StyledSearchResults>
         )}
       </StyledSearchSection>
       <LoadMark ref={observeTargetRef} />

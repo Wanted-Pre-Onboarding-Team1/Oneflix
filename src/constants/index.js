@@ -46,3 +46,8 @@ export const YEAR_ITEMS = [
   '1980',
   '1970',
 ];
+export const SORT_ITEMS = [
+  { text: '제목순', value: 'title' },
+  { text: '별점 높은순', value: 'rating' },
+  { text: '개봉년도 최신순', value: 'year' },
+];

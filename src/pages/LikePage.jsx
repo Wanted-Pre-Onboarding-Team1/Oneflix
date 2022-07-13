@@ -1,40 +1,70 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import MovieCard from 'components/movieCard/MovieCard';
+import LikeSearchInput from 'components/likePage/LikeSearchInput';
+import useInfinityLikeLoad from 'hooks/useInfinityLikeLoad';
 import { palette } from 'lib/styles/palette';
 import media from 'lib/styles/media';
-import SearchInput from 'components/searchPage/SearchInput';
-import useMovieModel from 'models/useMovieModel';
-import MovieCard from 'components/movieCard/MovieCard';
-import { useParams } from 'react-router-dom';
+import qs from 'qs';
+import SortBox from 'components/searchPage/SortBox';
 
 function LikePage() {
-  const params = useParams();
-  const { movies } = useMovieModel(params.title, 1);
-  const requestedMovieList = movies?.data.map(
-    ({ id, title, year, rating, medium_cover_image: image }, index) => {
+  const movieListItem = useRef();
+  const mainMovieList = useRef();
+  const location = useLocation();
+  const [sortBy, setSortBy] = useState('title');
+  const onChangeSort = (event) => {
+    setSortBy(event.target.value);
+  };
+  const query = qs.parse(location.search, {
+    ignoreQueryPrefix: true,
+  });
+  const { observeTargetRef, movieList } = useInfinityLikeLoad({
+    queryTitle: query.title,
+    queryYear: query.year,
+    movieListItem,
+    mainMovieList,
+  });
+  const [likeList, setLikeList] = useState([]);
+
+  useEffect(() => {
+    movieList && setLikeList(movieList);
+  }, [movieList]);
+
+  const requestedMovieList = likeList?.map(
+    ({ id, title, year, rating, medium_cover_image: image, like }, index) => {
       return (
-        <MovieCard
-          id={id}
-          title={title}
-          year={year}
-          rating={rating}
-          image={image}
-          key={`${title}_${index}`}
-        />
+        <li key={`${title}_${index}`} ref={movieListItem}>
+          <MovieCard
+            id={id}
+            title={title}
+            year={year}
+            rating={rating}
+            image={image}
+            key={`${title}_${index}`}
+            like={like}
+            onRemoveLikeMovie={setLikeList}
+          />
+        </li>
       );
     },
   );
 
   return (
     <StyledSearchPage>
-      <SearchInput />
+      <LikeSearchInput />
       <StyledSearchSection>
-        {movies?.data.length === 0 ? (
-          <StyledSerchText>즐겨찾기 한 항목이 없습니다.</StyledSerchText>
+        <SortBox sortBy={sortBy} onChangeSort={onChangeSort} />
+        {movieList?.length === 0 ? (
+          <StyledSerchText>즐겨찾기 항목이 없습니다.</StyledSerchText>
         ) : (
-          <StyledSearchResults>{requestedMovieList}</StyledSearchResults>
+          <StyledSearchResults ref={mainMovieList}>
+            {requestedMovieList}
+          </StyledSearchResults>
         )}
       </StyledSearchSection>
+      <LoadMark ref={observeTargetRef} />
     </StyledSearchPage>
   );
 }
@@ -83,6 +113,9 @@ const StyledSearchResults = styled.div`
   ${media.custom(576)} {
     grid-template-columns: repeat(1, 1fr);
   }
+`;
+const LoadMark = styled.div`
+  height: 40px;
 `;
 
 export default LikePage;
