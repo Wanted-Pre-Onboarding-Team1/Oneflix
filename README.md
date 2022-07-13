@@ -94,8 +94,7 @@
  ┃ ┃ ┗ 📜index.js
  ┣ 📂components
  ┃ ┣ 📂detailModal
- ┃ ┃ ┣ 📜ModalMovieDetail.jsx
- ┃ ┃ ┗ 📜ModalPortal.jsx
+ ┃ ┃ ┗ 📜ModalMovieDetail.jsx
  ┃ ┣ 📂detailPage
  ┃ ┃ ┣ 📜NumericContent.jsx
  ┃ ┃ ┣ 📜RecommendMovies.jsx
@@ -113,7 +112,7 @@
  ┃ ┃ ┗ 📜SortBox.jsx
  ┃ ┗ 📂sideNavbar
  ┃ ┃ ┣ 📜SideNavbar.jsx
- ┃ ┃ ┗ 📜SideNavbarLayout.jsx
+ ┃ ┃ ┗ 📜AppLayout.jsx
  ┣ 📂constants
  ┃ ┗ 📜index.js
  ┣ 📂database
