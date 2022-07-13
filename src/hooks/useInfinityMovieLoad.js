@@ -30,16 +30,19 @@ const useInfinityMovieLoad = ({
   useEffect(() => {
     const callback = (response) => setMovieList(response.data);
 
-    movieRequest.getWithParams({
-      url: 'movies',
-      config: {
-        _page: getCurrentPageNumber(movieList),
-        _limit: minimumLength || MOVIES_AMOUNT_PER_PAGE,
-        q: queryTitle,
-        year_like: queryYear,
-      },
-      callback,
-    });
+    (queryTitle || queryYear) &&
+      movieRequest.getWithParams({
+        url: 'movies',
+        config: {
+          _page: getCurrentPageNumber(movieList),
+          _limit: minimumLength || MOVIES_AMOUNT_PER_PAGE,
+          q: queryTitle,
+          year_like: queryYear,
+        },
+        callback,
+      });
+
+    console.log('request');
   }, [queryTitle, queryYear, minimumLength]);
 
   useEffect(() => {
