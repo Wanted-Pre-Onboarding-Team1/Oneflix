@@ -25,6 +25,7 @@ export default function SideNavbar() {
       <Menu isToggled={isToggled}>
         <Move to="/">
           <Logo>
+            <StyledHomeIcon />
             <img src="/assets/ONEFLIX.svg" alt="원플릭스 로고" />
           </Logo>
         </Move>
@@ -92,7 +93,7 @@ const Menu = styled.section`
       border-radius: 6px;
       height: 40px;
     }
-    & a h1 {
+    & a h1 img {
       display: none;
     }
   }
@@ -121,9 +122,9 @@ const Move = styled(NavLink)`
   color: ${sideTextColor};
   align-items: center;
 `;
-// const StyledHomeIcon = styled(HomeIcon)`
-//   display: none;
-//   ${media.small} {
-//     display: block;
-//   }
-// `;
+const StyledHomeIcon = styled(HomeIcon)`
+  display: none;
+  ${media.small} {
+    display: block;
+  }
+`;
