@@ -25,6 +25,7 @@ function SearchPage() {
   const { observeTargetRef, movieList } = useInfinityMovieLoad({
     queryTitle: query.title,
     queryYear: query.year,
+    sort: sortBy,
     movieListItem,
     mainMovieList,
   });

@@ -7,6 +7,7 @@ import useDynamicScroll from './useDynamicScroll';
 const useInfinityMovieLoad = ({
   queryTitle,
   queryYear,
+  sort,
   movieListItem,
   mainMovieList,
 }) => {
@@ -37,10 +38,12 @@ const useInfinityMovieLoad = ({
         _limit: minimumLength || MOVIES_AMOUNT_PER_PAGE,
         q: queryTitle,
         year_like: queryYear,
+        _sort: sort,
+        _order: 'desc',
       },
       callback,
     });
-  }, [queryTitle, queryYear, minimumLength]);
+  }, [queryTitle, queryYear, sort, minimumLength]);
 
   useEffect(() => {
     getCurrentPageNumber(movieList) === 1 && setInitialLoading(false);

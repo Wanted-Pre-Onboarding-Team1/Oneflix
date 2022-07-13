@@ -9,7 +9,6 @@ const useRecommendModel = (keyword) => {
       try {
         const response = await getMoviesTitleAPI(keyword);
         setMovies(response);
-        console.log(response);
       } catch (error) {
         // eslint-disable-next-line no-alert
         alert(error);
