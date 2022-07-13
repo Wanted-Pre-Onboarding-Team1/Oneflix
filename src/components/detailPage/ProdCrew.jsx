@@ -19,3 +19,6 @@ const MovieSummary = styled.p`
   line-height: 1.3rem;
   margin-top: 1rem;
 `;
+const NoSummary = styled.p`
+  margin: 3.125rem 0;
+`;

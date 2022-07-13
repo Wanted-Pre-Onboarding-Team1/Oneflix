@@ -11,7 +11,7 @@ function SideNavbarLayout() {
   return (
     <NavbarLayout>
       <SideNavbar />
-      {location && <LandingPage />}
+      {/* {location && <LandingPage />} */}
       <Outlet />
     </NavbarLayout>
   );

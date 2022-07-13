@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import TitleArea from 'components/detailPage/TitleArea';
 import NumericCnt from 'components/detailPage/NumericCnt';
@@ -8,13 +8,22 @@ import RecommendMovies from 'components/detailPage/RecommendMovies';
 import useDetailModel from 'models/useDetailModel';
 import { palette } from 'lib/styles/palette';
 import { FiXCircle as CloseIcon } from 'react-icons/fi';
+import { LAST_LOCATION_KEY } from 'constants';
 
 export default function ModalMovieDetail() {
   const [movieMetaData, setmovieMetaData] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const paramId = useParams().id.slice();
   const movies = useDetailModel(paramId);
+
+  useEffect(() => {
+    if (location.state?.background.location) {
+      const { pathname, search } = location.state.background.location;
+      sessionStorage.setItem(LAST_LOCATION_KEY, pathname + search);
+    }
+  }, []);
 
   useEffect(() => {
     if (movies.movies) {
@@ -24,7 +33,8 @@ export default function ModalMovieDetail() {
   }, [movies]);
 
   const closeModal = () => {
-    navigate(-1);
+    const lastLocation = sessionStorage.getItem(LAST_LOCATION_KEY);
+    navigate(lastLocation, { replace: true });
   };
 
   return (
@@ -50,9 +60,8 @@ export default function ModalMovieDetail() {
                 <ProdCrew summary={movieMetaData.summary} />
               </MovieDescBox>
               <RecommMovieCnt>
-                <RecommMovieHeader>추천 영화</RecommMovieHeader>
+                <RecommMovieHeader>이 영화와 비슷한 영화</RecommMovieHeader>
                 <RecommPosterBox>
-                  {/* 추천 영화 목록 + 클릭시 해당 페이지로 이동 */}
                   <RecommendMovies currentMovie={movieMetaData} />
                 </RecommPosterBox>
               </RecommMovieCnt>

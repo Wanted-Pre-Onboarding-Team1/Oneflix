@@ -11,19 +11,23 @@ function Routing() {
   const background = location.state && location.state.background;
 
   return (
-    <Routes>
-      <Route element={<SideNavbarLayout />}>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/search" element={<SearchPage />} />
-        <Route path="/search/:title" element={<SearchPage />} />
-        <Route path="/like" element={<LikePage />} />
-        {background && (
+    <>
+      <Routes location={background || location}>
+        <Route element={<SideNavbarLayout />}>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/search" element={<SearchPage />} />
+          <Route path="/search/:title" element={<SearchPage />} />
+          <Route path="/like" element={<LikePage />} />
           <Route path="/detail/:id" element={<ModalMovieDetail />} />
-        )}
-        {/* 검색 결과 페이지 표시용 라우터 */}
-        <Route path="/like/:title" element={<LikePage />} />
-      </Route>
-    </Routes>
+          <Route path="/like/:title" element={<LikePage />} />
+        </Route>
+      </Routes>
+      {background && (
+        <Routes>
+          <Route path="/detail/:id" element={<ModalMovieDetail />} />
+        </Routes>
+      )}
+    </>
   );
 }
 
