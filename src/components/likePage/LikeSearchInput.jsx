@@ -55,9 +55,9 @@ function SearchInput() {
         onFocus={onToggleIsActive}
         ref={targetEl}
       />
-      <SearchBtn type="button" onClick={onSubmit}>
+      <SearchButton type="button" onClick={onSubmit}>
         검색
-      </SearchBtn>
+      </SearchButton>
     </SearchForm>
   );
 }
@@ -97,7 +97,7 @@ const InputStyled = styled.input`
   background-color: rgba(0, 0, 0, 0.1);
   color: ${fontColor};
 `;
-const SearchBtn = styled.button`
+const SearchButton = styled.button`
   background-color: #bb65ff;
   border-radius: 6px;
   font-weight: 500;

@@ -30,9 +30,9 @@ export default function NumericContent({ id, rating, like }) {
         평점
         <strong>{rating}</strong>
       </Rating>
-      <LikeBtn type="button" onClick={handleClick}>
+      <LikeButton type="button" onClick={handleClick}>
         즐겨찾기 <AiFillStar className="like" color={likeIconColor} />
-      </LikeBtn>
+      </LikeButton>
     </NumericInfoContent>
   );
 }
@@ -57,7 +57,7 @@ const Rating = styled.p`
     margin-left: 5px;
   }
 `;
-const LikeBtn = styled.button`
+const LikeButton = styled.button`
   color: #ffffff;
   border: 0.15rem solid ${highlightColor};
   border-radius: 8px;

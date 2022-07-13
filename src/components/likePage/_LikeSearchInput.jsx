@@ -63,7 +63,7 @@ function LikeSearchInput() {
         value={keyword}
         onChange={onChangeValue}
       />
-      <SearchBtn type="button">검색</SearchBtn>
+      <SearchButton type="button">검색</SearchButton>
     </SearchForm>
   );
 }
@@ -103,7 +103,7 @@ const InputStyled = styled.input`
   background-color: rgba(0, 0, 0, 0.1);
   color: ${fontColor};
 `;
-const SearchBtn = styled.button`
+const SearchButton = styled.button`
   background-color: #bb65ff;
   border-radius: 6px;
   font-weight: 500;
