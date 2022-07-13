@@ -4,7 +4,7 @@ import { MOVIES_AMOUNT_PER_PAGE } from 'constants';
 import useIntersectObserver from './useIntersectObserver';
 import useDynamicScroll from './useDynamicScroll';
 
-const useInfinityMovieLoad = ({
+const useInfinityLikeLoad = ({
   queryTitle,
   queryYear,
   movieListItem,
@@ -28,10 +28,15 @@ const useInfinityMovieLoad = ({
   };
 
   useEffect(() => {
-    const callback = (response) => setMovieList(response.data);
+    const callback = (response) => {
+      const isSameLikeList =
+        JSON.stringify(response.data) === JSON.stringify(movieList);
+      if (isSameLikeList) return;
+      setMovieList(response.data);
+    };
 
     movieRequest.getWithParams({
-      url: 'movies',
+      url: 'movies?like=true',
       config: {
         _page: getCurrentPageNumber(movieList),
         _limit: minimumLength || MOVIES_AMOUNT_PER_PAGE,
@@ -40,7 +45,7 @@ const useInfinityMovieLoad = ({
       },
       callback,
     });
-  }, [queryTitle, queryYear, minimumLength]);
+  }, [queryTitle, queryYear, minimumLength, movieList]);
 
   useEffect(() => {
     getCurrentPageNumber(movieList) === 1 && setInitialLoading(false);
@@ -49,17 +54,18 @@ const useInfinityMovieLoad = ({
     isTargetVisible &&
       !isInitialLoading &&
       movieRequest.getWithParams({
-        url: 'movies',
+        url: 'movies?like=true',
         config: {
           _page: getCurrentPageNumber(movieList) + 1,
           q: queryTitle,
           year_like: queryYear,
-          _limit: minimumLength || MOVIES_AMOUNT_PER_PAGE,
+          _list: minimumLength || MOVIES_AMOUNT_PER_PAGE,
         },
         callback,
       });
   }, [isTargetVisible, isInitialLoading, minimumLength]);
+
   return { movieList, observeTargetRef };
 };
 
-export default useInfinityMovieLoad;
+export default useInfinityLikeLoad;

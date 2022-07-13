@@ -7,19 +7,19 @@ import styled from 'styled-components';
 import useToggle from 'hooks/common/useToggle';
 import useOutSideClick from 'hooks/common/useOutsideClick';
 import { SELECT_ITEM } from 'constants';
-import useRecommendForm from 'hooks/useRecommendForm';
-import RecommendBox from './RecommendBox';
-import SelectBox from './SelectBox';
+import useLikeRecommendForm from 'hooks/useLikeRecommendForm';
+import RecommendBox from 'components/searchPage/RecommendBox';
+import SelectBox from 'components/searchPage/SelectBox';
 
 function SearchInput() {
   const {
     keyword,
     onChangeSelect,
-    onChangeKeyword,
+    onChangeValue,
     onClickChange,
     recommendKeyword,
     select,
-  } = useRecommendForm();
+  } = useLikeRecommendForm();
   const [isActive, onToggleIsActive] = useToggle();
   const { targetEl } = useOutSideClick(isActive, onToggleIsActive);
   const navigate = useNavigate();
@@ -28,8 +28,8 @@ function SearchInput() {
   const onSubmit = (e) => {
     e.preventDefault();
     keyword && select === '제목'
-      ? navigate(`/search?title=${keyword}&year=`)
-      : navigate(`/search?title=&year=${keyword}`);
+      ? navigate(`/like?title=${keyword}&year=`)
+      : navigate(`/like?title=&year=${keyword}`);
   };
 
   return (
@@ -51,7 +51,7 @@ function SearchInput() {
         type="text"
         placeholder={`영화를 ${select}으로 검색해보세요`}
         value={keyword}
-        onChange={onChangeKeyword}
+        onChange={onChangeValue}
         onFocus={onToggleIsActive}
         ref={targetEl}
       />
@@ -67,6 +67,7 @@ export default SearchInput;
 const { borderColor, fontColor } = palette;
 
 const SearchForm = styled.form`
+  width: 100%;
   width: 75%;
   border: 1px solid ${borderColor};
   display: flex;
@@ -74,8 +75,7 @@ const SearchForm = styled.form`
   border-radius: 6px;
   font-size: 16px;
   box-sizing: border-box;
-  height: 3.3rem;
-  min-height: 3rem;
+  height: 45px;
   max-width: 1060px;
   margin: 28px auto;
   ${media.small} {
@@ -99,11 +99,9 @@ const InputStyled = styled.input`
 `;
 const SearchBtn = styled.button`
   background-color: #bb65ff;
-  border-top-right-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border-radius: 6px;
   font-weight: 500;
-  width: 6.5rem;
-  min-width: 3rem;
+  width: 91px;
   height: 45px;
   box-sizing: content-box;
   ${media.small} {

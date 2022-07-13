@@ -1,13 +1,17 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { palette } from 'lib/styles/palette';
+import LandingPage from 'pages/LandingPage';
 import SideNavbar from './SideNavbar';
 
-function SideNavbarLayout(props) {
+function SideNavbarLayout() {
+  const location = useLocation().state;
+
   return (
     <NavbarLayout>
       <SideNavbar />
+      {/* {location && <LandingPage />} */}
       <Outlet />
     </NavbarLayout>
   );

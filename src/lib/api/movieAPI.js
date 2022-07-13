@@ -12,3 +12,8 @@ export const getMoviesTitleAPI = async (title) => {
   const response = await request.get(`/movies?_limit=10&q=${title}`);
   return response.data;
 };
+
+export const getLikesTitleAPI = async () => {
+  const response = await request.get(`/movies?_limit=50&like=true`);
+  return response.data;
+};

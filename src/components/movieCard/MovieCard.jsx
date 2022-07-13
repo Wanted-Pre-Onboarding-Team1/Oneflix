@@ -1,22 +1,38 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { HttpRequest } from 'lib/api/httpRequest';
 import { AiFillStar } from 'react-icons/ai';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { palette } from 'lib/styles/palette';
 
-export default function MovieCard({ id, title, year, rating, image }) {
-  const [isLikeClicked, setLikeClicked] = useState(false);
+export default function MovieCard({
+  id,
+  title,
+  year,
+  rating,
+  image,
+  like,
+  onRemoveLikeMovie,
+}) {
+  const [isLikeClicked, setLikeClicked] = useState(like);
   const likeIconColor = isLikeClicked ? highlightColor : fontColor;
+  const location = useLocation();
+  const request = new HttpRequest();
 
-  function changeClickState(event) {
+  function markAsLike(event) {
     event.preventDefault();
     setLikeClicked(!isLikeClicked);
+    request.patch(`/movies/${id}`, { like: !isLikeClicked });
+    like &&
+      onRemoveLikeMovie((previousLikeList) =>
+        previousLikeList.filter((movie) => movie.id !== id),
+      );
   }
 
   return (
     <CardLayout>
-      <NavLink to={`/detail/${id}`}>
-        <button type="button" onClick={changeClickState}>
+      <NavLink to={`/detail/${id}`} state={{ background: { location } }}>
+        <button type="button" onClick={markAsLike}>
           <LikeIcon color={likeIconColor} />
         </button>
         <CardPoster src={image} alt={`${title} 포스터`} />
@@ -32,6 +48,7 @@ export default function MovieCard({ id, title, year, rating, image }) {
             }(${year})`}{' '}
           </CardMovieHeading>
         </CardMovieInfo>
+        {/* </button> */}
       </NavLink>
     </CardLayout>
   );
@@ -45,8 +62,12 @@ const CardLayout = styled.article`
   margin-bottom: 16px;
   border-radius: 0 0 4px 4px;
   font-weight: 400;
-  background: ${sideTabColor};
+  /* background: ${sideTabColor}; */
   color: ${sideTextColor};
+  transition: transform 300ms ease-in-out;
+  &:hover {
+    transform: scale(1.05);
+  }
   & strong {
     display: block;
     text-align: right;
