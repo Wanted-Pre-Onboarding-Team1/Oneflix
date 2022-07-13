@@ -4,6 +4,7 @@ import { AiFillCaretDown } from 'react-icons/ai';
 import useToggle from 'hooks/common/useToggle';
 import useOutSideClick from 'hooks/common/useOutsideClick';
 import media from 'lib/styles/media';
+import { palette } from 'lib/styles/palette';
 
 function SelectBox({ selectData, value, onChangeValue }) {
   const [isSelect, onToggleSelect] = useToggle();
@@ -36,14 +37,15 @@ export default SelectBox;
 
 const SelectBoxStyled = styled.div`
   display: inline-block;
-  width: 120px;
-  border: 1px solid #999;
-  background: #fff;
+  width: 8rem;
+  height: 45px;
+  border: 1px solid ${palette.borderColor};
+  background: ${palette.backgroundColor};
+  color: ${palette.fontColor};
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
   cursor: pointer;
   ul {
-    list-style-type: none;
-    padding-left: 0px;
-    width: 120px;
     border: 1px solid #999;
     position: absolute;
     background: #fff;
@@ -56,8 +58,8 @@ const SelectBoxStyled = styled.div`
 const SelectLabel = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 8px 5px;
   align-items: center;
+  padding: 8px 5px;
   height: 45px;
   border-radius: 6px;
   ${media.small} {
