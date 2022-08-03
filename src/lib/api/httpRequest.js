@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import axios from 'axios';
 import { BASE_URL } from 'constants';
 
@@ -13,7 +14,7 @@ export class HttpRequest {
     return response;
   }
 
-  async getWithParams({ url = '', config = {}, callback }) {
+  async getWithParams({ url = '', config = {}, callback = () => {} }) {
     const response = await this.axios.get(url, { params: config });
     callback(response);
   }
