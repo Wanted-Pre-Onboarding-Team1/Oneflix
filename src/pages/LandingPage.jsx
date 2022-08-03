@@ -12,15 +12,20 @@ function LandingPage() {
   const { isTargetVisible, observeTargetRef } = useIntersectObserver();
   const movieRequest = useMemo(() => request, []);
 
+  // 20개 / 10  === 2
+  // 159개 / 10 === 15.9 => 16
+  // isInteger? // 정수인지 아닌지 확인
   const getCurrentPageNumber = (currentMovieList) => {
-    const pageNumber = currentMovieList.length / MOVIES_AMOUNT_PER_PAGE;
+    const pageNumber = currentMovieList.length / MOVIES_AMOUNT_PER_PAGE; // 10;
     return Number.isInteger(pageNumber) ? pageNumber : Math.ceil(pageNumber);
   };
   const currentPage = getCurrentPageNumber(movieList);
 
+  // 페이지가 맨 처음에 로딩 될 때만 실행
   useEffect(() => {
     const callback = ({ data }) => {
       setMovieList(data);
+      // 초기 로딩 상태를 false로 업데이트
       setIsInitialLoading(false);
     };
 
@@ -28,16 +33,20 @@ function LandingPage() {
       url: 'movies',
       config: {
         _page: 1,
-        _limit: MOVIES_AMOUNT_PER_PAGE,
+        _limit: MOVIES_AMOUNT_PER_PAGE, // 10개
       },
       callback,
     });
+    // movieRequest는 useMemo로 감쌌을 때에만 deps에 넣어준다
   }, [movieRequest]);
 
+  // 페이지가 바뀔 때 마다 실행
   useEffect(() => {
     const callback = ({ data }) =>
       setMovieList((prevMovieList) => [...prevMovieList, ...data]);
 
+    // isTargetVisible : 영화 리스트의 바닥이 보일 때
+    // !isInitialLoading : 초기 로딩이 아닐 때(맨 처음에 1페이지 리스트 받아오는 작업이 이미 끝났을 때)
     isTargetVisible &&
       !isInitialLoading &&
       movieRequest.getWithParams({
