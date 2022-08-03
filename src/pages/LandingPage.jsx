@@ -1,47 +1,40 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import { MOVIES_AMOUNT_PER_PAGE } from 'constants';
 import { palette } from 'lib/styles/palette';
 import useIntersectObserver from 'hooks/useIntersectObserver';
-import useDynamicScroll from 'hooks/useDynamicScroll';
-import { HttpRequest } from 'lib/api/httpRequest';
 import MovieCard from 'components/movieCard/MovieCard';
+import { request } from 'lib/api/movieAPI';
 
 function LandingPage() {
   const [movieList, setMovieList] = useState([]);
-  const [isInitialLoading, setInitialLoading] = useState(true);
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
   const { isTargetVisible, observeTargetRef } = useIntersectObserver();
-  const movieRequest = new HttpRequest();
-  const movieListItem = React.useRef();
-  const mainMovieList = React.useRef();
-  const { minimumLength } = useDynamicScroll(
-    movieList,
-    movieListItem,
-    mainMovieList,
-  );
+  const movieRequest = useMemo(() => request, []);
 
   const getCurrentPageNumber = (currentMovieList) => {
-    const pageNumber = minimumLength
-      ? currentMovieList.length / minimumLength
-      : currentMovieList.length / MOVIES_AMOUNT_PER_PAGE;
+    const pageNumber = currentMovieList.length / MOVIES_AMOUNT_PER_PAGE;
     return Number.isInteger(pageNumber) ? pageNumber : Math.ceil(pageNumber);
   };
+  const currentPage = getCurrentPageNumber(movieList);
 
   useEffect(() => {
-    const callback = ({ data }) => setMovieList(data);
+    const callback = ({ data }) => {
+      setMovieList(data);
+      setIsInitialLoading(false);
+    };
 
     movieRequest.getWithParams({
       url: 'movies',
       config: {
-        _page: getCurrentPageNumber(movieList),
-        _limit: minimumLength || MOVIES_AMOUNT_PER_PAGE,
+        _page: 1,
+        _limit: MOVIES_AMOUNT_PER_PAGE,
       },
       callback,
     });
-  }, [minimumLength]);
+  }, [movieRequest]);
 
   useEffect(() => {
-    getCurrentPageNumber(movieList) === 1 && setInitialLoading(false);
     const callback = ({ data }) =>
       setMovieList((prevMovieList) => [...prevMovieList, ...data]);
 
@@ -50,21 +43,21 @@ function LandingPage() {
       movieRequest.getWithParams({
         url: 'movies',
         config: {
-          _page: getCurrentPageNumber(movieList) + 1,
-          _limit: minimumLength || MOVIES_AMOUNT_PER_PAGE,
+          _page: currentPage + 1,
+          _limit: MOVIES_AMOUNT_PER_PAGE,
         },
         callback,
       });
-  }, [isTargetVisible, isInitialLoading, minimumLength]);
+  }, [isTargetVisible, isInitialLoading, currentPage, movieRequest]);
 
   return (
     <LandingPageLayout>
       <LandingTitle>전체 영화 목록</LandingTitle>
       <MainPageContainer>
-        <MainMovieList ref={mainMovieList}>
+        <MainMovieList>
           {movieList.map(
             ({ id, title, year, rating, medium_cover_image: image, like }) => (
-              <li key={`${title}_${id}`} ref={movieListItem}>
+              <li key={`${title}_${id}`}>
                 <MovieCard
                   id={id}
                   title={title}
